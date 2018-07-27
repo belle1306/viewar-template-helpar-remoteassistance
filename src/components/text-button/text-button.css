@@ -1,0 +1,10 @@
+.TextButton {
+  padding: 10px 20px;
+  background: rgb(189, 24, 25);
+  color: white;
+  cursor: pointer;
+}
+
+.isHidden.TextButton {
+  opacity: 0;
+}

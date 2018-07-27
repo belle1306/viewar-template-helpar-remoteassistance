@@ -1,0 +1,38 @@
+/*@import 'fonts.css';*/
+
+body {
+  font-weight: 300;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-size: 12px;
+  color: #282f39;
+  position: fixed;
+}
+
+* {
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0) !important;
+  -webkit-focus-ring-color: rgba(255, 255, 255, 0) !important;
+  outline: none !important;
+  font-size: inherit;
+  line-height: 1em;
+
+  user-select: none;
+}
+
+#app {
+  position: absolute;
+}
+
+input, textarea {
+  border: 0;
+  user-select: text;
+}
+
+a,
+a:visited {
+  text-decoration: none;
+}
