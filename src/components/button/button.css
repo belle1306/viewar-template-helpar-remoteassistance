@@ -1,0 +1,44 @@
+.Button {
+  width: 40px;
+  height: 40px;
+  box-sizing: border-box;
+  margin: 20px;
+  cursor: pointer;
+  transition: opacity 0.5s ease;
+  pointer-events: all;
+}
+
+.isHidden.Button {
+  opacity: 0;
+}
+
+.isLarge.Button {
+  width: 100px;
+  height: 100px;
+}
+
+.isMedium.Button {
+  width: 60px;
+  height: 60px;
+}
+
+.Button.icon-back {
+  -webkit-mask-position-x: calc(100% / 7 * 7);
+  -webkit-mask-position-y: calc(100% / 7 * 2);
+  background-position-x: calc(100% / 7 * 7);
+  background-position-y: calc(100% / 7 * 2);
+}
+
+.Button.icon-login {
+  -webkit-mask-position-x: calc(100% / 7 * 0);
+  -webkit-mask-position-y: calc(100% / 7 * 5);
+  background-position-x: calc(100% / 7 * 0);
+  background-position-y: calc(100% / 7 * 5);
+}
+
+.Button.icon-add {
+  -webkit-mask-position-x: calc(100% / 7 * 0);
+  -webkit-mask-position-y: calc(100% / 7 * 0);
+  background-position-x: calc(100% / 7 * 0);
+  background-position-y: calc(100% / 7 * 0);
+}

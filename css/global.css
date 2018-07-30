@@ -1,4 +1,5 @@
-/*@import 'fonts.css';*/
+@import 'fonts.css';
+/*@import '~normalize.css';*/
 
 body {
   font-weight: 300;
@@ -10,6 +11,18 @@ body {
   font-size: 12px;
   color: #282f39;
   position: fixed;
+}
+
+.CustomFont1 {
+  font-family: 'CustomFont1', sans-serif;
+}
+
+.CustomFont2 {
+  font-family: 'CustomFont2', sans-serif;
+}
+
+.CustomFont3 {
+  font-family: 'CustomFont3', sans-serif;
 }
 
 * {
@@ -35,4 +48,23 @@ input, textarea {
 a,
 a:visited {
   text-decoration: none;
+}
+
+.LogoImage {
+  background-image: url('../assets/images/viewar_logo.svg');
+}
+
+.BackgroundImage {
+  background-image: url('../assets/images/viewar_background.jpg');
+}
+
+.ButtonImage {
+  /*-webkit-mask-position: top left;*/
+  -webkit-mask-size: 800%;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-image: url('../assets/images/buttons_base.svg');
+}
+
+.ButtonColor {
+  background-color: rgb(189, 24, 25);
 }

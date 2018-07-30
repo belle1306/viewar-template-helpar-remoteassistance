@@ -26,6 +26,7 @@
   flex-flow: column;
   max-width: 80%;
   background-color: white;
+  border-radius: 5px;
 }
 
 .Content {

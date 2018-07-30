@@ -5,7 +5,7 @@ import { translate } from '../../services'
 import TextButton from '../text-button/text-button'
 
 import styles from './dialog.css'
-import globalStyles from '../../../css/global.css'
+import global from '../../../css/global.css'
 
 export default ({message, visible, onConfirm, onCancel, showConfirm, showCancel, confirmText, cancelText, withInput, input, setInput}) =>
   <div className={cx(styles.DialogWrapper, visible && styles.visible)}>

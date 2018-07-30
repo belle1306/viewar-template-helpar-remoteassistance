@@ -1,3 +1,43 @@
-.Container {
+.Home {
+  background: center / cover no-repeat;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
 
+.Logo {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+}
+
+.LoginButton {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.StartButton {
+  position: absolute;
+  bottom: 25vmax;
+  left: 50%;
+  transform: translate(-50%, 50%);
+}
+
+.LoadingText {
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgb(189, 24, 25);
+  font-size: 1.2em;
+  line-height: 2em;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.isHidden.LoadingText {
+  opacity: 0;
 }

@@ -22,7 +22,7 @@
     "react-dom": "^16.2.0",
     "react-hot-loader": "^3.1.3",
     "react-router": "^4.2.0",
-    "viewar-api": "git+ssh://git@github.com/viewar/viewar-scripts.git#develop",
+    "viewar-api": "file:../viewar-api",
     "viewar-core": "^11.5.0"
   },
   "devDependencies": {
@@ -42,10 +42,13 @@
     "postcss-loader": "^2.1.6",
     "postcss-responsive-type": "^1.0.0",
     "postcss-smart-import": "^0.7.6",
+    "prop-types": "^15.6.2",
     "rc-progress": "^2.2.5",
     "react-intl": "^2.4.0",
     "react-router-transition": "^1.2.1",
     "recompose": "^0.27.1",
+    "rxjs": "^6.2.2",
+    "rxjs-compat": "^6.2.2",
     "style-loader": "^0.20.3",
     "webpack": "^4.1.1",
     "webpack-cli": "^2.0.10",

@@ -1,10 +1,31 @@
 .TextButton {
-  padding: 10px 20px;
-  background: rgb(189, 24, 25);
   color: white;
   cursor: pointer;
+  box-sizing: border-box;
+  padding: 0 20px;
+  height: 2em;
+  border-radius: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .isHidden.TextButton {
   opacity: 0;
+}
+
+.isRound.TextButton {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.isLarge.TextButton {
+  width: 100px;
+  height: 100px;
+  font-size: 2em;
 }

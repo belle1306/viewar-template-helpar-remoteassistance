@@ -1,0 +1,25 @@
+.Container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    z-index: 50;
+}
+
+.Button {
+    transition: 0.5s cubic-bezier(.38, 1.38, .73, .98);
+    transition-property: transform, opacity;
+}
+
+.isHidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.isHidden.ButtonShowHelp {
+    transform: translateX(calc(-48px - 16px));
+}
+
+.Button.PositionLeft {
+    transform: translateX(calc(-96px - 32px));
+}

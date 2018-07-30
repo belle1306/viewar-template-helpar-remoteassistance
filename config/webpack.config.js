@@ -58,7 +58,7 @@ const baseConfig = {
           'style-loader',
           {
             loader: 'css-loader',
-            options: {importLoaders: 1, modules: true, localIdentName: '[folder]--[local]'},
+            options: {importLoaders: 1, modules: true, localIdentName: '[name]-[local]'},
           },
           {
             loader: 'postcss-loader',

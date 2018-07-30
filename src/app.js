@@ -4,6 +4,8 @@ import { AnimatedSwitch } from 'react-router-transition'
 import { compose, lifecycle, withState } from 'recompose'
 
 import Home from './views/home/home.js'
+import Main from './views/main/main.js'
+import UserSelection from './views/user-selection/user-selection.js'
 
 import Spinner from './components/spinner/spinner.jsx'
 import Toast from './components/toast/toast'
@@ -42,6 +44,9 @@ export default ({}) => <Fragment>
         className="SwitchWrapper"
       >
         <Route exact path='/' component={Home}/>
+        <Route exact path='/main' component={Main}/>
+        <Route exact path='/main-admin' component={(...props) => <Main admin {...props} />}/>
+        <Route exact path='/user-selection' component={UserSelection}/>
       </AnimatedSwitch>
     </GaMonitor>
   </MemoryRouter>

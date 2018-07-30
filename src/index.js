@@ -1,14 +1,19 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
 import merge from 'lodash/merge'
 import { AppContainer } from 'react-hot-loader'
 import { IntlProvider } from 'react-intl'
-
+import { compose, withContext } from 'recompose'
+import { createCallClient } from './mock/viewar-call'
 import viewarApi from 'viewar-api'
 import appState from './services/app-state'
+import authManager from './services/auth-manager'
 import googleAnalytics from './services/google-analytics/index'
+import highlightManager from './services/highlight-manager'
 import config from './config'
 import { translationProvider } from './services/index'
+import 'normalize.css/normalize.css';
 
 import App from './app'
 
@@ -16,17 +21,24 @@ import '../css/global.css'
 
 (async function () {
 
-  const api = window.api = await viewarApi.init({logToScreen: true})
+  const api = window.api = await viewarApi.init({logToScreen: false, waitForDebugger: false})
   merge(config, api.appConfig.uiConfig)
 
   await googleAnalytics.init()
   translationProvider.init()
 
+  const callClient = await createCallClient()
+
+  document.body.classList.add('global-CustomFont1')
+
   Object.assign(window, {
+    appState,
+    authManager,
+    callClient,
     config,
     googleAnalytics,
+    highlightManager,
     translationProvider,
-    appState,
   })
 
   const rootElement = document.getElementById('app-root') || document.getElementById('app')
@@ -42,7 +54,14 @@ import '../css/global.css'
     )
   }
 
-  render(App)
+  const AppWithContext = compose(
+    withContext(
+      { callClient: PropTypes.object },
+      () => ({ callClient })
+    )
+  )(App)
+
+  render(AppWithContext)
 
   if (module.hot) {
     module.hot.accept('./app', () => render(App))

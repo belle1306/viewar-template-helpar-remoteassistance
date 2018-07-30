@@ -1,0 +1,17 @@
+@font-face{
+  font-family: 'CustomFont1';
+  src: url('../assets/fonts/ttf/Catamaran-Regular.ttf') format('truetype');
+  font-style: normal;
+}
+
+@font-face{
+  font-family: 'CustomFont2';
+  src: url('../assets/fonts/ttf/Catamaran-Bold.ttf') format('truetype');
+  font-style: normal;
+}
+
+@font-face{
+  font-family: 'CustomFont3';
+  src: url('../assets/fonts/ttf/Catamaran-ExtraLight.ttf') format('truetype');
+  font-style: normal;
+}

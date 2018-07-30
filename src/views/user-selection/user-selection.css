@@ -1,0 +1,64 @@
+.UserSelection {
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.ClientList {
+  margin-top: 60px;
+  max-height: calc(100% - 60px);
+  overflow-y: auto;
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.Client {
+  position: relative;
+  flex: 0 0 calc(20% - 12px);
+  margin: 0 12px 12px 0;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  border-radius: 5px;
+}
+
+.Client:before {
+  content: '';
+  float: left;
+  padding-top: 100%;
+}
+
+.ClientName {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  background: rgba(255, 255, 255, .1);
+  font-size: 1.2em;
+  line-height: 2em;
+  border-radius: 0 0 5px 5px;
+  text-align: center;
+}
+
+@media only
+screen and (orientation: landscape) and (max-device-height: 767px),
+screen and (orientation: portrait) and (max-device-width: 376px) {
+
+  .Client {
+    flex-basis: calc(33% - 4px);
+    margin: 0 4px 4px 0;
+  }
+
+}
