@@ -6,12 +6,12 @@ import global from '../../../css/global.css'
 
 import HeaderBar from '../../components/header-bar/header-bar'
 
-export default ({ clientIds, call }) =>
+export default ({ clients, call }) =>
   <div className={cx(styles.UserSelection, global.BackgroundImage)}>
     <HeaderBar goBack />
     <div className={styles.ClientList}>
-      {clientIds.map(clientId => <div className={cx(styles.Client, global.ButtonColor)} key={clientId} onClick={() => call(clientId)}>
-        <div className={styles.ClientName}>{clientId}</div>
+      {clients.map(client => <div className={cx(styles.Client, global.ButtonColor)} key={client.id} onClick={() => call(client)}>
+        <div className={styles.ClientName}>{client.id}</div>
       </div>)}
     </div>
   </div>

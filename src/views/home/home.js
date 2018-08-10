@@ -15,8 +15,14 @@ export const goTo = ({history}) => async (route) => {
   history.push(route)
 }
 
-export const init = ({setLoadingDone, highlightManager, viewarApi, resetTrackers, authManager, updateProgress}) => async () => {
+export const init = ({viewarApi: { cameras }, callClient, setLoadingDone, highlightManager, resetTrackers, authManager, updateProgress}) => async () => {
   setLoadingDone(false)
+
+  if (callClient.connected && callClient.session) {
+    callClient.leave()
+  }
+
+  await cameras.perspectiveCamera.activate()
   await resetTrackers()
   await authManager.readPersisted()
 
@@ -30,10 +36,13 @@ export const resetTrackers = ({viewarApi}) => async () => {
   }
 }
 
-export const goToMain = ({setLoading, callClient, history}) => async() => {
+export const goToMain = ({setLoading, viewarApi: { appConfig }, callClient, history}) => async() => {
   setLoading(true)
   await callClient.join({
-    sessionId: 'com.viewar.helpar'
+    sessionId: appConfig.appId,
+    userData: {
+      supportAgent: false
+    }
   })
 
   setLoading(false)

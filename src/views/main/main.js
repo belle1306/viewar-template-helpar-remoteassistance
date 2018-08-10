@@ -14,13 +14,22 @@ export const goTo = ({history}) => async (route) => {
   history.push(route)
 }
 
-export const waitForSupportAgent = ({ admin , setWaitingForSupportAgent, callClient }) => async() => {
+export const waitForSupportAgent = ({ history, admin, viewarApi: { appConfig }, setWaitingForSupportAgent, callClient }) => async() => {
+  callEndedSubscription = callClient.endedCall.subscribe(() => {
+    history.goBack()
+  })
+
   if (!admin) {
     setWaitingForSupportAgent(true)
-    callClient.incomingCall.subscribe(async({id}) => {
-      await callClient.answerCall()
-      setWaitingForSupportAgent(false)
-    })
+
+    if(callClient.connected && callClient.session) {
+      callSubscription = callClient.incomingCall.subscribe(async({id}) => {
+        await callClient.answerCall()
+        const sceneState = viewarApi.sceneManager.getSceneState();
+        callClient.sendData("scene", sceneState);
+        setWaitingForSupportAgent(false)
+      })
+    }
   }
 }
 
@@ -31,6 +40,8 @@ export const highlight = ({ viewarApi: { cameras }, setLoading, highlightManager
   setLoading(false)
 }
 
+let callSubscription
+let callEndedSubscription
 export default compose(
   getContext({
     callClient: PropTypes.object
@@ -51,8 +62,19 @@ export default compose(
   }),
   lifecycle({
     componentDidMount() {
-      const { waitForSupportAgent } = this.props
+      const { waitForSupportAgent, viewarApi: { cameras } } = this.props
+      cameras.arCamera.activate()
       waitForSupportAgent()
+    },
+    componentWillUnmount() {
+      const { callClient } = this.props
+      if (callClient.connected && callClient.session) {
+        callClient.endCall()
+      }
+
+      if (callSubscription) {
+        callSubscription.unsubscribe()
+      }
     }
   })
 )(Main)

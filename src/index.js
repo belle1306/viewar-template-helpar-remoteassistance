@@ -5,7 +5,7 @@ import merge from 'lodash/merge'
 import { AppContainer } from 'react-hot-loader'
 import { IntlProvider } from 'react-intl'
 import { compose, withContext } from 'recompose'
-import { createCallClient } from './mock/viewar-call'
+// import { createCallClient } from './mock/viewar-call'
 import viewarApi from 'viewar-api'
 import appState from './services/app-state'
 import authManager from './services/auth-manager'
@@ -14,6 +14,7 @@ import highlightManager from './services/highlight-manager'
 import config from './config'
 import { translationProvider } from './services/index'
 import 'normalize.css/normalize.css';
+import { createCallClient } from 'viewar-call';
 
 import App from './app'
 
@@ -21,13 +22,38 @@ import '../css/global.css'
 
 (async function () {
 
-  const api = window.api = await viewarApi.init({logToScreen: false, waitForDebugger: false})
-  merge(config, api.appConfig.uiConfig)
+  window.api = await viewarApi.init({logToScreen: false, waitForDebugger: false})
+  merge(config, viewarApi.appConfig.uiConfig)
 
   await googleAnalytics.init()
   translationProvider.init()
 
-  const callClient = await createCallClient()
+  const callClient = await createCallClient(viewarApi, { host: 'ws://192.168.0.31:3001' })
+  if (callClient.connected) {
+
+    callClient.incomingCall.subscribe(async(call) => {
+      console.log('Incoming call', call)
+    })
+
+    callClient.acceptedCall.subscribe(call => {
+      console.log('Accepted Call', call)
+    })
+
+    callClient.refusedCall.subscribe(call => {
+      console.log('Call refused', call)
+    })
+
+    callClient.endedCall.subscribe(call => {
+      console.log('Ended call', call)
+    })
+
+    callClient.lineBusy.subscribe(call => {
+      console.log('Line busy', call)
+    })
+  } else {
+    console.log('Could not join session, no connection.')
+  }
+
 
   document.body.classList.add('global-CustomFont1')
 

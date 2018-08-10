@@ -14,19 +14,21 @@ export const goTo = ({history}) => async(route) => {
   history.push(route)
 }
 
-export const updateClientList = ({setClientIds, callClient}) => async({id}) => {
-  const clientIds = callClient.clients.list().map(client => client.name)
-  setClientIds(clientIds)
+export const updateClientList = ({setClients, callClient}) => async() => {
+  console.log('update client list', callClient.clients.list())
+  const clients = callClient.clients.list().filter(client => !client.supportAgent && client.available)
+  setClients(clients)
 }
 
-export const call = ({ history, setLoading, callClient }) => async(clientId) => {
+export const call = ({ history, setLoading, callClient }) => async(client) => {
   setLoading(true)
-  await callClient.call({ id: clientId })
+  await callClient.call({ id: client.id })
   setLoading(false)
 
   history.push('/main-admin')
 }
 
+let clientSubscription
 export default compose(
   getContext({
     callClient: PropTypes.object
@@ -34,7 +36,7 @@ export default compose(
   withRouter,
   withDialogControls,
   withSetLoading,
-  withState('clientIds', 'setClientIds', []),
+  withState('clients', 'setClients', []),
   withProps({
     viewarApi,
     getUiConfigPath,
@@ -47,7 +49,22 @@ export default compose(
   }),
   lifecycle({
     async componentDidMount() {
-      this.props.callClient.clients.subscribe(this.props.updateClientList)
-    }
+      const { callClient, updateClientList, viewarApi: { appConfig }, authManager } = this.props
+
+      if (callClient.connected) {
+        if (!callClient.session) {
+          await callClient.join({sessionId: appConfig.appId, user: authManager.user.username, userData: { supportAgent: true }})
+          console.log('Current session', callClient.session)
+        }
+
+        clientSubscription = callClient.clients.subscribe(updateClientList)
+        updateClientList()
+      }
+    },
+    componentWillUnmount() {
+      if (clientSubscription) {
+        clientSubscription.unsubscribe()
+      }
+    },
   })
 )(UserSelection)
