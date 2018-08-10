@@ -1,8 +1,8 @@
 import { withRouter } from 'react-router'
-import { compose, withHandlers, lifecycle, getContext, withProps, withState } from 'recompose'
-import PropTypes from 'prop-types'
+import { compose, withHandlers, lifecycle, withProps, withState } from 'recompose'
 
 import viewarApi from 'viewar-api'
+import withCallClient from '../../services/call-client'
 import { getUiConfigPath } from '../../utils'
 import { withDialogControls } from '../../services/dialog'
 import { withSetLoading } from '../../services/loading'
@@ -15,7 +15,6 @@ export const goTo = ({history}) => async(route) => {
 }
 
 export const updateClientList = ({setClients, callClient}) => async() => {
-  console.log('update client list', callClient.clients.list())
   const clients = callClient.clients.list().filter(client => !client.supportAgent && client.available)
   setClients(clients)
 }
@@ -30,9 +29,7 @@ export const call = ({ history, setLoading, callClient }) => async(client) => {
 
 let clientSubscription
 export default compose(
-  getContext({
-    callClient: PropTypes.object
-  }),
+  withCallClient,
   withRouter,
   withDialogControls,
   withSetLoading,
@@ -49,14 +46,10 @@ export default compose(
   }),
   lifecycle({
     async componentDidMount() {
-      const { callClient, updateClientList, viewarApi: { appConfig }, authManager } = this.props
+      const { connect, callClient, updateClientList, viewarApi: { appConfig }, authManager } = this.props
 
+      await connect({sessionId: appConfig.appId, user: authManager.user.username, userData: { supportAgent: true }})
       if (callClient.connected) {
-        if (!callClient.session) {
-          await callClient.join({sessionId: appConfig.appId, user: authManager.user.username, userData: { supportAgent: true }})
-          console.log('Current session', callClient.session)
-        }
-
         clientSubscription = callClient.clients.subscribe(updateClientList)
         updateClientList()
       }

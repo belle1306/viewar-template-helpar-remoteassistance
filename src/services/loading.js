@@ -8,15 +8,17 @@ import {
   lifecycle
 } from 'recompose'
 
-export const load = ({setLoading, setProgress, setWithProgress}) => ({loading, progress = 0, withProgress = false}) => {
+export const load = ({setLoading, setProgress, setMessage, setWithProgress}) => ({loading, progress = 0, withProgress = false, message}) => {
   setLoading(loading)
   setProgress(progress)
   setWithProgress(withProgress)
+  setMessage(message)
 }
 
 export const withLoading = (prefix = '') =>
   compose(
     withState('loading', 'setLoading', false),
+    withState('message', 'setMessage', null),
     withState('progress', 'setProgress', 0),
     withState('withProgress', 'setWithProgress', false),
     withHandlers({
@@ -29,11 +31,15 @@ export const withLoading = (prefix = '') =>
     })
   )
 
-const setLoading = ({pubSub}) => (value, withProgress = false, progress = 0, prefix = '') => pubSub.publish(prefix + 'loadingState', {
-  loading: value,
-  progress,
-  withProgress
-})
+const setLoading = ({pubSub}) => (value, args = {}) => {
+  const { withProgress = false, progress = 0, prefix = '', message } = args
+  pubSub.publish(prefix + 'loadingState', {
+    loading: value,
+    progress,
+    withProgress,
+    message,
+  })
+}
 
 export const withSetLoading = compose(
   withProps({pubSub}),

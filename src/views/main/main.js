@@ -1,7 +1,6 @@
 import { withRouter } from 'react-router'
-import PropTypes from 'prop-types'
-import { compose, withHandlers, withState, lifecycle, withProps, getContext } from 'recompose'
-
+import { compose, withHandlers, withState, lifecycle, withProps } from 'recompose'
+import withCallClient from '../../services/call-client'
 import viewarApi from 'viewar-api'
 import { getUiConfigPath } from '../../utils'
 import { withDialogControls } from '../../services/dialog'
@@ -14,15 +13,12 @@ export const goTo = ({history}) => async (route) => {
   history.push(route)
 }
 
-export const waitForSupportAgent = ({ history, admin, viewarApi: { appConfig }, setWaitingForSupportAgent, callClient }) => async() => {
-  callEndedSubscription = callClient.endedCall.subscribe(() => {
-    history.goBack()
-  })
-
+export const waitForSupportAgent = ({ connect, history, admin, viewarApi: { appConfig }, setWaitingForSupportAgent, callClient }) => async() => {
   if (!admin) {
-    setWaitingForSupportAgent(true)
+    await connect({userData: { supportAgent: false }})
 
     if(callClient.connected && callClient.session) {
+      setWaitingForSupportAgent(true)
       callSubscription = callClient.incomingCall.subscribe(async({id}) => {
         await callClient.answerCall()
         const sceneState = viewarApi.sceneManager.getSceneState();
@@ -41,11 +37,8 @@ export const highlight = ({ viewarApi: { cameras }, setLoading, highlightManager
 }
 
 let callSubscription
-let callEndedSubscription
 export default compose(
-  getContext({
-    callClient: PropTypes.object
-  }),
+  withCallClient,
   withState('waitingForSupportAgent', 'setWaitingForSupportAgent', false),
   withRouter,
   withDialogControls,
@@ -68,13 +61,11 @@ export default compose(
     },
     componentWillUnmount() {
       const { callClient } = this.props
-      if (callClient.connected && callClient.session) {
-        callClient.endCall()
-      }
-
       if (callSubscription) {
         callSubscription.unsubscribe()
       }
+
+      callClient.endCall()
     }
   })
 )(Main)

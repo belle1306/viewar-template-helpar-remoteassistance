@@ -1,11 +1,11 @@
-import PropTypes from 'prop-types'
 import { withRouter } from 'react-router'
-import { compose, withHandlers, lifecycle, withProps, getContext, withState } from 'recompose'
+import { compose, withHandlers, lifecycle, withProps, withState } from 'recompose'
 
 import viewarApi from 'viewar-api'
 import { getUiConfigPath } from '../../utils'
 import { withDialogControls } from '../../services/dialog'
 import { withSetLoading } from '../../services/loading'
+import withCallClient from '../../services/call-client'
 import authManager from '../../services/auth-manager'
 import highlightManager from '../../services/highlight-manager'
 
@@ -15,12 +15,10 @@ export const goTo = ({history}) => async (route) => {
   history.push(route)
 }
 
-export const init = ({viewarApi: { cameras }, callClient, setLoadingDone, highlightManager, resetTrackers, authManager, updateProgress}) => async () => {
+export const init = ({viewarApi: { cameras }, disconnect, setLoadingDone, highlightManager, resetTrackers, authManager, updateProgress}) => async () => {
   setLoadingDone(false)
 
-  if (callClient.connected && callClient.session) {
-    callClient.leave()
-  }
+  disconnect()
 
   await cameras.perspectiveCamera.activate()
   await resetTrackers()
@@ -36,16 +34,7 @@ export const resetTrackers = ({viewarApi}) => async () => {
   }
 }
 
-export const goToMain = ({setLoading, viewarApi: { appConfig }, callClient, history}) => async() => {
-  setLoading(true)
-  await callClient.join({
-    sessionId: appConfig.appId,
-    userData: {
-      supportAgent: false
-    }
-  })
-
-  setLoading(false)
+export const goToMain = ({setLoading, viewarApi: { appConfig }, history}) => async() => {
   history.push('/main')
 }
 
@@ -76,9 +65,7 @@ export const updateProgress = ({ setProgress, setStatus }) => (count) => {
 }
 
 export default compose(
-  getContext({
-    callClient: PropTypes.object
-  }),
+  withCallClient,
   withRouter,
   withDialogControls,
   withSetLoading,
