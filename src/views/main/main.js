@@ -6,6 +6,7 @@ import { getUiConfigPath } from '../../utils'
 import { withDialogControls } from '../../services/dialog'
 import { withSetLoading } from '../../services/loading'
 import highlightManager from '../../services/highlight-manager'
+import { translate } from '../../services'
 
 import Main from './main.jsx'
 
@@ -13,17 +14,25 @@ export const goTo = ({history}) => async (route) => {
   history.push(route)
 }
 
-export const waitForSupportAgent = ({ connect, history, admin, viewarApi: { appConfig }, setWaitingForSupportAgent, callClient }) => async() => {
+export const waitForSupportAgent = ({ showDialog, connect, history, admin, viewarApi: { appConfig }, setWaitingForSupportAgent, callClient }) => async() => {
   if (!admin) {
     await connect({userData: { supportAgent: false }})
 
     if(callClient.connected && callClient.session) {
       setWaitingForSupportAgent(true)
-      callSubscription = callClient.incomingCall.subscribe(async({id}) => {
-        await callClient.answerCall()
-        const sceneState = viewarApi.sceneManager.getSceneState();
-        callClient.sendData("scene", sceneState);
+      callSubscription = callClient.incomingCall.subscribe(async({ id }) => {
+        const client = callClient.clients.list().find(client => client.id === id) || {}
         setWaitingForSupportAgent(false)
+        const result = await showDialog(translate('MessageAcceptCall', false) + client.name || id + '?', {
+          showCancel: true
+        })
+
+        if (result.confirmed) {
+          await callClient.answerCall({ syncScene: true })
+        } else {
+          await callClient.rejectCall()
+          setWaitingForSupportAgent(true)
+        }
       })
     }
   }

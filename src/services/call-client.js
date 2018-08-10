@@ -18,26 +18,6 @@ const connect = ({ history, showDialog, setLoading, callClient }) => async(sessi
     })
     history.goBack()
     return false
-  } else {
-    callClient.incomingCall.subscribe(async(call) => {
-      console.log('Incoming call', call)
-    })
-
-    callClient.acceptedCall.subscribe(call => {
-      console.log('Accepted Call', call)
-    })
-
-    callClient.refusedCall.subscribe(call => {
-      console.log('Call refused', call)
-    })
-
-    callClient.endedCall.subscribe(call => {
-      console.log('Ended call', call)
-    })
-
-    callClient.lineBusy.subscribe(call => {
-      console.log('Line busy', call)
-    })
   }
 
   setLoading(true, { message: 'MessageJoin' })

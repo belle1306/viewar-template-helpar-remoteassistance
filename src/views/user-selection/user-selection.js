@@ -14,26 +14,49 @@ export const goTo = ({history}) => async(route) => {
   history.push(route)
 }
 
-export const updateClientList = ({setClients, callClient}) => async() => {
+export const updateClientList = ({ setClients, callClient }) => async() => {
   const clients = callClient.clients.list().filter(client => !client.supportAgent && client.available)
+
   setClients(clients)
 }
 
-export const call = ({ history, setLoading, callClient }) => async(client) => {
+export const call = ({ showDialog, setWaitingForUser, history, setLoading, callClient }) => async(client) => {
   setLoading(true)
   await callClient.call({ id: client.id })
   setLoading(false)
 
-  history.push('/main-admin')
+  setWaitingForUser(client.id)
+  callSubscription = callClient.acceptedCall.subscribe(() => {
+    setWaitingForUser(false)
+    history.push('/main-admin')
+  })
+
+  refusedCallSubscription = callClient.refusedCall.subscribe(() => {
+    setWaitingForUser(false)
+    showDialog('UserSelectionCallRefused', {
+      confirmText: 'DialogOK'
+    })
+  })
+
+  lineBusyCallSubscription = callClient.lineBusy.subscribe(() => {
+    setWaitingForUser(false)
+    showDialog('UserSelectionLineBusy', {
+      confirmText: 'DialogOK'
+    })
+  })
 }
 
 let clientSubscription
+let callSubscription
+let refusedCallSubscription
+let lineBusyCallSubscription
 export default compose(
   withCallClient,
   withRouter,
   withDialogControls,
   withSetLoading,
   withState('clients', 'setClients', []),
+  withState('waitingForUser', 'setWaitingForUser', false),
   withProps({
     viewarApi,
     getUiConfigPath,
@@ -57,6 +80,15 @@ export default compose(
     componentWillUnmount() {
       if (clientSubscription) {
         clientSubscription.unsubscribe()
+      }
+      if (callSubscription) {
+        callSubscription.unsubscribe()
+      }
+      if (refusedCallSubscription) {
+        refusedCallSubscription.unsubscribe()
+      }
+      if (lineBusyCallSubscription) {
+        lineBusyCallSubscription.unsubscribe()
       }
     },
   })

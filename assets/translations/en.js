@@ -14,6 +14,11 @@ export default {
   "HomeLoading": "Loading...",
   // Main
   "MainWaitForSupportAgent": "Waiting for support agent...",
+  // User Selection
+  "UserSelectionWaitForUser": "Waiting for user to accept call...",
+  "UserSelectionCallRefused": "User rejected your call.",
+  "UserSelectionLineBusy": "Line is busy.",
+  "UserSelectionEmptyList": "No available support requests",
   // Messages
   "MessageConnectionLost": "Connection to server lost.",
   "MessageCallEnded": "Call ended.",
@@ -21,4 +26,5 @@ export default {
   "MessageConnectionFailed": "Failed to connect to server.<br/>Please check your internect connection.",
   "MessageJoin": "Joining session, please wait.",
   "MessageJoinFailed": "Failed to join the channel.",
+  "MessageAcceptCall": "Accept support from ",
 }
