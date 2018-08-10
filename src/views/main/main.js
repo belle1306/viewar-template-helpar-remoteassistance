@@ -10,6 +10,14 @@ import { translate } from '../../services'
 
 import Main from './main.jsx'
 
+export const goBack = ({ backPath, history }) => () => {
+  if (backPath) {
+    history.push(backPath)
+  } else {
+    history.goBack()
+  }
+}
+
 export const goTo = ({history}) => async (route) => {
   history.push(route)
 }
@@ -58,6 +66,7 @@ export default compose(
     highlightManager,
   }),
   withHandlers({
+    goBack,
     goTo,
     waitForSupportAgent,
     highlight,

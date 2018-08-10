@@ -35,7 +35,7 @@ export const resetTrackers = ({viewarApi}) => async () => {
 }
 
 export const goToMain = ({setLoading, viewarApi: { appConfig }, history}) => async() => {
-  history.push('/main')
+  history.push('/calibration')
 }
 
 export const goToUserSelection = ({setLoading, authManager, showDialog, history}) => async() => {

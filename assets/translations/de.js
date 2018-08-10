@@ -19,6 +19,11 @@ export default {
   "UserSelectionCallRefused": "User hat den Anruf abgelehnt.",
   "UserSelectionLineBusy": "Leitung ist besetzt.",
   "UserSelectionEmptyList": "Keine Supportanfragen verfügbar",
+  // Calibration
+  "CalibrationARKit": "Filmen Sie den Boden und bewegen Sie das Gerät seitlich.",
+  "CalibrationARCore": "Filmen Sie den Boden und bewegen Sie das Gerät seitlich.",
+  "CalibrationFilmFloor": "Bitte filmen Sie den Boden.",
+  "CalibrationScaleGround": "Skalieren Sie den Boden und bestätigen Sie anschließend.",
   // Messages
   "MessageConnectionLost": "Verbindung zum Server unterbrochen.",
   "MessageCallEnded": "Anruf wurde beendet.",

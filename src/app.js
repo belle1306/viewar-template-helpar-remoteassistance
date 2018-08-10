@@ -6,6 +6,7 @@ import { compose, lifecycle } from 'recompose'
 import Home from './views/home/home.js'
 import Main from './views/main/main.js'
 import UserSelection from './views/user-selection/user-selection.js'
+import Calibration from './views/calibration/calibration.js'
 import ConnectionMonitor from './views/connection-monitor'
 
 import Spinner from './components/spinner/spinner.jsx'
@@ -47,7 +48,8 @@ export default ({}) => <Fragment>
           className="SwitchWrapper"
         >
           <Route exact path='/' component={Home}/>
-          <Route exact path='/main' component={Main}/>
+          <Route exact path='/calibration' component={(...props) => <Calibration {...props} nextView='/main'/>}/>
+          <Route exact path='/main' component={(...props) => <Main {...props} backPath='/'/>} />
           <Route exact path='/main-admin' component={(...props) => <Main admin {...props} />}/>
           <Route exact path='/user-selection' component={UserSelection}/>
         </AnimatedSwitch>

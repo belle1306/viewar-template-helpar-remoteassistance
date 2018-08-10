@@ -14,7 +14,7 @@ export default compose(
   withDialogControls,
   lifecycle({
     componentDidMount() {
-      const { callClient, history, showDialog } = this.props
+      const { callClient, history, showDialog, backPath } = this.props
 
       callClient.disconnect.subscribe(async() => {
         await showDialog('MessageConnectionLost', {
@@ -27,7 +27,11 @@ export default compose(
         await showDialog('MessageCallEnded', {
           confirmText: 'DialogOK'
         })
-        history.goBack()
+        if (backPath) {
+          history.push(backPath)
+        } else {
+          history.goBack()
+        }
       })
 
     }

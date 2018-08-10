@@ -19,6 +19,10 @@ export default {
   "UserSelectionCallRefused": "User rejected your call.",
   "UserSelectionLineBusy": "Line is busy.",
   "UserSelectionEmptyList": "No available support requests",
+  // Calibration
+  "CalibrationARKit": "Please film the floor and move your device sideways.",
+  "CalibrationARCore": "Please film the floor and move your device sideways.",
+  "CalibrationFilmFloor": "Please film the floor.",
   // Messages
   "MessageConnectionLost": "Connection to server lost.",
   "MessageCallEnded": "Call ended.",
