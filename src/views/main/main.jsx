@@ -12,9 +12,10 @@ const WaitForSupportAgentOverlay = ({visible}) => <div className={cx(styles.Wait
   {translate('MainWaitForSupportAgent')}
 </div>
 
-export default ({ waitingForSupportAgent, highlight, goBack }) =>
+export default ({ waitingForSupportAgent, highlight, goBack, onTouch }) =>
   <div className={cx(styles.Main)}>
     <HeaderBar goBack={goBack} />
     <WaitForSupportAgentOverlay visible={waitingForSupportAgent} />
-    <Button medium onClick={highlight} icon="" className={styles.HighlightButton} />
+    {/*<Button medium onClick={highlight} icon="" className={styles.HighlightButton} />*/}
+    <div className={styles.TouchPlane} onClick={(e) => onTouch(e)} />
   </div>

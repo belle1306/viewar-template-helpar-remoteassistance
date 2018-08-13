@@ -53,6 +53,22 @@ export const highlight = ({ viewarApi: { cameras }, setLoading, highlightManager
   setLoading(false)
 }
 
+export const onTouch = ({ setLoading, admin, highlightManager, viewarApi: { simulateTouchRay } }) => async(event) => {
+  setLoading(true)
+
+  let x, y
+  if (event.type === 'click') {
+    x = event.clientX / event.target.offsetWidth
+    y = event.clientY / event.target.offsetHeight
+  }
+
+  if (x !== undefined && y !== undefined) {
+    await highlightManager.setTouchHighlight(x, y)
+  }
+  setLoading(false)
+
+}
+
 let callSubscription
 export default compose(
   withCallClient,
@@ -70,11 +86,14 @@ export default compose(
     goTo,
     waitForSupportAgent,
     highlight,
+    onTouch,
   }),
   lifecycle({
-    componentDidMount() {
-      const { waitForSupportAgent, viewarApi: { cameras } } = this.props
-      cameras.arCamera.activate()
+    async componentDidMount() {
+      const { highlightManager, admin, waitForSupportAgent, viewarApi: { cameras, coreInterface } } = this.props
+      highlightManager.isAdmin = admin
+      await cameras.arCamera.activate()
+      !admin && await coreInterface.call('setPointCloudVisibility', true, true)
       waitForSupportAgent()
     },
     componentWillUnmount() {

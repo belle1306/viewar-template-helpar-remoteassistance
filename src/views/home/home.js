@@ -15,7 +15,7 @@ export const goTo = ({history}) => async (route) => {
   history.push(route)
 }
 
-export const init = ({viewarApi: { cameras }, disconnect, setLoadingDone, highlightManager, resetTrackers, authManager, updateProgress}) => async () => {
+export const init = ({viewarApi: { coreInterface, cameras }, disconnect, setLoadingDone, highlightManager, resetTrackers, authManager, updateProgress}) => async () => {
   setLoadingDone(false)
 
   disconnect()

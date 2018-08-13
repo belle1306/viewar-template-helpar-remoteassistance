@@ -8,6 +8,7 @@ export default ({
   let initialized = false
   let models = {}
   let instances = {}
+  let isAdmin = false
 
   const MODEL_DESCRIPTIONS = {
     highlight: {
@@ -19,7 +20,7 @@ export default ({
 
   const init = async(onProgress) => {
     if (!initialized) {
-      const {modelManager} = viewarApi
+      const {modelManager, sceneManager} = viewarApi
 
       for (let [id, description] of Object.entries(MODEL_DESCRIPTIONS)) {
         const model = await getModel(description)
@@ -52,13 +53,15 @@ export default ({
         onProgress(count)
 
         // Instantiate model
-        instances[id] = await insertModel(model, { visible: false })
+        const instance = await insertModel(model, { visible: false })
+        await sceneManager.removeNode(instance)
         count.current += 1
         count.currentProgress = 0
         onProgress(count)
       }
 
       modelManager.off('transferProgress', updateProgress)
+
       initialized = true
     } else {
       for (let instance of Object.values(instances)) {
@@ -67,7 +70,7 @@ export default ({
     }
   }
 
-  const setHighlight = async(position, admin = false) => {
+  const setHighlight = async(position, admin = isAdmin) => {
     const pose = {
       position,
       scale: {
@@ -82,21 +85,31 @@ export default ({
     }
 
     if(!instances.highlight) {
-      instances.highlight = (await insertModel(models.highlight, {
-        pose,
-        propertyValues,
-        visible: true,
-      }))
-    } else {
-      await instances.highlight.setPose(pose)
-      await instances.highlight.setPropertyValues(propertyValues)
-      await instances.highlight.setVisible(true)
+      instances.highlight = []
+    }
+
+    instances.highlight.push(await insertModel(models.highlight, {
+      pose,
+      propertyValues,
+      visible: true,
+    }))
+  }
+
+  const setTouchHighlight = async(x, y) => {
+    const { sceneManager } = viewarApi
+
+    const hits = await sceneManager.simulateTouchRay(x, y, 40)
+    if (hits.featurePoints.length) {
+      await setHighlight(hits.featurePoints[0].intersection, isAdmin)
     }
   }
 
   return {
     init,
     setHighlight,
+    setTouchHighlight,
+
+    set isAdmin(newIsAdmin) { isAdmin = newIsAdmin },
   }
 
 }

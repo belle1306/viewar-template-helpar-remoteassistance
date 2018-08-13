@@ -5,7 +5,6 @@ import merge from 'lodash/merge'
 import { AppContainer } from 'react-hot-loader'
 import { IntlProvider } from 'react-intl'
 import { compose, withContext } from 'recompose'
-// import { createCallClient } from './mock/viewar-call'
 import viewarApi from 'viewar-api'
 import appState from './services/app-state'
 import authManager from './services/auth-manager'
@@ -28,7 +27,7 @@ import '../css/global.css'
   await googleAnalytics.init()
   translationProvider.init()
 
-  const callClient = await createCallClient(viewarApi, { host: 'ws://192.168.0.31:3001' })
+  const callClient = await createCallClient(viewarApi, { host: config.serverUrl || 'ws://3.viewar.com:3001' })
 
   document.body.classList.add('global-CustomFont1')
 
