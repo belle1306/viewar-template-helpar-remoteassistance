@@ -8,7 +8,7 @@ import { withSetLoading } from '../../services/loading'
 import highlightManager from '../../services/highlight-manager'
 import { translate } from '../../services'
 
-import Main from './main.jsx'
+import Call from './Call.jsx'
 
 export const goBack = ({ backPath, history }) => () => {
   if (backPath) {
@@ -105,4 +105,4 @@ export default compose(
       callClient.endCall()
     }
   })
-)(Main)
+)(Call)

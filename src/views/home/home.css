@@ -1,5 +1,7 @@
 .Home {
-  background: center / cover no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
   width: 100vw;
   height: 100vh;
   position: absolute;

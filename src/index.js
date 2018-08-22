@@ -8,6 +8,7 @@ import { compose, withContext } from 'recompose'
 import viewarApi from 'viewar-api'
 import appState from './services/app-state'
 import authManager from './services/auth-manager'
+import annotationDb from './services/annotation-db'
 import googleAnalytics from './services/google-analytics/index'
 import highlightManager from './services/highlight-manager'
 import config from './config'
@@ -39,6 +40,7 @@ import '../css/global.css'
     googleAnalytics,
     highlightManager,
     translationProvider,
+    annotationDb,
   })
 
   const rootElement = document.getElementById('app-root') || document.getElementById('app')

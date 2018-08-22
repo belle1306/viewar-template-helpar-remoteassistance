@@ -1,0 +1,9 @@
+.Tag {
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 4px 8px;
+  background-color: lightyellow;
+  margin-right: 6px;
+  display: flex;
+  align-items: center;
+}

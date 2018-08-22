@@ -34,8 +34,8 @@ export const resetTrackers = ({viewarApi}) => async () => {
   }
 }
 
-export const goToMain = ({setLoading, viewarApi: { appConfig }, history}) => async() => {
-  history.push('/calibration')
+export const goToProductSelection = ({history}) => async() => {
+  history.push('/product-selection')
 }
 
 export const goToUserSelection = ({setLoading, authManager, showDialog, history}) => async() => {
@@ -85,7 +85,7 @@ export default compose(
     init,
     goTo,
     goToUserSelection,
-    goToMain,
+    goToProductSelection,
   }),
   lifecycle({
     componentDidMount () {

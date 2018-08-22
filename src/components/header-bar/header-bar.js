@@ -5,11 +5,11 @@ import HeaderBar from './header-bar.jsx'
 
 export const defaultGoHome = ({history}) => () => history.push('/')
 
-// export const defaultGoBack = ({history}) => () => history.goBack()
-export const defaultGoBack = ({history}) => () => {
-  history.push({pathname: '/', state: {showMessage: 'MessageConnectionLost'}})
-  // history.goBack()
-}
+export const defaultGoBack = ({history}) => () => history.goBack()
+
+// export const defaultGoBack = ({history}) => () => {
+//   history.push({pathname: '/', state: {showMessage: 'MessageConnectionLost'}})
+// }
 
 export default compose(
   withRouter,

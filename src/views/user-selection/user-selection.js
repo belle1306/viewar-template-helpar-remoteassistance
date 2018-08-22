@@ -28,7 +28,7 @@ export const call = ({ showDialog, setWaitingForUser, history, setLoading, callC
   setWaitingForUser(client.id)
   callSubscription = callClient.acceptedCall.subscribe(() => {
     setWaitingForUser(false)
-    history.push('/main-admin')
+    history.push('/call-admin')
   })
 
   refusedCallSubscription = callClient.refusedCall.subscribe(() => {

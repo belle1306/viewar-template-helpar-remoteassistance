@@ -1,0 +1,23 @@
+.TextInput {
+    position: relative;
+    border: 1px solid rgb(189, 24, 25);
+}
+
+.TextInput input {
+    padding: 8px 16px;
+    width: 100%;
+    box-sizing: border-box;
+    color: #666;
+}
+
+.DeleteButton {
+    color: rgb(189, 24, 25);
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0 8px;
+    font-size: 1.6em;
+    cursor: pointer;
+    font-family: "Lucida Console", Monaco, monospace;
+}

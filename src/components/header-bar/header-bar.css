@@ -12,8 +12,16 @@
 }
 
 .isHidden {
-    opacity: 0;
+    display: none;
     pointer-events: none;
+}
+
+.Title {
+    flex: 1 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.7em;
 }
 
 .isHidden.ButtonShowHelp {

@@ -1,0 +1,88 @@
+.AnnotationSelection {
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.AnnotationSelectionContent {
+  position: absolute;
+  display: flex;
+  flex-flow: column;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 80px;
+  padding: 12px;
+}
+
+.SelectAnnotationInput {
+  width: 100%;
+  flex: 0 0 auto;
+}
+
+.Annotations {
+  flex: 1 1 auto;
+  display: flex;
+  overflow-y: auto;
+  flex-flow: column;
+}
+
+.Annotation {
+  display: flex;
+  margin-top: 16px;
+  position: relative;
+  min-height: 32px;
+  border-bottom: 1px solid grey;
+  padding: 0 30px 16px 0;
+  line-height: 16px;
+  flex-flow: column;
+}
+
+.Annotation:first-of-type {
+  margin-top: 36px;
+}
+
+.Annotation:last-of-type {
+  border-bottom: 0;
+}
+
+.Title {
+  font-size: 1.4em;
+  line-height: 2em;
+}
+
+.Tags {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.Description {
+  margin-top: 8px;
+  line-height: 1.2em;
+}
+
+.SelectButton {
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin: 0;
+}
+
+.Call {
+  flex: 0 0 auto;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
+.CallMessage {
+}
+
+.CallButton {
+  margin: 10px;
+}

@@ -8,12 +8,12 @@ export default {
   "DialogYes": "Ja",
   "DialogNo": "Nein",
   // Home
-  "HomeStart": "Support Anrufen",
+  "HomeStart": "Support",
   "HomeLogin": "Einloggen",
   "HomeUsername": "Benutzername:",
   "HomeLoading": "Loading...",
-  // Main
-  "MainWaitForSupportAgent": "Warte auf Supportmitarbeiter...",
+  // Call
+  "CallWaitForSupportAgent": "Warte auf Supportmitarbeiter...",
   // User Selection
   "UserSelectionWaitForUser": "Warte auf User...",
   "UserSelectionCallRefused": "User hat den Anruf abgelehnt.",
@@ -24,6 +24,10 @@ export default {
   "CalibrationARCore": "Filmen Sie den Boden und bewegen Sie das Gerät seitlich.",
   "CalibrationFilmFloor": "Bitte filmen Sie den Boden.",
   "CalibrationScaleGround": "Skalieren Sie den Boden und bestätigen Sie anschließend.",
+  // Product Selection
+  "ProductSelectionTitle": "Wählen Sie ihr Produkt:",
+  // Annotation Selection
+  "AnnotationSelectionTitle": "Beschreiben Sie ihr Problem:",
   // Messages
   "MessageConnectionLost": "Verbindung zum Server unterbrochen.",
   "MessageCallEnded": "Anruf wurde beendet.",
@@ -32,4 +36,6 @@ export default {
   "MessageJoin": "Sitzung beitreten, bitte warten.",
   "MessageJoinFailed": "Fehler beim Beitreten der Sitzung.",
   "MessageAcceptCall": "Unterstützung akzeptieren von ",
+  // Nothing Found
+  "NothingFoundCallSupport": "Nichts gefunden? Rufen Sie den Support an",
 }
