@@ -12,9 +12,9 @@ import Button from '../../components/button/button'
 import Tag from '../../components/tag/tag'
 import NothingFoundCallSupport from '../../components/nothing-found-call-support/nothing-found-call-support'
 
-export default ({search, updateSearch, searchResult, callSupport, goToAnnotation}) =>
+export default ({backPath, search, updateSearch, searchResult, callSupport, openAnnotation, backArgs}) =>
   <div className={cx(styles.AnnotationSelection, global.BackgroundImage)}>
-      <HeaderBar goBack title="AnnotationSelectionTitle" />
+      <HeaderBar goBack title="AnnotationSelectionTitle" backPath={backPath} backArgs={backArgs} />
       <div className={styles.AnnotationSelectionContent}>
         <TextInput deleteButton value={search} setValue={updateSearch} className={styles.SelectProductInput} />
 
@@ -25,7 +25,7 @@ export default ({search, updateSearch, searchResult, callSupport, goToAnnotation
               {annotation.tags.map(tag => <Tag key={tag} label={tag} />)}
             </div>
             <div className={styles.Description}>{annotation.description}</div>
-            <Button icon="next" small className={styles.SelectButton} />
+            <Button icon="next" small className={styles.SelectButton} onClick={() => openAnnotation(annotation.id)} />
           </div>)}
         </div>
 

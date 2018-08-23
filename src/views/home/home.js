@@ -5,6 +5,7 @@ import viewarApi from 'viewar-api'
 import { getUiConfigPath } from '../../utils'
 import { withDialogControls } from '../../services/dialog'
 import { withSetLoading } from '../../services/loading'
+import { withGoTo } from '../../services/param-props'
 import withCallClient from '../../services/call-client'
 import authManager from '../../services/auth-manager'
 import highlightManager from '../../services/highlight-manager'
@@ -34,8 +35,10 @@ export const resetTrackers = ({viewarApi}) => async () => {
   }
 }
 
-export const goToProductSelection = ({history}) => async() => {
-  history.push('/product-selection')
+export const goToProductSelection = ({goToWithArgs}) => async() => {
+  goToWithArgs('/product-selection', {
+    input: 'auto & / delorean'
+  })
 }
 
 export const goToUserSelection = ({setLoading, authManager, showDialog, history}) => async() => {
@@ -67,6 +70,7 @@ export const updateProgress = ({ setProgress, setStatus }) => (count) => {
 export default compose(
   withCallClient,
   withRouter,
+  withGoTo,
   withDialogControls,
   withSetLoading,
   withState('loadingDone', 'setLoadingDone', false),

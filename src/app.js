@@ -8,6 +8,7 @@ import ProductSelection from './views/product-selection/product-selection.js'
 import UserSelection from './views/user-selection/user-selection.js'
 import Calibration from './views/calibration/calibration.js'
 import AnnotationSelection from './views/annotation-selection/annotation-selection.js'
+import Annotation from './views/annotation/annotation.js'
 import ConnectionMonitor from './views/connection-monitor'
 
 import Spinner from './components/spinner/spinner.jsx'
@@ -44,13 +45,14 @@ export default ({}) => <Fragment>
       <GaMonitor>
         <Switch>
           <Route exact path='/' component={Home}/>
-          <Route exact path='/calibration-annotation' component={(...props) => <Calibration {...props} nextView='/annotation'/>}/>
-          <Route exact path='/calibration-call' component={(...props) => <Calibration {...props} nextView='/call'/>}/>
-          <Route exact path='/call' component={(...props) => <Main {...props} backPath='/'/>} />
-          <Route exact path='/call-admin' component={(...props) => <Main admin {...props} />}/>
-          <Route exact path='/user-selection' component={UserSelection}/>
-          <Route exact path='/product-selection' component={ProductSelection}/>
-          <Route exact path='/annotation-selection/:tags' component={AnnotationSelection}/>
+          <Route exact path='/annotation/:args' component={(...props) => <Annotation {...props} backPath='/product-selection' />}/>
+          <Route exact path='/calibration-annotation/:args' component={(...props) => <Calibration {...props} nextView='/annotation' />}/>
+          <Route exact path='/calibration-call/:args' component={(...props) => <Calibration {...props} nextView='/call'/>}/>
+          <Route exact path='/call/:args' component={(...props) => <Main {...props} backPath='/'/>} />
+          <Route exact path='/call-admin/:args' component={(...props) => <Main admin {...props} />}/>
+          <Route exact path='/user-selection/:args' component={UserSelection}/>
+          <Route exact path='/product-selection/:args' component={ProductSelection}/>
+          <Route exact path='/annotation-selection/:args' component={AnnotationSelection}/>
         </Switch>
       </GaMonitor>
     </ConnectionMonitor>

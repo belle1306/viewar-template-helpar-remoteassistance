@@ -24,7 +24,8 @@ export default {
   "CalibrationARCore": "Please film the floor and move your device sideways.",
   "CalibrationFilmFloor": "Please film the floor.",
   // Product Selection
-  "ProductSelectionTitle": "Select your product:",
+  "ProductSelectionTitle": "Select your product",
+  "ProductSelectionNoResult": "Enter your product keywords above.",
   // Annotation Selection
   "AnnotationSelectionTitle": "Whats your issue?",
   // Messages
@@ -37,4 +38,5 @@ export default {
   "MessageAcceptCall": "Accept support from ",
   // Misc
   "NothingFoundCallSupport": "Nothing found? Call Support",
+  "SearchPlaceholder": "Search...",
 }

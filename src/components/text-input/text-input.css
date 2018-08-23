@@ -21,3 +21,7 @@
     cursor: pointer;
     font-family: "Lucida Console", Monaco, monospace;
 }
+
+.withDelete.TextInput input {
+    padding: 8px 30px 8px 16px;
+}

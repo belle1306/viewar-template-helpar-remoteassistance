@@ -1,6 +1,7 @@
 import { withRouter } from 'react-router'
 import { compose, pure,lifecycle, withState, withProps, withHandlers } from 'recompose'
 import { withSetLoading } from '../../../services/loading'
+import { withGoTo, withParamProps } from '../../../services/param-props'
 
 import viewarApi from 'viewar-api'
 
@@ -13,13 +14,15 @@ export default compose(
   withSetLoading,
   withState('loadingVisible', 'setLoadingVisible', true),
   withState('deviceType', 'setDeviceType', null),
+  withGoTo,
+  withParamProps(),
   withProps({
     getDeviceType,
     initTracking,
     activateARCamera,
   }),
   withHandlers({
-    onTrackingChanged: ({setLoading, tracker, onTrackingChanged, history, nextView}) => async() => {
+    onTrackingChanged: ({setLoading, tracker, onTrackingChanged, goToNext}) => async() => {
       if (tracker.tracking) {
         setLoading(true)
 
@@ -27,14 +30,14 @@ export default compose(
         await tracker.confirmGroundPosition()
 
         setLoading(false)
-        history.push({pathname: nextView, state: {backButtonPath: '/', showGroundConfirmToast: true}})
+        goToNext()
       }
     }
   }),
   withHandlers({
-    goBack: ({history, tracker, onTrackingChanged}) => () => {
+    goBack: ({goToLast, tracker, onTrackingChanged}) => () => {
       tracker.off('trackingTargetStatusChanged', onTrackingChanged)
-      history.goBack()
+      goToLast()
     }
   }),
   lifecycle({

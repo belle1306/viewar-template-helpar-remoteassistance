@@ -25,9 +25,10 @@ export default {
   "CalibrationFilmFloor": "Bitte filmen Sie den Boden.",
   "CalibrationScaleGround": "Skalieren Sie den Boden und bestätigen Sie anschließend.",
   // Product Selection
-  "ProductSelectionTitle": "Wählen Sie ihr Produkt:",
+  "ProductSelectionTitle": "Wählen Sie ihr Produkt",
+  "ProductSelectionNoResult": "Geben Sie ihre Produktstichwörter oben ein.",
   // Annotation Selection
-  "AnnotationSelectionTitle": "Beschreiben Sie ihr Problem:",
+  "AnnotationSelectionTitle": "Wo liegt ihr Problem?",
   // Messages
   "MessageConnectionLost": "Verbindung zum Server unterbrochen.",
   "MessageCallEnded": "Anruf wurde beendet.",
@@ -38,4 +39,5 @@ export default {
   "MessageAcceptCall": "Unterstützung akzeptieren von ",
   // Nothing Found
   "NothingFoundCallSupport": "Nichts gefunden? Rufen Sie den Support an",
+  "SearchPlaceholder": "Suchen...",
 }

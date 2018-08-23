@@ -1,5 +1,6 @@
 import React from 'react'
-import { compose, branch, renderComponent, withProps } from 'recompose'
+import { compose, branch, renderComponent, withProps, withHandlers } from 'recompose'
+import { withGoTo, withParamProps } from '../../services/param-props'
 
 import NoCalibration from './tracker/no-calibration'
 import GroundConfirmCalibration from './tracker/ground-confirm-calibration'
@@ -17,6 +18,20 @@ export default compose(
     usesTrackingMap,
     usesFloorOffsetModel,
     usesSimpleGroundConfirm,
+  }),
+  withGoTo,
+  withParamProps(),
+  withHandlers({
+    goToNext: ({goToWithArgs, nextView, annotationId, backPath, backArgs}) => () => {
+      console.log('a backPath', backPath)
+      console.log('a backArgs', backArgs)
+
+      goToWithArgs(nextView, {
+        annotationId,
+        backPath,
+        backArgs,
+      })
+    },
   }),
   branch(({getTracker, usesTrackingMap}) => usesTrackingMap(getTracker(viewarApi)),
     renderComponent(({getTracker, ...props}) =>

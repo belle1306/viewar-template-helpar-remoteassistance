@@ -1,6 +1,7 @@
 import { withRouter } from 'react-router'
 import { compose, pure,lifecycle, withState, withProps, withHandlers } from 'recompose'
 import { withSetLoading } from '../../../services/loading'
+import { withGoTo, withParamProps } from '../../../services/param-props'
 
 import viewarApi from 'viewar-api'
 
@@ -28,12 +29,12 @@ export default compose(
     scaleDown: ({tracker, scaleFloorOffsetModel}) => (factor) => scaleFloorOffsetModel(tracker, -100),
   }),
   withHandlers({
-    goBack: ({history, tracker, onTrackingChanged, removeFloorOffsetModel}) => () => {
+    goBack: ({goToLast, tracker, onTrackingChanged, removeFloorOffsetModel}) => () => {
       tracker.off('trackingTargetStatusChanged', onTrackingChanged)
       removeFloorOffsetModel(viewarApi)
-      history.goBack()
+      goToLast()
     },
-    confirmGround: ({setLoading, tracker, removeFloorOffsetModel, history, nextView, onTrackingChanged}) => async() => {
+    confirmGround: ({setLoading, tracker, removeFloorOffsetModel, onTrackingChanged, goToNext}) => async() => {
       setLoading(true)
 
       tracker.off('trackingTargetStatusChanged', onTrackingChanged)
@@ -41,7 +42,8 @@ export default compose(
 
       removeFloorOffsetModel(viewarApi)
       setLoading(false)
-      history.push({pathname: nextView, state: {backButtonPath: '/', showGroundConfirmToast: true}})
+
+      goToNext()
     }
   }),
   lifecycle({

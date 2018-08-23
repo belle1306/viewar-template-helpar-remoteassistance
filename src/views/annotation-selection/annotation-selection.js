@@ -5,18 +5,14 @@ import { getUiConfigPath } from '../../utils'
 import { withDialogControls } from '../../services/dialog'
 import { withSetLoading } from '../../services/loading'
 import annotationDb from '../../services/annotation-db'
+import { withGoTo, withParamProps } from '../../services/param-props'
 
 import AnnotationSelection from './annotation-selection.jsx'
 
-export const goTo = ({history}) => async (route) => {
-  history.push(route)
-}
-
-export const init = ({setLoading, annotationDb, tags, setSearchResult}) => async () => {
+export const init = ({setLoading, annotationDb, tags, input, updateSearch}) => async () => {
   setLoading(true)
   await annotationDb.load(tags)
-  console.log('TAGS', tags)
-  setSearchResult(annotationDb.entries)
+  updateSearch(input || '')
   setLoading(false)
 }
 
@@ -36,8 +32,17 @@ export const callSupport = ({history}) => () => {
   history.push('/calibration-call')
 }
 
-export const goToAnnotation = ({ history }) => () => {
-  history.push('/annotation')
+export const openAnnotation = ({ goToWithArgs, backPath, backArgs, history, search, args }) => (annotationId) => {
+  goToWithArgs('/calibration-annotation', {
+    annotationId,
+    backPath: '/annotation-selection',
+    backArgs: {
+      input: search,
+      tags: args.tags,
+      backPath,
+      backArgs: backArgs,
+    }
+  })
 }
 
 export default compose(
@@ -51,19 +56,22 @@ export default compose(
     getUiConfigPath,
     annotationDb,
   }),
-  withProps(({ match: { params }}) => ({
-    tags: params.tags.split('&').map(decodeURIComponent),
-  })),
+  withGoTo,
+  withParamProps({
+    tags: tags => tags.split('&').map(decodeURIComponent),
+  }),
+  withHandlers({
+    updateSearch,
+  }),
   withHandlers({
     init,
-    goTo,
-    updateSearch,
     callSupport,
-    goToAnnotation,
+    openAnnotation,
   }),
   lifecycle({
     componentDidMount () {
       this.props.init()
+      window.test = this.props.history
     }
   }),
 )(AnnotationSelection)

@@ -1,6 +1,7 @@
 import { withRouter } from 'react-router'
 import { compose, pure, lifecycle, withState, withHandlers, withProps } from 'recompose'
 import { withSetLoading } from '../../../services/loading'
+import { withGoTo, withParamProps } from '../../../services/param-props'
 
 import viewarApi from 'viewar-api'
 
@@ -11,6 +12,8 @@ import { initTracking, activateARCamera, getDeviceType } from '../tracking-utils
 export default compose(
   withRouter,
   withSetLoading,
+  withGoTo,
+  withParamProps(),
   withState('loadingVisible', 'setLoadingVisible', true),
   withState('deviceType', 'setDeviceType', null),
   withProps({
@@ -19,7 +22,7 @@ export default compose(
     activateARCamera,
   }),
   withHandlers({
-    onTrackingChanged: ({setLoading, tracker, onTrackingChanged, history, nextView}) => async() => {
+    onTrackingChanged: ({setLoading, tracker, onTrackingChanged, goToNext}) => async() => {
       if (tracker.tracking) {
         setLoading(true)
 
@@ -27,14 +30,15 @@ export default compose(
         await tracker.confirmGroundPosition()
 
         setLoading(false)
-        history.push({pathname: nextView, state: {backButtonPath: '/', showGroundConfirmToast: true}})
+
+        goToNext()
       }
     }
   }),
   withHandlers({
-    goBack: ({history, tracker, onTrackingChanged}) => () => {
+    goBack: ({goToLast, tracker, onTrackingChanged}) => () => {
       tracker.off('trackingTargetStatusChanged', onTrackingChanged)
-      history.goBack()
+      goToLast()
     }
   }),
   lifecycle({

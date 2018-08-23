@@ -12,6 +12,11 @@ import Button from '../../components/button/button'
 import Tag from '../../components/tag/tag'
 import NothingFoundCallSupport from '../../components/nothing-found-call-support/nothing-found-call-support'
 
+const NoResult = ({visible}) => <div className={cx(styles.NoResult, !visible && styles.isHidden)}>
+  <div className={styles.NoResultImage}></div>
+  <div className={styles.NoResultText}>{translate("ProductSelectionNoResult")}</div>
+</div>
+
 export default ({search, updateSearch, searchResult, callSupport, goToAnnotationSelection}) =>
   <div className={cx(styles.ProductSelection, global.BackgroundImage)}>
       <HeaderBar goBack title="ProductSelectionTitle" />
@@ -19,6 +24,8 @@ export default ({search, updateSearch, searchResult, callSupport, goToAnnotation
         <TextInput deleteButton value={search} setValue={updateSearch} className={styles.SelectProductInput} />
 
         <div className={styles.Products}>
+          <NoResult visible={!searchResult.length} />
+
           {searchResult.map(tags => <div className={styles.Product} key={tags} onClick={() => goToAnnotationSelection(tags)}>
             {tags.map(tag => <Tag key={tag} label={tag} />)}
             <Button icon="next" small className={styles.SelectButton} />

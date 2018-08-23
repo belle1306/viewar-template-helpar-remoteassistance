@@ -12,7 +12,7 @@ import styles from '../calibration.css'
 
 export default ({confirmGround, scaleUp, scaleDown, tracking, goBack}) =>
   <div className={styles.Container}>
-    <HeaderBar goBack={goBack}/>
+    <HeaderBar goBack={goBack} />
     <Hint className={cx(tracking && styles.Hint)}>
       {!tracking ? translate('CalibrationFilmFloor') : translate('CalibrationScaleGround')}
     </Hint>

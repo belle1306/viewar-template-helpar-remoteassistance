@@ -2,6 +2,7 @@ import React from 'react'
 import { withRouter } from 'react-router'
 import { compose, pure, lifecycle, withState, withProps } from 'recompose'
 import { withSetLoading } from '../../../services/loading'
+import { withGoTo, withParamProps } from '../../../services/param-props'
 
 import viewarApi from 'viewar-api'
 
@@ -15,16 +16,18 @@ export default compose(
     initTracking,
     activateARCamera,
   }),
+  withGoTo,
+  withParamProps(),
   lifecycle({
     async componentWillMount() {
-      const { nextView, history, setLoading, initTracking, activateARCamera, tracker } = this.props
+      const { setLoading, initTracking, activateARCamera, goToNext} = this.props
 
       setLoading(true)
       await activateARCamera(viewarApi)
       await initTracking(tracker)
       setLoading(false)
 
-      history.push({pathname: nextView, state: {backButtonPath: '/'}})
+      goToNext()
     }
   }),
   pure,
