@@ -1,7 +1,5 @@
-import { withRouter } from 'react-router'
 import { compose, pure,lifecycle, withState, withProps, withHandlers } from 'recompose'
 import { withSetLoading } from '../../../services/loading'
-import { withGoTo, withParamProps } from '../../../services/param-props'
 
 import viewarApi from 'viewar-api'
 
@@ -10,7 +8,6 @@ import FloorOffsetCalibration from './floor-offset-calibration.jsx'
 import { initTracking, activateARCamera, getDeviceType, insertFloorOffsetModel, removeFloorOffsetModel, scaleFloorOffsetModel } from '../tracking-utils.js'
 
 export default compose(
-  withRouter,
   withSetLoading,
   withState('loadingVisible', 'setLoadingVisible', true),
   withState('deviceType', 'setDeviceType', null),

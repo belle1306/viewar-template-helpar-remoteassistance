@@ -8,7 +8,7 @@ import global from '../../../css/global.css'
 import HeaderBar from '../../components/header-bar/header-bar'
 import Button from '../../components/button/button'
 
-export default ({ waitingForSupportAgent, highlight, goBack, onTouch, backPath, backArgs }) =>
+export default ({ waitingForSupportAgent }) =>
   <div className={cx(styles.Annotation)}>
-    <HeaderBar goBack backPath={backPath} backArgs={backArgs}  />
+    <HeaderBar goBack />
   </div>

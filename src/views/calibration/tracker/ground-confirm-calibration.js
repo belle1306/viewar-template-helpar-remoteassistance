@@ -1,7 +1,5 @@
-import { withRouter } from 'react-router'
 import { compose, pure,lifecycle, withState, withProps, withHandlers } from 'recompose'
 import { withSetLoading } from '../../../services/loading'
-import { withGoTo, withParamProps } from '../../../services/param-props'
 
 import viewarApi from 'viewar-api'
 
@@ -10,12 +8,9 @@ import GroundConfirmCalibration from './ground-confirm-calibration.jsx'
 import { initTracking, activateARCamera, getDeviceType } from '../tracking-utils.js'
 
 export default compose(
-  withRouter,
   withSetLoading,
   withState('loadingVisible', 'setLoadingVisible', true),
   withState('deviceType', 'setDeviceType', null),
-  withGoTo,
-  withParamProps(),
   withProps({
     getDeviceType,
     initTracking,
@@ -35,9 +30,9 @@ export default compose(
     }
   }),
   withHandlers({
-    goBack: ({goToLast, tracker, onTrackingChanged}) => () => {
+    goBack: ({goToLastView, tracker, onTrackingChanged}) => () => {
       tracker.off('trackingTargetStatusChanged', onTrackingChanged)
-      goToLast()
+      goToLastView()
     }
   }),
   lifecycle({

@@ -1,6 +1,5 @@
-import { withRouter } from 'react-router'
 import { compose, withHandlers, lifecycle, withProps, withState } from 'recompose'
-
+import withRouteProps from '../../views/route-props'
 import viewarApi from 'viewar-api'
 import withCallClient from '../../services/call-client'
 import { getUiConfigPath } from '../../utils'
@@ -10,17 +9,13 @@ import authManager from '../../services/auth-manager'
 
 import UserSelection from './user-selection.jsx'
 
-export const goTo = ({history}) => async(route) => {
-  history.push(route)
-}
-
 export const updateClientList = ({ setClients, callClient }) => async() => {
   const clients = callClient.clients.list().filter(client => !client.supportAgent && client.available)
 
   setClients(clients)
 }
 
-export const call = ({ showDialog, setWaitingForUser, history, setLoading, callClient }) => async(client) => {
+export const call = ({ showDialog, setWaitingForUser, goTo, setLoading, callClient }) => async(client) => {
   setLoading(true)
   await callClient.call({ id: client.id })
   setLoading(false)
@@ -28,7 +23,7 @@ export const call = ({ showDialog, setWaitingForUser, history, setLoading, callC
   setWaitingForUser(client.id)
   callSubscription = callClient.acceptedCall.subscribe(() => {
     setWaitingForUser(false)
-    history.push('/call-admin')
+    goTo('/call-admin')
   })
 
   refusedCallSubscription = callClient.refusedCall.subscribe(() => {
@@ -52,9 +47,9 @@ let refusedCallSubscription
 let lineBusyCallSubscription
 export default compose(
   withCallClient,
-  withRouter,
   withDialogControls,
   withSetLoading,
+  withRouteProps(),
   withState('clients', 'setClients', []),
   withState('waitingForUser', 'setWaitingForUser', false),
   withProps({
@@ -65,7 +60,6 @@ export default compose(
   withHandlers({
     updateClientList,
     call,
-    goTo,
   }),
   lifecycle({
     async componentDidMount() {

@@ -1,4 +1,3 @@
-import { withRouter } from 'react-router'
 import { compose, withHandlers, withState, lifecycle, withProps } from 'recompose'
 import withCallClient from '../../services/call-client'
 import viewarApi from 'viewar-api'
@@ -7,20 +6,9 @@ import { withDialogControls } from '../../services/dialog'
 import { withSetLoading } from '../../services/loading'
 import highlightManager from '../../services/highlight-manager'
 import { translate } from '../../services'
+import withRouteProps from '../../views/route-props'
 
 import Call from './Call.jsx'
-
-export const goBack = ({ backPath, history }) => () => {
-  if (backPath) {
-    history.push(backPath)
-  } else {
-    history.goBack()
-  }
-}
-
-export const goTo = ({history}) => async (route) => {
-  history.push(route)
-}
 
 export const waitForSupportAgent = ({ showDialog, connect, history, admin, viewarApi: { appConfig }, setWaitingForSupportAgent, callClient }) => async() => {
   if (!admin) {
@@ -73,17 +61,15 @@ let callSubscription
 export default compose(
   withCallClient,
   withState('waitingForSupportAgent', 'setWaitingForSupportAgent', false),
-  withRouter,
   withDialogControls,
   withSetLoading,
+  withRouteProps(),
   withProps({
     viewarApi,
     getUiConfigPath,
     highlightManager,
   }),
   withHandlers({
-    goBack,
-    goTo,
     waitForSupportAgent,
     highlight,
     onTouch,

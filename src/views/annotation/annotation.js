@@ -1,17 +1,15 @@
-import { withRouter } from 'react-router'
 import { compose, withHandlers, withState, lifecycle, withProps } from 'recompose'
 import viewarApi from 'viewar-api'
 import { getUiConfigPath } from '../../utils'
 import { withDialogControls } from '../../services/dialog'
 import { withSetLoading } from '../../services/loading'
 import highlightManager from '../../services/highlight-manager'
-import { withGoTo, withParamProps } from '../../services/param-props'
+import withRouteProps from '../../views/route-props'
 import { translate } from '../../services'
 
 import Annotation from './annotation.jsx'
 
 export default compose(
-  withRouter,
   withDialogControls,
   withSetLoading,
   withProps({
@@ -19,12 +17,9 @@ export default compose(
     getUiConfigPath,
     highlightManager,
   }),
-  withGoTo,
-  withParamProps(),
+  withRouteProps(),
   lifecycle({
     async componentDidMount() {
-      console.log('backPath', this.props.backPath)
-      console.log('backArgs', this.props.backArgs)
     },
     componentWillUnmount() {
     }

@@ -1,11 +1,10 @@
-import { withRouter } from 'react-router'
 import { compose, withHandlers, lifecycle, withProps, withState } from 'recompose'
 import viewarApi from 'viewar-api'
 import { getUiConfigPath } from '../../utils'
 import { withDialogControls } from '../../services/dialog'
 import { withSetLoading } from '../../services/loading'
 import annotationDb from '../../services/annotation-db'
-import { withGoTo, withParamProps } from '../../services/param-props'
+import withRouteProps from '../../views/route-props'
 
 import AnnotationSelection from './annotation-selection.jsx'
 
@@ -28,12 +27,12 @@ export const updateSearch = ({annotationDb, setSearch, setSearchResult}) => (val
 
 }
 
-export const callSupport = ({history}) => () => {
-  history.push('/calibration-call')
+export const callSupport = ({goTo}) => () => {
+  goTo('/calibration-call')
 }
 
-export const openAnnotation = ({ goToWithArgs, backPath, backArgs, history, search, args }) => (annotationId) => {
-  goToWithArgs('/calibration-annotation', {
+export const openAnnotation = ({ goTo, backPath, backArgs, history, search, tags, args }) => (annotationId) => {
+  goTo('/calibration-annotation', {
     annotationId,
     backPath: '/annotation-selection',
     backArgs: {
@@ -46,7 +45,6 @@ export const openAnnotation = ({ goToWithArgs, backPath, backArgs, history, sear
 }
 
 export default compose(
-  withRouter,
   withDialogControls,
   withSetLoading,
   withState('search', 'setSearch', ''),
@@ -56,8 +54,7 @@ export default compose(
     getUiConfigPath,
     annotationDb,
   }),
-  withGoTo,
-  withParamProps({
+  withRouteProps({
     tags: tags => tags.split('&').map(decodeURIComponent),
   }),
   withHandlers({
@@ -71,7 +68,6 @@ export default compose(
   lifecycle({
     componentDidMount () {
       this.props.init()
-      window.test = this.props.history
     }
   }),
 )(AnnotationSelection)

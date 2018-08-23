@@ -1,10 +1,9 @@
-import { withRouter } from 'react-router'
 import { compose, withHandlers, lifecycle, withProps, withState } from 'recompose'
 import viewarApi from 'viewar-api'
 import { getUiConfigPath } from '../../utils'
 import { withDialogControls } from '../../services/dialog'
 import { withSetLoading } from '../../services/loading'
-import { withGoTo, withParamProps } from '../../services/param-props'
+import withRouteProps from '../../views/route-props'
 import annotationDb from '../../services/annotation-db'
 
 import ProductSelection from './product-selection.jsx'
@@ -22,23 +21,20 @@ export const updateSearch = ({annotationDb, setSearch, setSearchResult}) => (val
   setSearchResult(searchResult)
 }
 
-export const goToAnnotationSelection = ({ goToWithArgs, createPathWithArgs, search }) => (tags) => {
+export const goToAnnotationSelection = ({ goTo, createPathWithArgs, search }) => (tags) => {
   const tagsParam = tags.map(encodeURI).join('&')
 
-  goToWithArgs('/annotation-selection', {
+  goTo('/annotation-selection', {
     tags: tagsParam,
-    input: 'reifen',
     backPath: '/product-selection/',
     backArgs: { input: search }
   })
 }
 
 export default compose(
-  withRouter,
   withDialogControls,
   withSetLoading,
-  withGoTo,
-  withParamProps(),
+  withRouteProps(),
   withState('search', 'setSearch', ''),
   withState('searchResult', 'setSearchResult', []),
   withProps({

@@ -10,9 +10,9 @@ import HeaderBar from '../../../components/header-bar/header-bar'
 
 import styles from '../calibration.css'
 
-export default ({confirmGround, scaleUp, scaleDown, tracking, goBack}) =>
+export default ({confirmGround, scaleUp, scaleDown, tracking}) =>
   <div className={styles.Container}>
-    <HeaderBar goBack={goBack} />
+    <HeaderBar goBack />
     <Hint className={cx(tracking && styles.Hint)}>
       {!tracking ? translate('CalibrationFilmFloor') : translate('CalibrationScaleGround')}
     </Hint>

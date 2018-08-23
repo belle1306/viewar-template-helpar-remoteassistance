@@ -1,8 +1,8 @@
-import { withRouter } from 'react-router'
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { compose, lifecycle, getContext } from 'recompose'
 import { withDialogControls } from '../services/dialog'
+import withRouteProps from '../views/route-props'
 
 const render = ({children}) => <Fragment>{children}</Fragment>
 
@@ -10,28 +10,24 @@ export default compose(
   getContext({
     callClient: PropTypes.object
   }),
-  withRouter,
+  withRouteProps(),
   withDialogControls,
   lifecycle({
     componentDidMount() {
-      const { callClient, history, showDialog, backPath } = this.props
+      const { callClient, goTo, showDialog, goToLastView } = this.props
 
       callClient.disconnect.subscribe(async() => {
         await showDialog('MessageConnectionLost', {
           confirmText: 'DialogOK'
         })
-        history.push('/')
+        goTo('/')
       })
 
       callClient.endedCall.subscribe(async() => {
         await showDialog('MessageCallEnded', {
           confirmText: 'DialogOK'
         })
-        if (backPath) {
-          history.push(backPath)
-        } else {
-          history.goBack()
-        }
+        goToLastView()
       })
 
     }

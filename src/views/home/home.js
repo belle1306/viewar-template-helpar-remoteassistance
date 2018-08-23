@@ -1,20 +1,15 @@
-import { withRouter } from 'react-router'
 import { compose, withHandlers, lifecycle, withProps, withState } from 'recompose'
 
 import viewarApi from 'viewar-api'
 import { getUiConfigPath } from '../../utils'
 import { withDialogControls } from '../../services/dialog'
 import { withSetLoading } from '../../services/loading'
-import { withGoTo } from '../../services/param-props'
+import withRouteProps from '../../views/route-props'
 import withCallClient from '../../services/call-client'
 import authManager from '../../services/auth-manager'
 import highlightManager from '../../services/highlight-manager'
 
 import Home from './home.jsx'
-
-export const goTo = ({history}) => async (route) => {
-  history.push(route)
-}
 
 export const init = ({viewarApi: { coreInterface, cameras }, disconnect, setLoadingDone, highlightManager, resetTrackers, authManager, updateProgress}) => async () => {
   setLoadingDone(false)
@@ -35,15 +30,13 @@ export const resetTrackers = ({viewarApi}) => async () => {
   }
 }
 
-export const goToProductSelection = ({goToWithArgs}) => async() => {
-  goToWithArgs('/product-selection', {
-    input: 'auto & / delorean'
-  })
+export const goToProductSelection = ({goTo}) => async() => {
+  goTo('/product-selection')
 }
 
-export const goToUserSelection = ({setLoading, authManager, showDialog, history}) => async() => {
+export const goToUserSelection = ({goTo, setLoading, authManager, showDialog}) => async() => {
   if (authManager.user) {
-    history.push('/user-selection')
+    goTo('/user-selection')
   } else {
     const {confirmed, input} = await showDialog('HomeUsername', {
       input: authManager.token || '',
@@ -57,7 +50,7 @@ export const goToUserSelection = ({setLoading, authManager, showDialog, history}
       const success = await authManager.login(input)
       setLoading(false)
 
-      success && history.push('/user-selection')
+      success && goTo('/user-selection')
     }
   }
 }
@@ -69,8 +62,7 @@ export const updateProgress = ({ setProgress, setStatus }) => (count) => {
 
 export default compose(
   withCallClient,
-  withRouter,
-  withGoTo,
+  withRouteProps(),
   withDialogControls,
   withSetLoading,
   withState('loadingDone', 'setLoadingDone', false),
@@ -87,7 +79,6 @@ export default compose(
   }),
   withHandlers({
     init,
-    goTo,
     goToUserSelection,
     goToProductSelection,
   }),

@@ -1,7 +1,8 @@
 import { withRouter } from 'react-router'
 import { compose, withProps, withHandlers } from 'recompose'
 
-export const withParamProps = (props = {}) => compose(
+export default(props = {}) => compose(
+  withRouter,
   withProps(({ match: { params }}) => {
     const newProps = {}
 
@@ -17,7 +18,7 @@ export const withParamProps = (props = {}) => compose(
         console.error('Invalid route args', params.args)
       }
 
-      props[args] = args
+      newProps.args = args
 
       for(let prop of Object.keys(args)) {
         if (props[prop]) {
@@ -30,25 +31,24 @@ export const withParamProps = (props = {}) => compose(
 
     return newProps
   }),
-)
-
-export const withGoTo = compose(
-  withRouter,
   withHandlers({
-    goToWithArgs: ({history}) => (path, args = {}) => {
+    goTo: ({history}) => (path, args) => {
       const savePath = path.endsWith('/') ? path : path + '/'
-      const saveArgs = encodeURIComponent(JSON.stringify(args))
+      const saveArgs = encodeURIComponent(JSON.stringify(args || {}))
 
       history.push(savePath + saveArgs)
     },
   }),
   withHandlers({
-    goToLast: ({goToWithArgs, history, backPath, backArgs}) => () => {
+    goToLastView: ({goTo, history, backPath, backArgs}) => () => {
       if (backPath) {
-        goToWithArgs(backPath, backArgs)
+        goTo(backPath, backArgs)
       } else {
         history.goBack()
       }
     }
   }),
+)
+
+export const withGoTo = compose(
 )

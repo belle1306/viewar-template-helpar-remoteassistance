@@ -10,9 +10,9 @@ import styles from '../calibration.css'
 
 import { CalibratonInstruction } from '../../../components/calibration-instruction'
 
-export default ({deviceType, goBack}) =>
+export default ({deviceType}) =>
   <div className={styles.Container}>
-    <HeaderBar goBack={goBack}/>
+    <HeaderBar goBack/>
     <div className={styles.AnimationWrapper}>
       <CalibratonInstruction deviceType={deviceType}/>
     </div>

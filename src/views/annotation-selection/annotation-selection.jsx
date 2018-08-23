@@ -12,9 +12,9 @@ import Button from '../../components/button/button'
 import Tag from '../../components/tag/tag'
 import NothingFoundCallSupport from '../../components/nothing-found-call-support/nothing-found-call-support'
 
-export default ({backPath, search, updateSearch, searchResult, callSupport, openAnnotation, backArgs}) =>
+export default ({backPath, search, updateSearch, searchResult, callSupport, openAnnotation}) =>
   <div className={cx(styles.AnnotationSelection, global.BackgroundImage)}>
-      <HeaderBar goBack title="AnnotationSelectionTitle" backPath={backPath} backArgs={backArgs} />
+      <HeaderBar goBack title="AnnotationSelectionTitle" />
       <div className={styles.AnnotationSelectionContent}>
         <TextInput deleteButton value={search} setValue={updateSearch} className={styles.SelectProductInput} />
 
