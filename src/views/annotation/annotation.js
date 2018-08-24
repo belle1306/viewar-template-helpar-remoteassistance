@@ -3,40 +3,26 @@ import viewarApi from 'viewar-api'
 import { getUiConfigPath } from '../../utils'
 import { withDialogControls } from '../../services/dialog'
 import { withSetLoading } from '../../services/loading'
-import highlightManager from '../../services/highlight-manager'
+import annotationManager from '../../services/annotation-manager'
 import annotationDb from '../../services/annotation-db'
 import withRouteParams from '../../services/route-params'
 import { translate } from '../../services'
 
 import Annotation from './annotation.jsx'
 
-export const init = ({ setLoading, annotation, updateSelection, viewarApi: { sceneManager, modelManager } }) => async() => {
+export const init = ({ annotationManager, setLoading, annotation, updateSelection, viewarApi: { sceneManager } }) => async() => {
   setLoading(true)
   await sceneManager.clearScene()
-  const model = modelManager.findModelByForeignKey(annotation.model) || await modelManager.getModelFromRepository(annotation.model)
-  if (model) {
-    await sceneManager.insertModel(model, {
-      id: annotation.id,
-      pose: annotation.pose,
-      interaction: {
-        rotation: false,
-        translation: false,
-        scaling: false,
-      }
-    })
-  } else {
-    console.error(`Couldn't find annotation model '${annotation.model}'.`)
+  if (annotation.model) {
+    annotationManager.setAnnotation(annotation)
   }
 
   sceneManager.on('selectionChanged', updateSelection)
   setLoading(false)
 }
 
-export const destroy = ({ viewarApi: { sceneManager }, updateSelection, annotation }) => async() => {
-  const instance = sceneManager.findNodeById(annotation.id)
-  if (instance) {
-    await sceneManager.removeNode(instance)
-  }
+export const destroy = ({ annotationManager, updateSelection, annotation, viewarApi: { sceneManager } }) => async() => {
+  await annotationManager.reset()
   sceneManager.off('selectionChanged', updateSelection)
 }
 
@@ -64,8 +50,6 @@ export const closeRateOverlay = ({ setLoading, rating, backPath, backArgs, goTo,
 }
 
 export const rateAnnotation = ({ setRating }) => (rating) => {
-
-  console.log('Annotation rated: ' + rating)
   setRating(rating)
 }
 
@@ -78,7 +62,7 @@ export default compose(
   withProps({
     viewarApi,
     getUiConfigPath,
-    highlightManager,
+    annotationManager,
     annotationDb,
   }),
   withRouteParams(),

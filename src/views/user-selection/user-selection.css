@@ -1,96 +1,107 @@
 .UserSelection {
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    width: 100vw;
-    height: 100vh;
-    position: absolute;
-    left: 0;
-    top: 0;
-    padding: 20px;
-    box-sizing: border-box;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.Content {
+  position: absolute;
+  top: 80px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-flow: column;
+  padding: 20px;
 }
 
 .ClientList {
-    margin-top: 60px;
-    max-height: calc(100% - 60px);
-    overflow-y: auto;
-    display: flex;
-    flex-flow: row wrap;
+  flex: 1 1 auto;
+  display: flex;
+  flex-flow: row wrap;
+  overflow-y: auto;
+  align-content: flex-start;
 }
 
 .Client {
-    position: relative;
-    flex: 0 0 calc(20% - 12px);
-    margin: 0 12px 12px 0;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    border-radius: 5px;
+  line-height: 30px;
+  border-radius: 20px;
+  padding: 0 20px;
+  margin-bottom: 8px;
+  margin-right: 8px;
+  flex: 0 0 calc(25% - 8px * 4 / 3);
+  box-sizing: border-box;
+  align-self: flex-start;
 }
 
-.Client:before {
-    content: '';
-    float: left;
-    padding-top: 100%;
+.Client:nth-child(4n) {
+  margin-right: 0;
 }
 
-.ClientName {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    background: rgba(255, 255, 255, .1);
-    font-size: 1.2em;
-    line-height: 2em;
-    border-radius: 0 0 5px 5px;
-    text-align: center;
+.isSelected.Client {
+  border: 1px solid rgb(189, 24, 25);
+  line-height: 28px;
+}
+
+.Buttons {
+  flex: 0 0 auto;
+  margin-top: 12px;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .WaitForUserOverlay {
-    background: rgba(0, 0, 0, .6);
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100vw;
-    height: 100vh;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.3em;
-    transition: opacity 0.5s ease;
-    z-index: 40;
+  background: rgba(0, 0, 0, .6);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.3em;
+  transition: opacity 0.5s ease;
+  z-index: 40;
 }
 
 .isHidden.WaitForUserOverlay {
-    pointer-events: none;
-    opacity: 0;
+  pointer-events: none;
+  opacity: 0;
 }
 
 .EmptyClientList {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    font-size: 1.4em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  font-size: 1.4em;
 }
 
-@media only
-screen and (orientation: landscape) and (max-device-height: 767px), screen and (orientation: portrait) and (max-device-width: 376px) {
 
-    .Client {
-        flex-basis: calc(33% - 4px);
-        margin: 0 4px 4px 0;
-    }
+@media only
+screen and (orientation: portrait) and (max-device-width: 420px) {
+
+  .Client {
+    flex: 0 0 auto;
+    margin-right: 0;
+    align-self: auto;
+  }
+
+  .ClientList {
+    flex-flow: column;
+  }
 
 }

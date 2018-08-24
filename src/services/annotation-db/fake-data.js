@@ -14,7 +14,7 @@ export default [
       position: { x: 0, y: 0, z: 0 },
       orientation: { w: 1, x: 0, y: 0, z: 0 }
     },
-    model: "20"
+    model: "59615"
   },
   {
     id: "2",
@@ -31,7 +31,7 @@ export default [
       position: { x: 0, y: 0, z: 0 },
       orientation: { w: 1, x: 0, y: 0, z: 0 }
     },
-    model: "20"
+    model: "59615"
   },
   {
     id: "3",
@@ -48,6 +48,6 @@ export default [
       position: { x: 0, y: 0, z: 0 },
       orientation: { w: 1, x: 0, y: 0, z: 0 }
     },
-    model: "20"
+    model: "59615"
   }
 ]

@@ -16,10 +16,10 @@ export default {
   // Call
   "CallWaitForSupportAgent": "Waiting for support agent...",
   // User Selection
-  "UserSelectionWaitForUser": "Waiting for user to accept call...",
-  "UserSelectionCallRefused": "User rejected your call.",
+  "UserSelectionWaitForUser": "Waiting for user...",
   "UserSelectionLineBusy": "Line is busy.",
   "UserSelectionEmptyList": "No available support requests",
+  "UserSelectionAnswerCall": "Answer call",
   // Calibration
   "CalibrationARKit": "Please film the floor and move your device sideways.",
   "CalibrationARCore": "Please film the floor and move your device sideways.",
@@ -38,11 +38,11 @@ export default {
   "MessageConnectionFailed": "Failed to connect to server.<br/>Please check your internect connection.",
   "MessageJoin": "Joining session, please wait.",
   "MessageJoinFailed": "Failed to join the channel.",
-  "MessageAcceptCall": "Accept support from ",
   // Misc
   "NothingFoundCallSupport": "Nothing found? Call Support",
   "SearchPlaceholder": "Search...",
-  "RatingOverlayMessage": "Please rate this information. Do you want to se other help topics or call a support assistant?",
+  "RatingOverlayMessage": "Please rate this information. Do you want to see other help topics or call a support assistant?",
   "RatingOverlayBack": "Go Back",
   "RatingOverlayCall": "Call",
+  "AnnotationPickerHint": "Insert annotation with a touch.",
 }

@@ -7,11 +7,11 @@ import { withSetLoading } from '../../services/loading'
 import withRouteParams from '../../services/route-params'
 import withCallClient from '../../services/call-client'
 import authManager from '../../services/auth-manager'
-import highlightManager from '../../services/highlight-manager'
+import annotationManager from '../../services/annotation-manager'
 
 import Home from './home.jsx'
 
-export const init = ({viewarApi: { coreInterface, cameras }, disconnect, setLoadingDone, highlightManager, resetTrackers, authManager, updateProgress}) => async () => {
+export const init = ({viewarApi: { coreInterface, cameras }, disconnect, setLoadingDone, annotationManager, resetTrackers, authManager, updateProgress}) => async () => {
   setLoadingDone(false)
 
   disconnect()
@@ -20,7 +20,7 @@ export const init = ({viewarApi: { coreInterface, cameras }, disconnect, setLoad
   await resetTrackers()
   await authManager.readPersisted()
 
-  await highlightManager.init(updateProgress)
+  await annotationManager.init(updateProgress)
   setLoadingDone(true)
 }
 
@@ -74,7 +74,7 @@ export default compose(
     viewarApi,
     getUiConfigPath,
     authManager,
-    highlightManager,
+    annotationManager,
   }),
   withHandlers({
     resetTrackers,

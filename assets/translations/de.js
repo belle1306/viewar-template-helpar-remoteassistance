@@ -17,9 +17,9 @@ export default {
   "CallWaitForSupportAgent": "Warte auf Supportmitarbeiter...",
   // User Selection
   "UserSelectionWaitForUser": "Warte auf User...",
-  "UserSelectionCallRefused": "User hat den Anruf abgelehnt.",
   "UserSelectionLineBusy": "Leitung ist besetzt.",
   "UserSelectionEmptyList": "Keine Supportanfragen verfügbar",
+  "UserSelectionAnswerCall": "Anruf annehmen",
   // Calibration
   "CalibrationARKit": "Filmen Sie den Boden und bewegen Sie das Gerät seitlich.",
   "CalibrationARCore": "Filmen Sie den Boden und bewegen Sie das Gerät seitlich.",
@@ -39,11 +39,11 @@ export default {
   "MessageConnectionFailed": "Verbindung zum Server fehlgeschlagen.<br/>Bitte überprüfen Sie ihre Internetverbindung.",
   "MessageJoin": "Sitzung beitreten, bitte warten.",
   "MessageJoinFailed": "Fehler beim Beitreten der Sitzung.",
-  "MessageAcceptCall": "Unterstützung akzeptieren von ",
   // Nothing Found
   "NothingFoundCallSupport": "Nichts gefunden? Rufen Sie den Support an",
   "SearchPlaceholder": "Suchen...",
   "RatingOverlayMessage": "Bitte bewerten Sie diese Information. Wollen Sie ander Hilfsthemen sehen oder den Support anrufen?",
   "RatingOverlayBack": "Zurück",
   "RatingOverlayCall": "Anrufen",
+  "AnnotationPickerHint": "Platzieren Sie ihr Annotation durch einen Touch.",
 }

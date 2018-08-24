@@ -8,14 +8,16 @@ import global from '../../../css/global.css'
 import HeaderBar from '../../components/header-bar/header-bar'
 import Button from '../../components/button/button'
 
+import AnnotationPicker from '../../components/annotation-picker/annotation-picker'
+
 const WaitForSupportAgentOverlay = ({visible}) => <div className={cx(styles.WaitForSupportAgentOverlay, !visible && styles.isHidden)}>
   {translate('CallWaitForSupportAgent')}
 </div>
 
-export default ({ waitingForSupportAgent, highlight, onTouch }) =>
+export default ({ waitingForSupportAgent, showAnnotationPicker, closeAnnotationPicker, setShowAnnotationPicker }) =>
   <div className={cx(styles.Call)}>
     <HeaderBar goBack />
     <WaitForSupportAgentOverlay visible={waitingForSupportAgent} />
-    {/*<Button medium onClick={highlight} icon="" className={styles.HighlightButton} />*/}
-    <div className={styles.TouchPlane} onClick={(e) => onTouch(e)} />
+    <AnnotationPicker visible={showAnnotationPicker} onClose={closeAnnotationPicker}/>
+    <Button medium onClick={() => setShowAnnotationPicker(true)} icon="" hidden={showAnnotationPicker} className={styles.AnnotationButton} />
   </div>

@@ -9,13 +9,19 @@ import authManager from '../../services/auth-manager'
 
 import UserSelection from './user-selection.jsx'
 
-export const updateClientList = ({ setClients, callClient }) => async() => {
+export const updateClientList = ({ setClients, callClient, selectedClient, setSelectedClient }) => async() => {
   const clients = callClient.clients.list().filter(client => !client.supportAgent && client.available)
+
+  if (!clients.find(client => client === selectedClient)) {
+    setSelectedClient(null)
+  }
 
   setClients(clients)
 }
 
-export const call = ({ showDialog, setWaitingForUser, goTo, setLoading, callClient }) => async(client) => {
+export const call = ({ showDialog, setWaitingForUser, goTo, setLoading, callClient, selectedClient }) => async() => {
+  const client = selectedClient
+
   setLoading(true)
   await callClient.call({ id: client.id })
   setLoading(false)
@@ -24,13 +30,6 @@ export const call = ({ showDialog, setWaitingForUser, goTo, setLoading, callClie
   callSubscription = callClient.acceptedCall.subscribe(() => {
     setWaitingForUser(false)
     goTo('/call-admin')
-  })
-
-  refusedCallSubscription = callClient.refusedCall.subscribe(() => {
-    setWaitingForUser(false)
-    showDialog('UserSelectionCallRefused', {
-      confirmText: 'DialogOK'
-    })
   })
 
   lineBusyCallSubscription = callClient.lineBusy.subscribe(() => {
@@ -50,6 +49,7 @@ export default compose(
   withDialogControls,
   withSetLoading,
   withRouteParams(),
+  withState('selectedClient', 'setSelectedClient', null),
   withState('clients', 'setClients', []),
   withState('waitingForUser', 'setWaitingForUser', false),
   withProps({

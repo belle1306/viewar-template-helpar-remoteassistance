@@ -45,14 +45,14 @@ export default ({}) => <Fragment>
       <GaMonitor>
         <Switch>
           <Route exact path='/' component={Home}/>
-          <Route exact path='/annotation/:args' component={(...props) => <Annotation {...props} />}/>
-          <Route exact path='/calibration-annotation/:args' component={(...props) => <Calibration {...props} nextView='/annotation' />}/>
-          <Route exact path='/calibration-call/:args' component={(...props) => <Calibration {...props} nextView='/call'/>}/>
-          <Route exact path='/call/:args' component={Call} />
-          <Route exact path='/call-admin/:args' component={(...props) => <Call admin {...props} />}/>
-          <Route exact path='/user-selection/:args' component={UserSelection}/>
-          <Route exact path='/product-selection/:args' component={ProductSelection}/>
-          <Route exact path='/annotation-selection/:args' component={AnnotationSelection}/>
+          <Route exact path='/annotation/:args?' component={(...props) => <Annotation {...props} />}/>
+          <Route exact path='/calibration-annotation/:args?' component={(...props) => <Calibration {...props} nextView='/annotation' />}/>
+          <Route exact path='/calibration-call/:args?' component={(...props) => <Calibration {...props} nextView='/call'/>}/>
+          <Route exact path='/call/:args?' component={Call} />
+          <Route exact path='/call-admin/:args?' component={(...props) => <Call admin {...props} />}/>
+          <Route exact path='/user-selection/:args?' component={UserSelection}/>
+          <Route exact path='/product-selection/:args?' component={ProductSelection}/>
+          <Route exact path='/annotation-selection/:args?' component={AnnotationSelection}/>
         </Switch>
       </GaMonitor>
     </ConnectionMonitor>

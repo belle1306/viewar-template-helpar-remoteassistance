@@ -58,10 +58,12 @@
 
 @media only
 screen and (orientation: portrait) and (max-device-width: 420px) {
+
   .Dialog {
     position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
   }
+
 }

@@ -10,7 +10,7 @@ import appState from './services/app-state'
 import authManager from './services/auth-manager'
 import annotationDb from './services/annotation-db'
 import googleAnalytics from './services/google-analytics/index'
-import highlightManager from './services/highlight-manager'
+import annotationManager from './services/annotation-manager'
 import config from './config'
 import { translationProvider } from './services/index'
 import 'normalize.css/normalize.css';
@@ -38,7 +38,7 @@ import '../css/global.css'
     callClient,
     config,
     googleAnalytics,
-    highlightManager,
+    annotationManager,
     translationProvider,
     annotationDb,
   })

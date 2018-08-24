@@ -12,6 +12,7 @@
   box-sizing: border-box;
   margin: 20px;
   transition: opacity 0.5s ease;
+  pointer-events: none;
 }
 
 .Hint {
@@ -27,10 +28,10 @@
   line-height: 1.2em;
   white-space: nowrap;
   transition: opacity 0.5s ease;
+  pointer-events: none;
 }
 
 .isHidden.Hint,
 .isHidden.Description {
   opacity: 0;
-  pointer-events: none;
 }

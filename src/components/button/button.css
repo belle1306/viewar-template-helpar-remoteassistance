@@ -48,10 +48,23 @@
   background-position-y: calc(100% / 7 * 0);
 }
 
-
 .Button.icon-next {
   -webkit-mask-position-x: calc(100% / 7 * 0);
   -webkit-mask-position-y: calc(100% / 7 * 7);
   background-position-x: calc(100% / 7 * 0);
   background-position-y: calc(100% / 7 * 7);
+}
+
+.Button.icon-confirm {
+  -webkit-mask-position-x: calc(100% / 7 * 1);
+  -webkit-mask-position-y: calc(100% / 7 * 2);
+  background-position-x: calc(100% / 7 * 1);
+  background-position-y: calc(100% / 7 * 2);
+}
+
+.Button.icon-cancel {
+  -webkit-mask-position-x: calc(100% / 7 * 2);
+  -webkit-mask-position-y: calc(100% / 7 * 0);
+  background-position-x: calc(100% / 7 * 2);
+  background-position-y: calc(100% / 7 * 0);
 }
