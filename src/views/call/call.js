@@ -6,7 +6,7 @@ import { withDialogControls } from '../../services/dialog'
 import { withSetLoading } from '../../services/loading'
 import highlightManager from '../../services/highlight-manager'
 import { translate } from '../../services'
-import withRouteProps from '../../views/route-props'
+import withRouteParams from '../../services/route-params'
 
 import Call from './Call.jsx'
 
@@ -63,7 +63,7 @@ export default compose(
   withState('waitingForSupportAgent', 'setWaitingForSupportAgent', false),
   withDialogControls,
   withSetLoading,
-  withRouteProps(),
+  withRouteParams(),
   withProps({
     viewarApi,
     getUiConfigPath,

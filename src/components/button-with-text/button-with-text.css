@@ -1,0 +1,17 @@
+.ButtonWithText {
+  display: flex;
+  align-items: center;
+  flex-flow: column;
+  transition: opacity 0.5s ease;
+}
+
+.isHidden.ButtonWithText {
+  pointer-events: none;
+  opacity: 0;
+}
+
+.Button {
+}
+
+.Label {
+}

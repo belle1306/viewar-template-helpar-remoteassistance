@@ -16,7 +16,7 @@ export default ({backPath, search, updateSearch, searchResult, callSupport, open
   <div className={cx(styles.AnnotationSelection, global.BackgroundImage)}>
       <HeaderBar goBack title="AnnotationSelectionTitle" />
       <div className={styles.AnnotationSelectionContent}>
-        <TextInput deleteButton value={search} setValue={updateSearch} className={styles.SelectProductInput} />
+        <TextInput deleteButton value={search} setValue={updateSearch} className={styles.SelectProductInput} placeholder="SearchPlaceholder" />
 
         <div className={styles.Annotations}>
           {searchResult.map(annotation => <div className={styles.Annotation} key={annotation.id}>
@@ -29,6 +29,6 @@ export default ({backPath, search, updateSearch, searchResult, callSupport, open
           </div>)}
         </div>
 
-        <NothingFoundCallSupport />
+        <NothingFoundCallSupport callSupport={callSupport} />
       </div>
   </div>

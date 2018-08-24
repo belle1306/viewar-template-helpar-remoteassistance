@@ -1,5 +1,5 @@
 import { compose, withHandlers, lifecycle, withProps, withState } from 'recompose'
-import withRouteProps from '../../views/route-props'
+import withRouteParams from '../../services/route-params'
 import viewarApi from 'viewar-api'
 import withCallClient from '../../services/call-client'
 import { getUiConfigPath } from '../../utils'
@@ -49,7 +49,7 @@ export default compose(
   withCallClient,
   withDialogControls,
   withSetLoading,
-  withRouteProps(),
+  withRouteParams(),
   withState('clients', 'setClients', []),
   withState('waitingForUser', 'setWaitingForUser', false),
   withProps({

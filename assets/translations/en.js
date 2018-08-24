@@ -10,7 +10,8 @@ export default {
   // Home
   "HomeStart": "Get Support",
   "HomeLogin": "Login",
-  "HomeUsername": "Username:",
+  "HomeLoginText": "Login as support assistant:",
+  "HomeUsername": "Username",
   "HomeLoading": "Loading...",
   // Call
   "CallWaitForSupportAgent": "Waiting for support agent...",
@@ -28,6 +29,8 @@ export default {
   "ProductSelectionNoResult": "Enter your product keywords above.",
   // Annotation Selection
   "AnnotationSelectionTitle": "Whats your issue?",
+  // Annotation
+  "AnnotationHint": "Touch a point to see more information",
   // Messages
   "MessageConnectionLost": "Connection to server lost.",
   "MessageCallEnded": "Call ended.",
@@ -39,4 +42,7 @@ export default {
   // Misc
   "NothingFoundCallSupport": "Nothing found? Call Support",
   "SearchPlaceholder": "Search...",
+  "RatingOverlayMessage": "Please rate this information. Do you want to se other help topics or call a support assistant?",
+  "RatingOverlayBack": "Go Back",
+  "RatingOverlayCall": "Call",
 }

@@ -1,3 +1,36 @@
 .Annotation {
 
 }
+
+.Description {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background: white;
+  right: 0;
+  padding: 20px;
+  box-sizing: border-box;
+  margin: 20px;
+  transition: opacity 0.5s ease;
+}
+
+.Hint {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  bottom: 10%;
+  border-radius: 1000px;
+  padding: 10px 20px;
+  color: white;
+  background: rgba(0, 0, 0, .8);
+  text-align: center;
+  line-height: 1.2em;
+  white-space: nowrap;
+  transition: opacity 0.5s ease;
+}
+
+.isHidden.Hint,
+.isHidden.Description {
+  opacity: 0;
+  pointer-events: none;
+}

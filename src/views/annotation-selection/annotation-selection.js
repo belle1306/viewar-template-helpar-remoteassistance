@@ -4,7 +4,7 @@ import { getUiConfigPath } from '../../utils'
 import { withDialogControls } from '../../services/dialog'
 import { withSetLoading } from '../../services/loading'
 import annotationDb from '../../services/annotation-db'
-import withRouteProps from '../../views/route-props'
+import withRouteParams from '../../services/route-params'
 
 import AnnotationSelection from './annotation-selection.jsx'
 
@@ -27,11 +27,19 @@ export const updateSearch = ({annotationDb, setSearch, setSearchResult}) => (val
 
 }
 
-export const callSupport = ({goTo}) => () => {
-  goTo('/calibration-call')
+export const callSupport = ({ goTo, backPath, args, backArgs, search }) => () => {
+  goTo('/calibration-call', {
+    backPath: '/annotation-selection',
+    backArgs: {
+      input: search,
+      tags: args.tags,
+      backPath,
+      backArgs: backArgs,
+    }
+  })
 }
 
-export const openAnnotation = ({ goTo, backPath, backArgs, history, search, tags, args }) => (annotationId) => {
+export const openAnnotation = ({ goTo, backPath, backArgs, search, args }) => (annotationId) => {
   goTo('/calibration-annotation', {
     annotationId,
     backPath: '/annotation-selection',
@@ -54,7 +62,7 @@ export default compose(
     getUiConfigPath,
     annotationDb,
   }),
-  withRouteProps({
+  withRouteParams({
     tags: tags => tags.split('&').map(decodeURIComponent),
   }),
   withHandlers({

@@ -10,7 +10,8 @@ export default {
   // Home
   "HomeStart": "Support",
   "HomeLogin": "Einloggen",
-  "HomeUsername": "Benutzername:",
+  "HomeLoginText": "Einloggen als Support Assistent:",
+  "HomeUsername": "Benutzername",
   "HomeLoading": "Loading...",
   // Call
   "CallWaitForSupportAgent": "Warte auf Supportmitarbeiter...",
@@ -29,6 +30,8 @@ export default {
   "ProductSelectionNoResult": "Geben Sie ihre Produktstichwörter oben ein.",
   // Annotation Selection
   "AnnotationSelectionTitle": "Wo liegt ihr Problem?",
+  // Annotation
+  "AnnotationHint": "Berühren Sie einen Punkt um mehr Informationen zu erhalten.",
   // Messages
   "MessageConnectionLost": "Verbindung zum Server unterbrochen.",
   "MessageCallEnded": "Anruf wurde beendet.",
@@ -40,4 +43,7 @@ export default {
   // Nothing Found
   "NothingFoundCallSupport": "Nichts gefunden? Rufen Sie den Support an",
   "SearchPlaceholder": "Suchen...",
+  "RatingOverlayMessage": "Bitte bewerten Sie diese Information. Wollen Sie ander Hilfsthemen sehen oder den Support anrufen?",
+  "RatingOverlayBack": "Zurück",
+  "RatingOverlayCall": "Anrufen",
 }

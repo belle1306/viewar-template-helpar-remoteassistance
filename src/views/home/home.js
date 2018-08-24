@@ -4,7 +4,7 @@ import viewarApi from 'viewar-api'
 import { getUiConfigPath } from '../../utils'
 import { withDialogControls } from '../../services/dialog'
 import { withSetLoading } from '../../services/loading'
-import withRouteProps from '../../views/route-props'
+import withRouteParams from '../../services/route-params'
 import withCallClient from '../../services/call-client'
 import authManager from '../../services/auth-manager'
 import highlightManager from '../../services/highlight-manager'
@@ -31,16 +31,19 @@ export const resetTrackers = ({viewarApi}) => async () => {
 }
 
 export const goToProductSelection = ({goTo}) => async() => {
-  goTo('/product-selection')
+  goTo('/product-selection', {
+    input: 'auto'
+  })
 }
 
 export const goToUserSelection = ({goTo, setLoading, authManager, showDialog}) => async() => {
   if (authManager.user) {
     goTo('/user-selection')
   } else {
-    const {confirmed, input} = await showDialog('HomeUsername', {
+    const {confirmed, input} = await showDialog('HomeLoginText', {
       input: authManager.token || '',
       withInput: true,
+      inputPlaceholder: 'HomeUsername',
       showCancel: true,
       confirmText: 'HomeLogin',
     })
@@ -62,7 +65,7 @@ export const updateProgress = ({ setProgress, setStatus }) => (count) => {
 
 export default compose(
   withCallClient,
-  withRouteProps(),
+  withRouteParams(),
   withDialogControls,
   withSetLoading,
   withState('loadingDone', 'setLoadingDone', false),

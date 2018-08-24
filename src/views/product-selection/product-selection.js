@@ -3,7 +3,7 @@ import viewarApi from 'viewar-api'
 import { getUiConfigPath } from '../../utils'
 import { withDialogControls } from '../../services/dialog'
 import { withSetLoading } from '../../services/loading'
-import withRouteProps from '../../views/route-props'
+import withRouteParams from '../../services/route-params'
 import annotationDb from '../../services/annotation-db'
 
 import ProductSelection from './product-selection.jsx'
@@ -31,10 +31,17 @@ export const goToAnnotationSelection = ({ goTo, createPathWithArgs, search }) =>
   })
 }
 
+export const callSupport = ({ goTo, search }) => () => {
+  goTo('/calibration-call', {
+    backPath: '/product-selection/',
+    backArgs: { input: search }
+  })
+}
+
 export default compose(
   withDialogControls,
   withSetLoading,
-  withRouteProps(),
+  withRouteParams(),
   withState('search', 'setSearch', ''),
   withState('searchResult', 'setSearchResult', []),
   withProps({
@@ -48,6 +55,7 @@ export default compose(
   withHandlers({
     init,
     goToAnnotationSelection,
+    callSupport,
   }),
   lifecycle({
     componentDidMount () {

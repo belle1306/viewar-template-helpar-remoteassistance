@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { compose, lifecycle, getContext } from 'recompose'
 import { withDialogControls } from '../services/dialog'
-import withRouteProps from '../views/route-props'
+import withRouteParams from '../services/route-params'
 
 const render = ({children}) => <Fragment>{children}</Fragment>
 
@@ -10,7 +10,7 @@ export default compose(
   getContext({
     callClient: PropTypes.object
   }),
-  withRouteProps(),
+  withRouteParams(),
   withDialogControls,
   lifecycle({
     componentDidMount() {

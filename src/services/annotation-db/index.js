@@ -41,10 +41,15 @@ const createAnnotationDb = () => {
     return uniqueProductTags
   }
 
+  const get = (id) => {
+    return entries.find(entry => entry.id === id)
+  }
+
   return {
     load,
     searchForProductTags,
     searchForAnnotations,
+    get,
 
     get entries() { return entries },
   }

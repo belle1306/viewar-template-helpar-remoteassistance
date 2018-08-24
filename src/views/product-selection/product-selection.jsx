@@ -17,11 +17,11 @@ const NoResult = ({visible}) => <div className={cx(styles.NoResult, !visible && 
   <div className={styles.NoResultText}>{translate("ProductSelectionNoResult")}</div>
 </div>
 
-export default ({search, updateSearch, searchResult, callSupport, goToAnnotationSelection}) =>
+export default ({search, goTo, callSupport, updateSearch, searchResult, goToAnnotationSelection}) =>
   <div className={cx(styles.ProductSelection, global.BackgroundImage)}>
-      <HeaderBar goBack title="ProductSelectionTitle" />
+      <HeaderBar goBack={() => goTo('/')} title="ProductSelectionTitle" />
       <div className={styles.ProductSelectionContent}>
-        <TextInput deleteButton value={search} setValue={updateSearch} className={styles.SelectProductInput} />
+        <TextInput deleteButton value={search} setValue={updateSearch} className={styles.SelectProductInput} placeholder="SearchPlaceholder" />
 
         <div className={styles.Products}>
           <NoResult visible={!searchResult.length} />
@@ -32,6 +32,6 @@ export default ({search, updateSearch, searchResult, callSupport, goToAnnotation
           </div>)}
         </div>
 
-        <NothingFoundCallSupport />
+        <NothingFoundCallSupport callSupport={callSupport} />
       </div>
   </div>

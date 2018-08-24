@@ -3,9 +3,10 @@ import { compose,  getContext, withHandlers } from 'recompose'
 import PropTypes from 'prop-types'
 import { withSetLoading } from './loading'
 import { withDialogControls } from './dialog'
+import withRouterProps from '../services/route-params'
 import viewarApi from 'viewar-api'
 
-const connect = ({ history, showDialog, setLoading, callClient }) => async(sessionArgs = {}) => {
+const connect = ({ goToLastView, showDialog, setLoading, callClient }) => async(sessionArgs = {}) => {
   const { sessionId = viewarApi.appConfig.appId, user, password, userData } = sessionArgs
 
   setLoading(true, {message: 'MessageConnect'})
@@ -16,7 +17,7 @@ const connect = ({ history, showDialog, setLoading, callClient }) => async(sessi
     await showDialog('MessageConnectionFailed', {
       confirmText: 'DialogOK'
     })
-    history.goBack()
+    goToLastView()
     return false
   }
 
@@ -29,7 +30,7 @@ const connect = ({ history, showDialog, setLoading, callClient }) => async(sessi
     await showDialog('MessageJoinFailed', {
       confirmText: 'DialogOK'
     })
-    history.goBack()
+    goToLastView()
   }
 }
 
@@ -40,7 +41,7 @@ const disconnect = ({ callClient }) => () => {
 }
 
 export const withConnect = compose(
-  withRouter,
+  withRouterProps(),
   withDialogControls,
   withSetLoading,
   getContext({

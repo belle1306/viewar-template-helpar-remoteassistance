@@ -33,8 +33,8 @@ export default(props = {}) => compose(
   }),
   withHandlers({
     goTo: ({history}) => (path, args) => {
-      const savePath = path.endsWith('/') ? path : path + '/'
-      const saveArgs = encodeURIComponent(JSON.stringify(args || {}))
+      const savePath = (path.endsWith('/') || !args) ? path : path + '/'
+      const saveArgs = args ? encodeURIComponent(JSON.stringify(args || {})) : ''
 
       history.push(savePath + saveArgs)
     },

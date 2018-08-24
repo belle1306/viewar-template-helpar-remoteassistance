@@ -8,8 +8,8 @@ import {
   lifecycle
 } from 'recompose'
 
-export const load = ({setMessage, setVisible, setShowConfirm, setShowCancel, setConfirmText, setCancelText, setWithInput, setInput, onKeyDown, onConfirm, onCancel}) =>
-  ({message, showConfirm, showCancel, confirmText, cancelText, withInput, input}) => {
+export const load = ({setMessage, setVisible, setShowConfirm, setShowCancel, setConfirmText, setCancelText, setWithInput, setInput, onKeyDown, onConfirm, onCancel, setInputPlaceholder}) =>
+  ({message, showConfirm, showCancel, confirmText, cancelText, withInput, input, inputPlaceholder}) => {
     setMessage(message)
     setShowConfirm(showConfirm)
     setShowCancel(showCancel)
@@ -18,6 +18,7 @@ export const load = ({setMessage, setVisible, setShowConfirm, setShowCancel, set
     setWithInput(withInput)
     setInput(input)
     setVisible(true)
+    setInputPlaceholder(inputPlaceholder)
 
     keyDownFunction = (e) => onKeyDown(e, onConfirm, onCancel)
     document.addEventListener('keydown', keyDownFunction)
@@ -62,6 +63,7 @@ export const withDialog = (prefix = '') =>
     withState('confirmText', 'setConfirmText', 'DialogConfirm'),
     withState('cancelText', 'setCancelText', 'DialogCancel'),
     withState('withInput', 'setWithInput', false),
+    withState('inputPlaceholder', 'setInputPlaceholder', false),
     withState('input', 'setInput', ''),
     withState('visible', 'setVisible', false),
     withHandlers({
@@ -82,8 +84,8 @@ export const withDialog = (prefix = '') =>
   )
 
 const showDialog = ({pubSub}) => (message, args = {}, prefix = '') => {
-  const {showConfirm = true, showCancel = false, confirmText = 'DialogConfirm', cancelText = 'DialogCancel', withInput = false, input} = args
-  pubSub.publish(prefix + 'showDialog', {message, showConfirm, showCancel, confirmText, cancelText, withInput, input})
+  const {showConfirm = true, showCancel = false, confirmText = 'DialogConfirm', cancelText = 'DialogCancel', withInput = false, input, inputPlaceholder} = args
+  pubSub.publish(prefix + 'showDialog', {message, showConfirm, showCancel, confirmText, cancelText, withInput, input, inputPlaceholder})
   return new Promise(resolve => pubSub.subscribe(prefix + 'closeDialog', resolve))
 }
 

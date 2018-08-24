@@ -8,7 +8,13 @@ export default [
     ],
     productTags: [
       "Auto", "DeLorean"
-    ]
+    ],
+    featureMap: "1",
+    pose: {
+      position: { x: 0, y: 0, z: 0 },
+      orientation: { w: 1, x: 0, y: 0, z: 0 }
+    },
+    model: "20"
   },
   {
     id: "2",
@@ -19,7 +25,13 @@ export default [
     ],
     productTags: [
       "Auto", "Ferrari"
-    ]
+    ],
+    featureMap: "2",
+    pose: {
+      position: { x: 0, y: 0, z: 0 },
+      orientation: { w: 1, x: 0, y: 0, z: 0 }
+    },
+    model: "20"
   },
   {
     id: "3",
@@ -30,6 +42,12 @@ export default [
     ],
     productTags: [
       "Auto", "DeLorean"
-    ]
+    ],
+    featureMap: "3",
+    pose: {
+      position: { x: 0, y: 0, z: 0 },
+      orientation: { w: 1, x: 0, y: 0, z: 0 }
+    },
+    model: "20"
   }
 ]

@@ -1,6 +1,6 @@
 import React from 'react'
 import { compose, branch, renderComponent, withProps, withHandlers } from 'recompose'
-import withRouteProps from '../../views/route-props'
+import withRouteParams from '../../services/route-params'
 
 import NoCalibration from './tracker/no-calibration'
 import GroundConfirmCalibration from './tracker/ground-confirm-calibration'
@@ -19,7 +19,7 @@ export default compose(
     usesFloorOffsetModel,
     usesSimpleGroundConfirm,
   }),
-  withRouteProps(),
+  withRouteParams(),
   withHandlers({
     goToNext: ({goTo, nextView, annotationId, backPath, backArgs}) => () => {
       goTo(nextView, {

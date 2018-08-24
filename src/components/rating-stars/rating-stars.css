@@ -1,0 +1,19 @@
+.RatingStars {
+  display: flex;
+}
+
+.Star {
+  width: 20px;
+  height: 20px;
+  background: url('../../../assets/images/icons/icon_star_empty.svg') center / cover no-repeat;
+  margin-right: 4px;
+  transition: all 0.5s ease;
+}
+
+.isChecked.Star {
+  background-image: url('../../../assets/images/icons/icon_star_filled.svg');
+}
+
+.Star:last-child {
+  margin-right: 0;
+}

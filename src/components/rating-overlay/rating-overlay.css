@@ -1,0 +1,49 @@
+.RatingOverlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, .6);
+  transition: opacity 0.5s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.isHidden.RatingOverlay {
+  pointer-events: none;
+  opacity: 0;
+}
+
+.RatingContent {
+  margin: 20px;
+  padding: 20px;
+  display: flex;
+  flex-flow: column;
+  background: white;
+}
+
+.Message {
+  margin-bottom: 12px;
+}
+
+.Stars {
+  justify-content: center;
+}
+
+.Buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+@media only
+screen and (orientation: portrait) and (max-device-width: 420px) {
+  .RatingContent {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
