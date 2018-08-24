@@ -3,29 +3,38 @@
 }
 
 .WaitForSupportAgentOverlay {
-    background: rgba(0, 0, 0, .6);
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100vw;
-    height: 100vh;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.3em;
-    transition: opacity 0.5s ease;
-    z-index: 40;
+  background: rgba(0, 0, 0, .6);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.3em;
+  transition: opacity 0.5s ease;
+  z-index: 40;
+}
+
+.TouchOverlay {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
 }
 
 .isHidden.WaitForSupportAgentOverlay {
-    pointer-events: none;
-    opacity: 0;
+  pointer-events: none;
+  opacity: 0;
 }
 
 .AnnotationButton {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    z-index: 30;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 30;
 }

@@ -14,7 +14,7 @@ export const init = ({ annotationManager, setLoading, annotation, updateSelectio
   setLoading(true)
   await sceneManager.clearScene()
   if (annotation.model) {
-    annotationManager.setAnnotation(annotation)
+    annotationManager.setAnnotation(annotation, false)
   }
 
   sceneManager.on('selectionChanged', updateSelection)

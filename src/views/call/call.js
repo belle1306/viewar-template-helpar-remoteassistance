@@ -13,10 +13,17 @@ import Call from './Call.jsx'
 export const waitForSupportAgent = ({ showDialog, connect, history, admin, viewarApi: { appConfig }, setWaitingForSupportAgent, callClient }) => async() => {
   if (!admin) {
     await connect({userData: { supportAgent: false }})
+  }
 
-    if(callClient.connected && callClient.session) {
+  if(callClient.connected && callClient.session) {
+    syncSubscription = callClient.getData('annotation').subscribe(annotation => {
+      console.log('receiving annotation', annotation)
+      annotationManager.setAnnotation(annotation, admin)
+    })
+
+    if (!admin) {
       setWaitingForSupportAgent(true)
-      callSubscription = callClient.incomingCall.subscribe(async({ id }) => {
+      callSubscription = callClient.incomingCall.subscribe(async() => {
         await callClient.answerCall()
         setWaitingForSupportAgent(false)
       })
@@ -24,14 +31,7 @@ export const waitForSupportAgent = ({ showDialog, connect, history, admin, viewa
   }
 }
 
-export const annotation = ({ viewarApi: { cameras }, setLoading, annotationManager, admin }) => async() => {
-  setLoading(true)
-  const camera = Object.values(cameras).filter(camera => camera.active)[0]
-  await annotationManager.setAnnotation(camera.pose.position, admin)
-  setLoading(false)
-}
-
-export const onTouch = ({ setLoading, admin, annotationManager, viewarApi: { simulateTouchRay } }) => async(event) => {
+export const onTouch = ({ syncAnnotation, setLoading, admin, annotationManager, viewarApi: { simulateTouchRay } }) => async(event) => {
   setLoading(true)
 
   let x, y
@@ -41,18 +41,27 @@ export const onTouch = ({ setLoading, admin, annotationManager, viewarApi: { sim
   }
 
   if (x !== undefined && y !== undefined) {
-    await annotationManager.setTouchAnnotation(x, y)
+    await annotationManager.setTouchAnnotation({x, y}, true)
+    syncAnnotation()
   }
   setLoading(false)
 
 }
 
-export const closeAnnotationPicker = ({ annotationManager, setShowAnnotationPicker }) => () => {
-  // TODO: Sync annotation.
-  //annotationManager.current
+export const closeAnnotationPicker = ({ syncAnnotation, annotationManager, setShowAnnotationPicker }) => () => {
   setShowAnnotationPicker(false)
+  syncAnnotation()
 }
 
+export const syncAnnotation = ({ annotationManager, callClient, admin }) => () => {
+  const annotation = admin ? annotationManager.current : annotationManager.currentUser
+  if (annotation) {
+    console.log('sending annotation', annotation)
+    callClient.sendData('annotation', annotation)
+  }
+}
+
+let syncSubscription
 let callSubscription
 export default compose(
   withCallClient,
@@ -67,22 +76,30 @@ export default compose(
     annotationManager,
   }),
   withHandlers({
+    syncAnnotation,
+  }),
+  withHandlers({
     waitForSupportAgent,
-    annotation,
     onTouch,
     closeAnnotationPicker,
   }),
   lifecycle({
     async componentDidMount() {
-      const { admin, waitForSupportAgent, viewarApi: { cameras, coreInterface } } = this.props
+      const { admin, waitForSupportAgent, annotationManager, viewarApi: { cameras, coreInterface } } = this.props
+      await annotationManager.reset()
+
       await cameras.arCamera.activate()
       !admin && await coreInterface.call('setPointCloudVisibility', true, true)
+
       waitForSupportAgent()
     },
     componentWillUnmount() {
       const { callClient } = this.props
       if (callSubscription) {
         callSubscription.unsubscribe()
+      }
+      if (syncSubscription) {
+        syncSubscription.unsubscribe()
       }
 
       callClient.endCall()

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import cx from 'classnames'
 import { translate } from '../../services'
 
@@ -14,10 +14,20 @@ const WaitForSupportAgentOverlay = ({visible}) => <div className={cx(styles.Wait
   {translate('CallWaitForSupportAgent')}
 </div>
 
-export default ({ waitingForSupportAgent, showAnnotationPicker, closeAnnotationPicker, setShowAnnotationPicker }) =>
+export default ({ admin, waitingForSupportAgent, showAnnotationPicker, closeAnnotationPicker, setShowAnnotationPicker, onTouch }) =>
   <div className={cx(styles.Call)}>
     <HeaderBar goBack />
-    <WaitForSupportAgentOverlay visible={waitingForSupportAgent} />
-    <AnnotationPicker visible={showAnnotationPicker} onClose={closeAnnotationPicker}/>
-    <Button medium onClick={() => setShowAnnotationPicker(true)} icon="" hidden={showAnnotationPicker} className={styles.AnnotationButton} />
+
+    {admin ?
+      <Fragment>
+        <AnnotationPicker visible={showAnnotationPicker} onClose={closeAnnotationPicker}/>
+        <Button medium onClick={() => setShowAnnotationPicker(true)} icon="" hidden={showAnnotationPicker} className={styles.AnnotationButton} />
+      </Fragment> :
+
+      <Fragment>
+        <WaitForSupportAgentOverlay visible={waitingForSupportAgent} />
+        <div className={styles.TouchOverlay} onClick={onTouch} />
+      </Fragment>}
+
+
   </div>

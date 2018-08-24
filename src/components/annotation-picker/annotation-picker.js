@@ -15,7 +15,7 @@ export const touch = ({ setLoading, selected, annotationManager }) => async(even
     }
 
     if (x !== undefined && y !== undefined) {
-      await annotationManager.setTouchAnnotation(selected, x, y)
+      await annotationManager.setTouchAnnotation({ model: selected, x, y})
     }
 
     setLoading(false)
@@ -29,9 +29,7 @@ export const confirm = ({ onClose }) => () => {
 
 export const cancel = ({ annotationManager, previous, setLoading, onClose }) => () => {
   setLoading(true)
-  if (previous) {
-    annotationManager.setAnnotation(previous)
-  }
+  annotationManager.setAnnotation(previous)
   setLoading(false)
 
   onClose()

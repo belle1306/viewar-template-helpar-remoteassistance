@@ -8,9 +8,10 @@ export default ({
 
   let initialized = false
   let models = {}
+  let userModel = null    // Use model with foreign key 'helpar_user_highlight' as user model, if not existing take first.
   let instances = {}
-  let currentModel = false
-  let currentPose = false
+  let userInstance = {}
+  let current = false
 
   const init = async(onProgress) => {
     if (initialized) {
@@ -22,6 +23,13 @@ export default ({
       if (category) {
         for (let model of category.children) {
           models[model.id] = model
+          if (model.foreignKey === 'helpar_user_highlight') {
+            userModel = model
+          }
+        }
+
+        if (!userModel) {
+          userModel = Object.values(models)[0]
         }
 
         const count = {
@@ -41,18 +49,18 @@ export default ({
         onProgress(count)
 
         for(let model of Object.values(models)) {
-          // Download model
+          // Download model.
           await model.download()
           count.current += 1
           count.currentProgress = 0
           onProgress(count)
 
-          // Instantiate model
+          // Insert model.
           const instance = await insertModel(model, { id: model.id, visible: false })
           instances[model.id] = instance
-          // await sceneManager.removeNode(instance)
-          count.current += 1
-          count.currentProgress = 0
+          if (model === userModel) {
+            userInstance = await insertModel(model, { id: model.id, visible: false })
+          }
           onProgress(count)
         }
 
@@ -70,28 +78,41 @@ export default ({
     for (let instance of Object.values(instances)) {
       await instance.setVisible(false)
     }
+    await userInstance.setVisible(false)
   }
 
-  const setAnnotation = async({model, pose}) => {
-    currentPose = null
-    currentModel = null
+  const setAnnotation = async(spec = {}, user) => {
+    const { model, pose } = spec
 
-    for (let [id, instance] of Object.entries(instances)) {
-      if (id === model) {
-        await instance.setPose(pose)
-        await instance.setVisible(true)
-        currentPose = pose
-        currentModel = model
-      } else {
-        await instance.setVisible(false)
+    if (user) {
+      await userInstance.setPose(pose)
+      await userInstance.setVisible(true)
+    } else {
+      current = false
+
+      for (let [id, instance] of Object.entries(instances)) {
+        if (id === model) {
+          await instance.setPose(pose)
+          await instance.setVisible(true)
+
+          current = {
+            pose,
+            model,
+          }
+        } else {
+          await instance.setVisible(false)
+        }
       }
     }
   }
 
-  const setTouchAnnotation = async(model, x, y) => {
-    const hits = getTouchResult(x, y, 40)
+  const setTouchAnnotation = async({ model, x, y }, user = false) => {
+    const hits = await getTouchResult(x, y, 40)
     if (hits.featurePoints.length) {
-      await setAnnotation({ model, pose: { position: hits.featurePoints[0].intersection } })
+      await setAnnotation({ model, pose: { position: hits.featurePoints[0].intersection } }, user)
+    } else {
+      // TODO: Debug, remove
+      await setAnnotation({ model, pose: { position: { x: Math.random(), y: Math.random(), z: Math.random() } } }, user)
     }
   }
 
@@ -101,10 +122,11 @@ export default ({
     setAnnotation,
     setTouchAnnotation,
 
-    get current() { return {
-      pose: currentPose,
-      model: currentModel,
-    } },
+    get current() { return current },
+    get currentUser() { return userInstance.visible ? {
+      model: userInstance.model.id,
+      pose: userInstance.pose
+    } : null },
 
     get models() { return Object.values(models) },
   }
