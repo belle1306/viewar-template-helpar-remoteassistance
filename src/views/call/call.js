@@ -10,7 +10,7 @@ import withRouteParams from '../../services/route-params'
 
 import Call from './Call.jsx'
 
-export const waitForSupportAgent = ({ showDialog, connect, history, admin, viewarApi: { appConfig }, setWaitingForSupportAgent, callClient }) => async() => {
+export const waitForSupportAgent = ({ goToLastView, showDialog, connect, history, admin, viewarApi: { appConfig }, setWaitingForSupportAgent, callClient }) => async() => {
   if (!admin) {
     await connect({userData: { supportAgent: false }})
   }
@@ -19,6 +19,13 @@ export const waitForSupportAgent = ({ showDialog, connect, history, admin, viewa
     syncSubscription = callClient.getData('annotation').subscribe(annotation => {
       console.log('receiving annotation', annotation)
       annotationManager.setAnnotation(annotation, admin)
+    })
+
+    endCallSubscription = callClient.endedCall.subscribe(async() => {
+      await showDialog('MessageCallEnded', {
+        confirmText: 'DialogOK'
+      })
+      goToLastView()
     })
 
     if (!admin) {
@@ -63,6 +70,7 @@ export const syncAnnotation = ({ annotationManager, callClient, admin }) => () =
 
 let syncSubscription
 let callSubscription
+let endCallSubscription
 export default compose(
   withCallClient,
   withDialogControls,
@@ -94,15 +102,21 @@ export default compose(
       waitForSupportAgent()
     },
     componentWillUnmount() {
-      const { callClient } = this.props
+      const { admin, callClient } = this.props
       if (callSubscription) {
         callSubscription.unsubscribe()
       }
       if (syncSubscription) {
         syncSubscription.unsubscribe()
       }
+      if (endCallSubscription) {
+        endCallSubscription.unsubscribe()
+      }
 
       callClient.endCall()
+      if (!admin) {
+        callClient.leave()
+      }
     }
   })
 )(Call)

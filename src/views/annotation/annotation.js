@@ -12,7 +12,6 @@ import Annotation from './annotation.jsx'
 
 export const init = ({ annotationManager, setLoading, annotation, updateSelection, viewarApi: { sceneManager } }) => async() => {
   setLoading(true)
-  await sceneManager.clearScene()
   if (annotation.model) {
     annotationManager.setAnnotation(annotation, false)
   }
@@ -42,7 +41,7 @@ export const closeRateOverlay = ({ setLoading, rating, backPath, backArgs, goTo,
   if (success) {
     goToLastView()
   } else {
-    goTo('/calibration-call', {
+    goTo('/call', {
       backPath,
       backArgs,
     })

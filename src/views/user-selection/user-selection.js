@@ -22,11 +22,6 @@ export const updateClientList = ({ setClients, callClient, selectedClient, setSe
 export const call = ({ showDialog, setWaitingForUser, goTo, setLoading, callClient, selectedClient }) => async() => {
   const client = selectedClient
 
-  setLoading(true)
-  await callClient.call({ id: client.id })
-  setLoading(false)
-
-  setWaitingForUser(client.id)
   callSubscription = callClient.acceptedCall.subscribe(() => {
     setWaitingForUser(false)
     goTo('/call-admin')
@@ -38,6 +33,12 @@ export const call = ({ showDialog, setWaitingForUser, goTo, setLoading, callClie
       confirmText: 'DialogOK'
     })
   })
+
+  setLoading(true)
+  await callClient.call({ id: client.id })
+  setLoading(false)
+
+  setWaitingForUser(client.id)
 }
 
 let clientSubscription

@@ -56,10 +56,10 @@ export default ({
           onProgress(count)
 
           // Insert model.
-          const instance = await insertModel(model, { id: model.id, visible: false })
+          const instance = await insertModel(model, { id: `SupportAgentAnnotation${model.id}`, visible: false })
           instances[model.id] = instance
           if (model === userModel) {
-            userInstance = await insertModel(model, { id: model.id, visible: false })
+            userInstance = await insertModel(model, { id: `UserAnnotation${model.id}`, visible: false })
           }
           onProgress(count)
         }

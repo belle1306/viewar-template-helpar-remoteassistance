@@ -23,13 +23,6 @@ export default compose(
         goTo('/')
       })
 
-      callClient.endedCall.subscribe(async() => {
-        await showDialog('MessageCallEnded', {
-          confirmText: 'DialogOK'
-        })
-        goToLastView()
-      })
-
     }
   })
 )(render)
