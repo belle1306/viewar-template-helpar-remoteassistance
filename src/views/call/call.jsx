@@ -14,9 +14,9 @@ const WaitForSupportAgentOverlay = ({visible}) => <div className={cx(styles.Wait
   {translate('CallWaitForSupportAgent')}
 </div>
 
-export default ({ admin, waitingForSupportAgent, showAnnotationPicker, closeAnnotationPicker, setShowAnnotationPicker, onTouch }) =>
+export default ({ admin, waitingForSupportAgent, showAnnotationPicker, closeAnnotationPicker, setShowAnnotationPicker, goBack, onTouch }) =>
   <div className={cx(styles.Call)}>
-    <HeaderBar goBack />
+    <HeaderBar goBack={goBack} />
 
     {admin ?
       <Fragment>

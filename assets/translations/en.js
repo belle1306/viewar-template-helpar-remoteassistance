@@ -15,6 +15,8 @@ export default {
   "HomeLoading": "Loading...",
   // Call
   "CallWaitForSupportAgent": "Waiting for support agent...",
+  "CallAbortQuestion": "Do you want to end the current call?",
+  "CallAbortCall": "End call",
   // User Selection
   "UserSelectionWaitForUser": "Waiting for user...",
   "UserSelectionLineBusy": "Line is busy.",

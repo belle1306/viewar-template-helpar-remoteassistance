@@ -15,6 +15,8 @@ export default {
   "HomeLoading": "Loading...",
   // Call
   "CallWaitForSupportAgent": "Warte auf Supportmitarbeiter...",
+  "CallAbortQuestion": "Wollen Sie den aktuellen Anruf beenden?",
+  "CallAbortCall": "Anruf beenden",
   // User Selection
   "UserSelectionWaitForUser": "Warte auf User...",
   "UserSelectionLineBusy": "Leitung ist besetzt.",

@@ -68,6 +68,17 @@ export const syncAnnotation = ({ annotationManager, callClient, admin }) => () =
   }
 }
 
+export const goBack = ({ showDialog, goToLastView }) => async() => {
+  const {confirmed} = await showDialog('CallAbortQuestion', {
+    showCancel: true,
+    confirmText: 'CallAbortCall'
+  })
+
+  if (confirmed) {
+    goToLastView()
+  }
+}
+
 let syncSubscription
 let callSubscription
 let endCallSubscription
@@ -90,6 +101,7 @@ export default compose(
     waitForSupportAgent,
     onTouch,
     closeAnnotationPicker,
+    goBack,
   }),
   lifecycle({
     async componentDidMount() {
