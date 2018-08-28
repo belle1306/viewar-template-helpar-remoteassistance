@@ -1,5 +1,14 @@
-import { compose, withState } from 'recompose'
+import { compose, withHandlers } from 'recompose'
 
 import TextInput from './text-input.jsx'
 
-export default compose()(TextInput)
+const handleSubmit = ({ onSubmit }) => (event) => {
+  onSubmit && onSubmit()
+  event.preventDefault()
+}
+
+export default compose(
+  withHandlers({
+    handleSubmit,
+  }),
+)(TextInput)

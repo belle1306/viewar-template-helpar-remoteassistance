@@ -34,6 +34,15 @@ export default {
   "AnnotationSelectionTitle": "Wo liegt ihr Problem?",
   // Annotation
   "AnnotationHint": "Berühren Sie einen Punkt um mehr Informationen zu erhalten.",
+  // Review
+  "ReviewTitle": "Bewerten Sie ihre Unterstützung",
+  "ReviewGeneralTags": "Produkt Tags (z.B. 'Auto', 'Audi', 'A4',...):",
+  "ReviewAnnotations": "Annotationen:",
+  "ReviewContinueSaving": "Sie haben undbehandelte Annotation. Mit Speichern fortfahren?",
+  "AnnotationReviewTitle": "Annotation Details",
+  "AnnotationReviewTitleSection": "Titel:",
+  "AnnotationReviewTags": "Annotation spepzifische Tags (z.B. 'Motoröl'):",
+  "AnnotationReviewDescription": "Annotation Beschreibung:",
   // Messages
   "MessageConnectionLost": "Verbindung zum Server unterbrochen.",
   "MessageCallEnded": "Anruf wurde beendet.",
@@ -48,4 +57,5 @@ export default {
   "RatingOverlayBack": "Zurück",
   "RatingOverlayCall": "Anrufen",
   "AnnotationPickerHint": "Platzieren Sie ihr Annotation durch einen Touch.",
+  "Save": "Speichern",
 }

@@ -1,9 +1,11 @@
 import viewarApi from 'viewar-api'
+import { generateId } from '../../utils'
 
 export default ({
   getCategory,
   getTouchResult,
   insertModel,
+  takeFreezeFrame,
 }) => {
 
   let initialized = false
@@ -12,6 +14,8 @@ export default ({
   let instances = {}
   let userInstance = {}
   let current = false
+  let freezeFrame
+  let saved = []
 
   const init = async(onProgress) => {
     if (initialized) {
@@ -79,6 +83,8 @@ export default ({
       await instance.setVisible(false)
     }
     await userInstance.setVisible(false)
+
+    saved = []
   }
 
   const setAnnotation = async(spec = {}, user) => {
@@ -110,10 +116,18 @@ export default ({
     const hits = await getTouchResult(x, y, 40)
     if (hits.featurePoints.length) {
       await setAnnotation({ model, pose: { position: hits.featurePoints[0].intersection } }, user)
+      freezeFrame = await takeFreezeFrame()
     } else {
       // TODO: Debug, remove
       await setAnnotation({ model, pose: { position: { x: Math.random(), y: Math.random(), z: Math.random() } } }, user)
     }
+  }
+
+  const saveAnnotation = () => {
+    saved.push(Object.assign({}, current, {
+      freezeFrame,
+      id: generateId(),
+    }))
   }
 
   return {
@@ -121,6 +135,7 @@ export default ({
     reset,
     setAnnotation,
     setTouchAnnotation,
+    saveAnnotation,
 
     get current() { return current },
     get currentUser() { return userInstance.visible ? {
@@ -129,6 +144,7 @@ export default ({
     } : null },
 
     get models() { return Object.values(models) },
+    get saved() { return saved },
   }
 
 }

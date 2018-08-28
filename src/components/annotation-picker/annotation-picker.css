@@ -19,7 +19,7 @@
   position: relative;
   flex: 1 0 auto;
   border: 1px solid white;
-  max-width: 10vh;
+  max-width: 20vh;
 }
 
 .Annotation::before {

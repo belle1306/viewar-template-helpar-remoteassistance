@@ -1,0 +1,139 @@
+.Review {
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.ReviewContent {
+  position: absolute;
+  display: flex;
+  flex-flow: column;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 60px;
+  padding: 12px;
+  overflow-y: auto;
+}
+
+.Section {
+  flex: 0 0 auto;
+  display: flex;
+  flex-flow: column;
+  margin-bottom: 12px;
+}
+
+.Title {
+  font-size: 1.1em;
+  margin-bottom: 6px;
+}
+
+.TagSearch {
+  display: flex;
+}
+
+.Review .CreateTagButton {
+  flex: 0 0 auto;
+  margin: 0 0 0 12px;
+}
+
+.TagInput {
+  flex: 1 0 auto;
+}
+
+.Tags {
+  display: flex;
+  flex-flow: row wrap;
+  margin-top: 6px;
+}
+
+.Tag {
+  flex: 0 0 auto;
+}
+
+.Buttons {
+  flex: 1 0 auto;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.Annotations {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.Annotation {
+  flex: 0 0 calc(20% - 12px);
+  margin: 0 12px 12px 0;
+  cursor: pointer;
+  position: relative;
+}
+
+.AnnotationCheckmark {
+  position: absolute;
+  bottom: -3px;
+  right: -2px;
+  transform: translate(50%, 50%);
+  width: 20px;
+  height: 20px;
+  background-color: darkgreen;
+
+  -webkit-mask-position-x: calc(100% / 7 * 1);
+  -webkit-mask-position-y: calc(100% / 7 * 2);
+  background-position-x: calc(100% / 7 * 1);
+  background-position-y: calc(100% / 7 * 2);
+}
+
+.AnnotationDelete {
+  position: absolute;
+  top: -2px;
+  right: 0;
+  transform: translate(50%, -50%);
+  width: 20px;
+  height: 20px;
+  background-color: darkred;
+
+  -webkit-mask-position-x: calc(100% / 7 * 2);
+  -webkit-mask-position-y: calc(100% / 7 * 6);
+  background-position-x: calc(100% / 7 * 2);
+  background-position-y: calc(100% / 7 * 6);
+}
+
+.Annotation img {
+  width: 100%;
+}
+
+.AnnotationTitle {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  line-height: 2em;
+  color: white;
+  background: rgba(0,0,0,.8);
+  padding: 6px 4px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+
+.AnnotationReview {
+  position: absolute;
+  z-index: 70;
+}
+
+@media only
+screen and (orientation: portrait) and (max-device-width: 420px) {
+
+  .Annotation {
+    flex: 0 0 calc(33% - 12px);
+  }
+
+}

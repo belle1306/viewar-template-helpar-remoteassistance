@@ -10,7 +10,7 @@ import withRouteParams from '../../services/route-params'
 
 import Call from './Call.jsx'
 
-export const waitForSupportAgent = ({ goToLastView, showDialog, connect, history, admin, viewarApi: { appConfig }, setWaitingForSupportAgent, callClient }) => async() => {
+export const waitForSupportAgent = ({ goToNextView, showDialog, connect, history, admin, viewarApi: { appConfig }, setWaitingForSupportAgent, callClient }) => async() => {
   if (!admin) {
     await connect({userData: { supportAgent: false }})
   }
@@ -25,7 +25,8 @@ export const waitForSupportAgent = ({ goToLastView, showDialog, connect, history
       await showDialog('MessageCallEnded', {
         confirmText: 'DialogOK'
       })
-      goToLastView()
+
+      goToNextView()
     })
 
     if (!admin) {
@@ -55,9 +56,12 @@ export const onTouch = ({ syncAnnotation, setLoading, admin, annotationManager, 
 
 }
 
-export const closeAnnotationPicker = ({ syncAnnotation, annotationManager, setShowAnnotationPicker }) => () => {
+export const closeAnnotationPicker = ({ syncAnnotation, annotationManager, setShowAnnotationPicker }) => (cancelled) => {
   setShowAnnotationPicker(false)
-  syncAnnotation()
+  if (!cancelled) {
+    syncAnnotation()
+    annotationManager.saveAnnotation()
+  }
 }
 
 export const syncAnnotation = ({ annotationManager, callClient, admin }) => () => {
@@ -68,13 +72,24 @@ export const syncAnnotation = ({ annotationManager, callClient, admin }) => () =
   }
 }
 
-export const goBack = ({ showDialog, goToLastView }) => async() => {
+export const goBack = ({ showDialog, goToNextView }) => async() => {
   const {confirmed} = await showDialog('CallAbortQuestion', {
     showCancel: true,
     confirmText: 'CallAbortCall'
   })
 
   if (confirmed) {
+    goToNextView()
+  }
+}
+
+export const goToNextView = ({ admin, goTo, backPath, backArgs, goToLastView }) => () => {
+  if (admin) {
+    goTo('/review', {
+      backPath,
+      backArgs,
+    })
+  } else {
     goToLastView()
   }
 }
@@ -96,6 +111,7 @@ export default compose(
   }),
   withHandlers({
     syncAnnotation,
+    goToNextView,
   }),
   withHandlers({
     waitForSupportAgent,

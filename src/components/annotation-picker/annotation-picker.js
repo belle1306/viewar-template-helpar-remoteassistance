@@ -24,7 +24,7 @@ export const touch = ({ setLoading, selected, annotationManager }) => async(even
 }
 
 export const confirm = ({ onClose }) => () => {
-  onClose()
+  onClose(true)
 }
 
 export const cancel = ({ annotationManager, previous, setLoading, onClose }) => () => {
@@ -32,7 +32,7 @@ export const cancel = ({ annotationManager, previous, setLoading, onClose }) => 
   annotationManager.setAnnotation(previous)
   setLoading(false)
 
-  onClose()
+  onClose(false)
 }
 
 export default compose(

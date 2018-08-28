@@ -33,6 +33,15 @@ export default {
   "AnnotationSelectionTitle": "Whats your issue?",
   // Annotation
   "AnnotationHint": "Touch a point to see more information",
+  // Review
+  "ReviewTitle": "Review your assistance",
+  "ReviewGeneralTags": "Product tags (e.g. 'Car', 'Audi', 'A4',...):",
+  "ReviewAnnotations": "Annotations",
+  "ReviewContinueSaving": "You have unhandled annotations. Continue with saving?",
+  "AnnotationReviewTitle": "Annotation Details",
+  "AnnotationReviewTitleSection": "Title:",
+  "AnnotationReviewTags": "Annotation specific tags (e.g. 'motoroil'):",
+  "AnnotationReviewDescription": "Annotation description:",
   // Messages
   "MessageConnectionLost": "Connection to server lost.",
   "MessageCallEnded": "Call ended.",
@@ -47,4 +56,5 @@ export default {
   "RatingOverlayBack": "Go Back",
   "RatingOverlayCall": "Call",
   "AnnotationPickerHint": "Insert annotation with a touch.",
+  "Save": "Save",
 }

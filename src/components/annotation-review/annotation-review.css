@@ -1,0 +1,119 @@
+.AnnotationReview {
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: opacity 0.5s ease;
+}
+
+.AnnotationReviewContent {
+  position: absolute;
+  display: flex;
+  flex-flow: column;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 60px;
+  padding: 12px;
+  transition: opacity 0.5s ease;
+  overflow-y: auto;
+}
+
+.Section {
+  flex: 0 0 auto;
+  display: flex;
+  flex-flow: column;
+  margin-bottom: 12px;
+}
+
+.Title {
+  font-size: 1.1em;
+  margin-bottom: 6px;
+}
+
+.TagSearch {
+  display: flex;
+}
+
+.AnnotationReview .CreateTagButton {
+  flex: 0 0 auto;
+  margin: 0 0 0 12px;
+}
+
+.TagInput {
+  flex: 1 0 auto;
+}
+
+.Tags {
+  display: flex;
+  flex-flow: row wrap;
+  margin-top: 6px;
+}
+
+.Tag {
+  flex: 0 0 auto;
+}
+
+.Section.SectionDescription {
+  flex: 1 0 auto;
+}
+
+.Description {
+  flex: 1 0 auto;
+  display: flex;
+  flex-flow: column;
+}
+
+.Description textarea {
+  flex: 1 0 auto;
+  height: auto;
+}
+
+.Buttons {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.Rows {
+  display: flex;
+  flex-flow: row;
+}
+
+.Left {
+  flex: 1 1 auto;
+  display: flex;
+  flex-flow: column;
+}
+
+.Right {
+  flex: 0 0 auto;
+  margin-left: 20px;
+}
+
+.AnnotationImage {
+  width: 30vmin;
+}
+
+.FullscreenImage {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: center / contain no-repeat;
+  z-index: 999;
+  transition: opacity 0.5s ease;
+}
+
+.isHidden.AnnotationReview,
+.isHidden.FullscreenImage,
+.isHidden.AnnotationReviewContent {
+  pointer-events: none;
+  opacity: 0;
+}

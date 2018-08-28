@@ -14,5 +14,5 @@ export default ({goBack, goHome, showHelp, title, goHomeFunction, goBackFunction
             className={cx(!showHelp && styles.isHidden, styles.Button, styles.ButtonShowHelp)}/>
     <Button onClick={goHomeFunction} icon={'home'} size={'small'} dark={dark}
             className={cx(!goHome && styles.isHidden, styles.Button, (!showHelp && !goBack) && styles.PositionLeft)}/>
-    {title && <div className={styles.Title}>{translate(title)}</div>}
+    {title && <div className={cx(styles.Title, (!showHelp && !goBack && !goHome) && styles.PositionLeft)}>{translate(title)}</div>}
   </div>

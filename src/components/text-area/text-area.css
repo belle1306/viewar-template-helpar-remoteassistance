@@ -1,0 +1,12 @@
+.TextArea {
+  position: relative;
+  border: 1px solid rgb(189, 24, 25);
+}
+
+.TextArea textarea {
+  padding: 8px 16px;
+  width: 100%;
+  box-sizing: border-box;
+  color: #666;
+  height: 8em;
+}

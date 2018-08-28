@@ -1,33 +1,40 @@
 .Container {
-    position: absolute;
-    left: 0;
-    top: 0;
-    display: flex;
-    z-index: 50;
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  z-index: 50;
 }
 
 .Button {
-    transition: 0.5s cubic-bezier(.38, 1.38, .73, .98);
-    transition-property: transform, opacity;
+  transition: 0.5s cubic-bezier(.38, 1.38, .73, .98);
+  transition-property: transform, opacity;
 }
 
 .isHidden {
-    display: none;
-    pointer-events: none;
+  display: none;
+  pointer-events: none;
 }
 
 .Title {
-    flex: 1 0 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.7em;
+  flex: 1 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.7em;
+  line-height: 40px;
+  height: 40px;
+  padding: 20px 0;
 }
 
 .isHidden.ButtonShowHelp {
-    transform: translateX(calc(-48px - 16px));
+  transform: translateX(calc(-48px - 16px));
 }
 
 .Button.PositionLeft {
-    transform: translateX(calc(-96px - 32px));
+  transform: translateX(calc(-96px - 32px));
+}
+
+.Title.PositionLeft {
+  margin-left: 12px;
 }

@@ -9,6 +9,7 @@ import UserSelection from './views/user-selection/user-selection.js'
 import Calibration from './views/calibration/calibration.js'
 import AnnotationSelection from './views/annotation-selection/annotation-selection.js'
 import Annotation from './views/annotation/annotation.js'
+import Review from './views/review/review.js'
 import ConnectionMonitor from './views/connection-monitor'
 
 import Spinner from './components/spinner/spinner.jsx'
@@ -53,6 +54,7 @@ export default ({}) => <Fragment>
           <Route exact path='/user-selection/:args?' component={UserSelection}/>
           <Route exact path='/product-selection/:args?' component={ProductSelection}/>
           <Route exact path='/annotation-selection/:args?' component={AnnotationSelection}/>
+          <Route exact path='/review/:args?' component={Review}/>
         </Switch>
       </GaMonitor>
     </ConnectionMonitor>
