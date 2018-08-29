@@ -31,8 +31,8 @@ export const resetTrackers = ({viewarApi}) => async () => {
 }
 
 export const goToProductSelection = ({goTo}) => async() => {
-  // goTo('/product-selection', {
-  goTo('/review', {
+  goTo('/product-selection', {
+  // goTo('/review', {
     input: 'auto'
   })
 }

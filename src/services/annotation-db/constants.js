@@ -7,12 +7,6 @@ export const DEFAULT_SEARCH_OPTIONS = {
   minMatchCharLength: 1,
 }
 
-export const PRODUCT_SEARCH_OPTIONS = {
-  keys: [
-    "productTags"
-  ],
-}
-
 export const ANNOTATION_SEARCH_OPTIONS = {
   keys: [
     { name: "tags", weight: 0.3 },

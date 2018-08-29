@@ -10,7 +10,7 @@ import ProductSelection from './product-selection.jsx'
 
 export const init = ({setLoading, annotationDb, input, updateSearch}) => async () => {
   setLoading(true)
-  await annotationDb.load()
+  await annotationDb.prepareData('productTags')
   updateSearch(input || '')
   setLoading(false)
 }

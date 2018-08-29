@@ -15,6 +15,7 @@ import config from './config'
 import { translationProvider } from './services/index'
 import 'normalize.css/normalize.css';
 import { createCallClient } from 'viewar-call';
+import { auth, db } from './services/firebase'
 
 import App from './app'
 
@@ -41,6 +42,8 @@ import '../css/global.css'
     annotationManager,
     translationProvider,
     annotationDb,
+    auth,
+    db,
   })
 
   const rootElement = document.getElementById('app-root') || document.getElementById('app')

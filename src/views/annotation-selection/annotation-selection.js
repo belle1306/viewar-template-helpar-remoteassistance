@@ -10,7 +10,7 @@ import AnnotationSelection from './annotation-selection.jsx'
 
 export const init = ({setLoading, annotationDb, tags, input, updateSearch}) => async () => {
   setLoading(true)
-  await annotationDb.load(tags)
+  await annotationDb.prepareData('annotations', { productTags: tags })
   updateSearch(input || '')
   setLoading(false)
 }
@@ -19,7 +19,7 @@ export const updateSearch = ({annotationDb, setSearch, setSearchResult}) => (val
   setSearch(value)
 
   if (value.length === 0) {
-    setSearchResult(annotationDb.entries)
+    setSearchResult(Object.values(annotationDb.entries))
   } else {
     const searchResult = annotationDb.searchForAnnotations(value)
     setSearchResult(searchResult)

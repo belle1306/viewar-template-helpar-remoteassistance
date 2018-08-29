@@ -13,7 +13,7 @@ import Review from './review.jsx'
 
 export const init = ({setLoading, annotationDb, setAnnotations}) => async () => {
   setLoading(true)
-  await annotationDb.load()
+  // await annotationDb.load()
   setLoading(false)
 
   // const annotations = annotationManager.saved
