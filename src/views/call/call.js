@@ -56,9 +56,9 @@ export const onTouch = ({ syncAnnotation, setLoading, admin, annotationManager, 
 
 }
 
-export const closeAnnotationPicker = ({ syncAnnotation, annotationManager, setShowAnnotationPicker }) => (cancelled) => {
+export const closeAnnotationPicker = ({ syncAnnotation, annotationManager, setShowAnnotationPicker }) => (confirmed) => {
   setShowAnnotationPicker(false)
-  if (!cancelled) {
+  if (confirmed) {
     syncAnnotation()
     annotationManager.saveAnnotation()
   }
@@ -83,11 +83,27 @@ export const goBack = ({ showDialog, goToNextView }) => async() => {
   }
 }
 
-export const goToNextView = ({ admin, goTo, backPath, backArgs, goToLastView }) => () => {
+export const saveTrackingMap = ({ setLoading, viewarApi: { trackers } }) => async() => {
+  setLoading(true)
+
+  let featureMap = ''
+  const tracker = Object.values(trackers)[0]
+  if (tracker && tracker.saveTrackingMap) {
+    featureMap = await tracker.saveTrackingMap()
+  }
+
+  setLoading(false)
+
+  return featureMap
+}
+
+export const goToNextView = ({ admin, goTo, backPath, backArgs, goToLastView, saveTrackingMap }) => async() => {
   if (admin) {
+    const featureMap = await saveTrackingMap()
     goTo('/review', {
       backPath,
       backArgs,
+      featureMap,
     })
   } else {
     goToLastView()
@@ -110,6 +126,9 @@ export default compose(
     annotationManager,
   }),
   withHandlers({
+    saveTrackingMap,
+  }),
+  withHandlers({
     syncAnnotation,
     goToNextView,
   }),
@@ -125,12 +144,14 @@ export default compose(
       await annotationManager.reset()
 
       await cameras.arCamera.activate()
-      !admin && await coreInterface.call('setPointCloudVisibility', true, true)
+      if (!admin) {
+        await coreInterface.call('setPointCloudVisibility', true, true)
+      }
 
       waitForSupportAgent()
     },
-    componentWillUnmount() {
-      const { admin, callClient } = this.props
+    async componentWillUnmount() {
+      const { admin, callClient, viewarApi: { coreInterface } } = this.props
       if (callSubscription) {
         callSubscription.unsubscribe()
       }
@@ -139,6 +160,11 @@ export default compose(
       }
       if (endCallSubscription) {
         endCallSubscription.unsubscribe()
+      }
+
+      if (!admin) {
+        await coreInterface.call('setPointCloudVisibility', true, true)
+        await cameras.perspectiveCamera.activate()
       }
 
       callClient.endCall()

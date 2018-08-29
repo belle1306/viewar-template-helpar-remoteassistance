@@ -34,7 +34,7 @@ export default ({annotation, setAnnotation, tags, tag, setTag, comment, createTa
         <div className={styles.Title}>{translate('ReviewAnnotations')}</div>
         <div className={styles.Annotations}>
           {annotations.map(annotation =>
-            <div key={annotation.id} className={cx(styles.Annotation, annotation.title && styles.isDone)}>
+            annotation.freezeFrame && <div key={annotation.id} className={cx(styles.Annotation, annotation.title && styles.isDone)}>
               <img src={annotation.freezeFrame.thumbnailUrl}  onClick={() => setAnnotation(annotation)} />
               <div className={cx(styles.AnnotationDelete, global.ButtonImage)} onClick={() => removeAnnotation(annotation)} />
               {!!annotation.title && <Fragment>

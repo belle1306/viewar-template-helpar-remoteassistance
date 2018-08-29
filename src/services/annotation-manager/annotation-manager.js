@@ -120,6 +120,7 @@ export default ({
     } else {
       // TODO: Debug, remove
       await setAnnotation({ model, pose: { position: { x: Math.random(), y: Math.random(), z: Math.random() } } }, user)
+      freezeFrame = await takeFreezeFrame()
     }
   }
 
