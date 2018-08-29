@@ -7,8 +7,8 @@ import fakeData from './fake-data'
 import { DEFAULT_SEARCH_OPTIONS, PRODUCT_SEARCH_OPTIONS, ANNOTATION_SEARCH_OPTIONS } from './constants'
 
 /**
- * Annotations are saved as 4 indiviual data nodes:
- *   - annotations The basic information about every annotation (title, descdription,...).
+ * Annotations are saved as 4 individual data nodes:
+ *   - annotations The basic information about every annotation (id, title, description).
  *   - details The 3d data of an annotation (featureMap, pose, model).
  *   - productTags The product tags of an annotation.
  *   - tags The annotation specific tags of an annotation.
@@ -118,15 +118,28 @@ const createAnnotationDb = () => {
     switch (type) {
       case 'productTags':
         data.productTags = await db.read('productTags')
+
+        // Adapt { id: array } values to [{ id, productTags: array }] for fuse search.
+        const fuseData = []
+        for(let [id, productTags] of Object.entries(data.productTags)) {
+          fuseData.push({
+            id,
+            productTags
+          })
+        }
+
+        searchProvider = new Fuse(fuseData, Object.assign({}, DEFAULT_SEARCH_OPTIONS, PRODUCT_SEARCH_OPTIONS))
         break;
+
       case 'annotations':
         const {productTags} = args
         data.productTags = await db.read('productTags')
 
         if (productTags) {
+          const lowerCaseProductTags = productTags.map(tag => tag.toLowerCase())
           const ids = []
           Object.entries(data.productTags).forEach(([id, tags]) => {
-            if (tags.every(tag => productTags.includes(tag))) {
+            if (tags.every(tag => lowerCaseProductTags.includes(tag.toLowerCase()))) {
               ids.push(id)
             } else {
               delete data.productTags[id]
@@ -169,21 +182,18 @@ const createAnnotationDb = () => {
    * Search for Product Tags. Uses fuzzy logic search (Fuse). Requires prepareData('productTags') first.
    *
    * @param searchString The string to search for.
-   * @returns {*} Search results.
+   * @returns [] Search results.
    */
   const searchForProductTags = (searchString) => {
-    const searchResult = []
-    const lowerCaseSearchString = searchString.toLowerCase()
-
-    if (lowerCaseSearchString.length > 2) {
-      for (let tags of Object.values(data.productTags)) {
-        if (tags.some(tag => tag.toLowerCase().indexOf(lowerCaseSearchString) !== -1)) {
-          searchResult.push(tags)
-        }
-      }
+    if (!searchProvider) {
+      console.error(`Search Provider not initialized. Run prepareData(dataType) first.`)
+      return []
     }
 
-    return uniqWith(searchResult, isEqual)
+    const searchResult = searchProvider.search(searchString)
+    const uniqueProductTags = uniqWith(searchResult.map(item => item.productTags), isEqual)
+
+    return uniqueProductTags
   }
 
   /**
@@ -205,11 +215,46 @@ const createAnnotationDb = () => {
   }
 
   /**
+   * Creates a new annotation and saves it in the database.
+   *
+   * @param id The unique id.
+   * @param title The display title.
+   * @param description A short description.
+   * @param tags Annotation specific tags.
+   * @param productTags Product specific tags.
+   * @param featureMap Feature Map id.
+   * @param pose Position/Orientation/Scale of the annotation.
+   * @param model The annotation model's id.
+   */
+  const create = async({ id, title, description, tags, productTags, featureMap, pose, model }) => {
+    await initDb()
+
+    const newData = {
+      annotations: {
+        id, title, description,
+      },
+      details: {
+        featureMap, pose, model,
+      },
+      tags,
+      productTags
+    }
+
+    for (let [type, value] of Object.entries(newData)) {
+      await db.write(`${type}/${id}`, value)
+      data[type][id] = value
+    }
+
+  }
+
+  /**
    * Rebuilds the database.
    *
    * WARNING: This will override your previously saved db data.
    */
   const buildDbFromFakeData = async(data = fakeData) => {
+    await initDb()
+
     const productTags = {}
     const tags = {}
     const annotations = {}
@@ -249,6 +294,7 @@ const createAnnotationDb = () => {
     searchForProductTags,
     searchForAnnotations,
     get,
+    create,
 
     buildDbFromFakeData,
 
