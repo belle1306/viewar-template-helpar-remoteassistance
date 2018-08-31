@@ -11,7 +11,7 @@ export default {
   "HomeStart": "Support",
   "HomeLogin": "Einloggen",
   "HomeLoginText": "Einloggen als Support Assistent:",
-  "HomeUsername": "Benutzername",
+  "HomePassword": "Password",
   "HomeLoading": "Loading...",
   // Call
   "CallWaitForSupportAgent": "Warte auf Supportmitarbeiter...",

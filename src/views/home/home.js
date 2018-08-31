@@ -45,7 +45,8 @@ export const goToUserSelection = ({goTo, setLoading, authManager, showDialog}) =
     const {confirmed, input} = await showDialog('HomeLoginText', {
       input: authManager.token || '',
       withInput: true,
-      inputPlaceholder: 'HomeUsername',
+      inputPassword: true,
+      inputPlaceholder: 'HomePassword',
       showCancel: true,
       confirmText: 'HomeLogin',
     })
