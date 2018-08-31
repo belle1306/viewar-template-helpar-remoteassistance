@@ -62,7 +62,6 @@ export const saveReview = ({ goToLastView, saveAnnotation, setLoading, showDialo
     }
 
     setLoading(false)
-
     goToLastView()
   }
 }
@@ -103,6 +102,7 @@ export default compose(
   }),
   lifecycle({
     componentDidMount () {
+      console.log(this.props.backPath, this.props.backArgs)
       this.props.init()
     }
   }),

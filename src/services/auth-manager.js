@@ -19,13 +19,11 @@ const createAuthManager = () => {
     token = settings.token
   }
 
-  const login = async(username, password) => {
-    token = username
+  const login = async(password) => {
+    token = password
     await persistLogin()
 
-    user = {
-      username
-    }
+    user = {}
     return true
   }
 

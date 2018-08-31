@@ -10,7 +10,7 @@ import authManager from '../../services/auth-manager'
 import UserSelection from './user-selection.jsx'
 
 export const updateClientList = ({ setClients, callClient, selectedClient, setSelectedClient }) => async() => {
-  const clients = callClient.clients.list().filter(client => !client.supportAgent && client.available)
+  const clients = callClient.clients.list().filter(client => client.data.available)
 
   if (!clients.find(client => client === selectedClient)) {
     setSelectedClient(null)
@@ -19,12 +19,17 @@ export const updateClientList = ({ setClients, callClient, selectedClient, setSe
   setClients(clients)
 }
 
-export const call = ({ showDialog, setWaitingForUser, goTo, setLoading, callClient, selectedClient }) => async() => {
+export const call = ({ showDialog, setWaitingForUser, goTo, setLoading, password, callClient, selectedClient }) => async() => {
   const client = selectedClient
 
   callSubscription = callClient.acceptedCall.subscribe(() => {
     setWaitingForUser(false)
-    goTo('/call-admin')
+    goTo('/call-admin', {
+      backPath: '/user-selection',
+      backArgs: {
+        password
+      }
+    })
   })
 
   lineBusyCallSubscription = callClient.lineBusy.subscribe(() => {
@@ -64,10 +69,13 @@ export default compose(
   }),
   lifecycle({
     async componentDidMount() {
-      const { connect, callClient, updateClientList, viewarApi: { appConfig }, authManager } = this.props
+      const { connect, joinSession, callClient, updateClientList, viewarApi: { appConfig }, authManager, password } = this.props
 
-      await connect({sessionId: appConfig.appId, user: authManager.user.username, userData: { supportAgent: true }})
-      if (callClient.connected) {
+      await connect()
+      await joinSession({sessionId: appConfig.appId, password: password})
+
+      if (callClient.connected && callClient.session) {
+        await authManager.login(password)
         clientSubscription = callClient.clients.subscribe(updateClientList)
         updateClientList()
       }

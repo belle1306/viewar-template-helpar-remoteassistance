@@ -38,7 +38,9 @@ export const goToProductSelection = ({goTo}) => async() => {
 
 export const goToUserSelection = ({goTo, setLoading, authManager, showDialog}) => async() => {
   if (authManager.user) {
-    goTo('/user-selection')
+    goTo('/user-selection', {
+      password: authManager.token,
+    })
   } else {
     const {confirmed, input} = await showDialog('HomeLoginText', {
       input: authManager.token || '',
@@ -49,11 +51,7 @@ export const goToUserSelection = ({goTo, setLoading, authManager, showDialog}) =
     })
 
     if (confirmed && input) {
-      setLoading(true)
-      const success = await authManager.login(input)
-      setLoading(false)
-
-      success && goTo('/user-selection')
+      goTo('/user-selection', { password: input})
     }
   }
 }

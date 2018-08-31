@@ -10,9 +10,10 @@ import withRouteParams from '../../services/route-params'
 
 import Call from './Call.jsx'
 
-export const waitForSupportAgent = ({ goToNextView, showDialog, connect, history, admin, viewarApi: { appConfig }, setWaitingForSupportAgent, callClient }) => async() => {
+export const waitForSupportAgent = ({ goToNextView, joinSession, showDialog, connect, history, admin, viewarApi: { appConfig }, setWaitingForSupportAgent, callClient }) => async() => {
   if (!admin) {
-    await connect({userData: { supportAgent: false }})
+    await connect()
+    await joinSession({userData: { available: true }})
   }
 
   if(callClient.connected && callClient.session) {
@@ -151,7 +152,7 @@ export default compose(
       waitForSupportAgent()
     },
     async componentWillUnmount() {
-      const { admin, callClient, viewarApi: { coreInterface } } = this.props
+      const { admin, callClient, viewarApi: { coreInterface, cameras } } = this.props
       if (callSubscription) {
         callSubscription.unsubscribe()
       }
