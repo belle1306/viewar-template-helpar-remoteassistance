@@ -76,7 +76,7 @@ export default compose(
 
       if (callClient.connected && callClient.session) {
         await authManager.login(password)
-        clientSubscription = callClient.clients.subscribe(updateClientList)
+        clientSubscription = callClient.clientsUpdate.subscribe(updateClientList)
         updateClientList()
       }
     },
