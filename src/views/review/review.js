@@ -23,7 +23,7 @@ export const removeAnnotation = ({ annotations, setAnnotations }) => (annotation
 }
 
 export const createTag = ({tags, setTags, tag, setTag}) => () => {
-  if (tags.indexOf(tag) === -1) {
+  if (tags.indexOf(tag) === -1 && tag) {
     tags.push(tag)
     setTags(tags)
   }
