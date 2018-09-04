@@ -27,6 +27,7 @@ export default ({ admin, waitingForSupportAgent, showAnnotationPicker, closeAnno
       <Fragment>
         <WaitForSupportAgentOverlay visible={waitingForSupportAgent} />
         <div className={styles.TouchOverlay} onClick={onTouch} />
+        <div className={cx(styles.Hint)}>{translate('CallAnnotateHint')}</div>
       </Fragment>}
 
 

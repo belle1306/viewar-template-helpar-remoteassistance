@@ -44,6 +44,7 @@
   line-height: 16px;
   flex-flow: row wrap;
   flex: 0 0 auto;
+  cursor: pointer;
 }
 
 .Product:last-of-type {

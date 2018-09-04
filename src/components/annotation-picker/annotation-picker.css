@@ -6,6 +6,7 @@
   bottom: 0;
   right: 0;
   flex-flow: column-reverse;
+  z-index: 10;
 }
 
 .Annotations {

@@ -33,7 +33,7 @@ export const waitForSupportAgent = ({ goToNextView, joinSession, showDialog, con
     if (!admin) {
       setWaitingForSupportAgent(true)
       callSubscription = callClient.incomingCall.subscribe(async() => {
-        await callClient.answerCall()
+        await callClient.answerCall({ syncScene: false })
         setWaitingForSupportAgent(false)
       })
     }

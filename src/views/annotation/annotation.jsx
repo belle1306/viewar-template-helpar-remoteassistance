@@ -9,7 +9,7 @@ import HeaderBar from '../../components/header-bar/header-bar'
 import Button from '../../components/button/button'
 import RatingOverlay from '../../components/rating-overlay/rating-overlay'
 
-export default ({ annotation, descriptionVisible, rateOverlayVisible, showRateOverlay, closeRateOverlay, rateAnnotation }) =>
+export default ({ tracking, annotation, descriptionVisible, rateOverlayVisible, showRateOverlay, closeRateOverlay, rateAnnotation }) =>
   <div className={cx(styles.Annotation)}>
     <HeaderBar goBack={showRateOverlay} />
     <RatingOverlay visible={rateOverlayVisible} onClose={closeRateOverlay} onRate={rateAnnotation}/>
@@ -18,7 +18,7 @@ export default ({ annotation, descriptionVisible, rateOverlayVisible, showRateOv
         <div className={cx(styles.Description, (!descriptionVisible || rateOverlayVisible) && styles.isHidden)}>
           {annotation.description}
         </div>
-        <div className={cx(styles.Hint, (descriptionVisible || rateOverlayVisible) && styles.isHidden)}>{translate('AnnotationHint')}</div>
+        <div className={cx(styles.Hint, (descriptionVisible || rateOverlayVisible) && styles.isHidden)}>{translate(tracking ? 'AnnotationHint' : 'AnnotationFilmLearnedArea')}</div>
       </Fragment>
     }
   </div>

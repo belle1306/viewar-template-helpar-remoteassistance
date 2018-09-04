@@ -43,6 +43,7 @@
   line-height: 16px;
   flex-flow: column;
   flex: 0 0 auto;
+  cursor: pointer;
 }
 
 .Annotation:last-of-type {

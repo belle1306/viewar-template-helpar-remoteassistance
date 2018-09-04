@@ -17,6 +17,7 @@ export default {
   "CallWaitForSupportAgent": "Waiting for support agent...",
   "CallAbortQuestion": "Do you want to end the current call?",
   "CallAbortCall": "End call",
+  "CallAnnotateHint": "Touch to highlight a point.",
   // User Selection
   "UserSelectionWaitForUser": "Waiting for user...",
   "UserSelectionLineBusy": "Line is busy.",
@@ -33,6 +34,7 @@ export default {
   "AnnotationSelectionTitle": "Whats your issue?",
   // Annotation
   "AnnotationHint": "Touch a point to see more information",
+  "AnnotationFilmLearnedArea": "Please film your product.",
   // Review
   "ReviewTitle": "Review your assistance",
   "ReviewGeneralTags": "Product tags (e.g. 'Car', 'Audi', 'A4',...):",

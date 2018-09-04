@@ -17,6 +17,7 @@ export default {
   "CallWaitForSupportAgent": "Warte auf Supportmitarbeiter...",
   "CallAbortQuestion": "Wollen Sie den aktuellen Anruf beenden?",
   "CallAbortCall": "Anruf beenden",
+  "CallAnnotateHint": "Berühren Sie den Bildschirm um einen Punkt zu markieren.",
   // User Selection
   "UserSelectionWaitForUser": "Warte auf User...",
   "UserSelectionLineBusy": "Leitung ist besetzt.",
@@ -34,6 +35,7 @@ export default {
   "AnnotationSelectionTitle": "Wo liegt ihr Problem?",
   // Annotation
   "AnnotationHint": "Berühren Sie einen Punkt um mehr Informationen zu erhalten.",
+  "AnnotationFilmLearnedArea": "Bitte filmen Sie ihr Produkt.",
   // Review
   "ReviewTitle": "Bewerten Sie ihre Unterstützung",
   "ReviewGeneralTags": "Produkt Tags (z.B. 'Auto', 'Audi', 'A4',...):",

@@ -27,7 +27,8 @@ export const call = ({ showDialog, setWaitingForUser, goTo, setLoading, password
     goTo('/call-admin', {
       backPath: '/user-selection',
       backArgs: {
-        password
+        password,
+        backPath: '/',
       }
     })
   })
