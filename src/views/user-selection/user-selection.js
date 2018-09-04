@@ -10,7 +10,7 @@ import authManager from '../../services/auth-manager'
 import UserSelection from './user-selection.jsx'
 
 export const updateClientList = ({ setClients, callClient, selectedClient, setSelectedClient }) => async() => {
-  const clients = callClient.clients.list().filter(client => client.data.available)
+  const clients = callClient.clients.filter(client => client.data.available)
 
   if (!clients.find(client => client === selectedClient)) {
     setSelectedClient(null)
