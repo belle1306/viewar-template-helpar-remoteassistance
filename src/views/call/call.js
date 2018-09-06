@@ -107,13 +107,17 @@ export const saveTrackingMap = ({setLoading, viewarApi: {trackers}}) => async() 
   return featureMap
 }
 
-export const goToNextView = ({admin, setLoading, featureMap, goTo, backPath, backArgs, goToLastView, saveTrackingMap}) => async() => {
+export const goToNextView = ({annotationManager, admin, setLoading, featureMap, goTo, backPath, backArgs, goToLastView, saveTrackingMap}) => async() => {
   if (admin) {
-    goTo('/review', {
-      backPath,
-      backArgs,
-      featureMap,
-    })
+    if (annotationManager.saved.length) {
+      goTo('/review', {
+        backPath,
+        backArgs,
+        featureMap,
+      })
+    } else {
+      goToLastView()
+    }
   } else {
     setLoading(true)
     await saveTrackingMap()
