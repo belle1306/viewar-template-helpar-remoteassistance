@@ -41,7 +41,7 @@ export const updateAnnotation = ({ annotations, annotation, setAnnotation, setAn
   setAnnotation(undefined)
 }
 
-export const saveReview = ({ goToLastView, saveAnnotation, setLoading, showDialog, annotations }) => async() => {
+export const saveReview = ({ featureMap, goToLastView, saveAnnotation, setLoading, showDialog, annotations }) => async() => {
   const unhandledAnnotations = annotations.some(annotation => !annotation.title)
   let save = true
 
@@ -102,7 +102,6 @@ export default compose(
   }),
   lifecycle({
     componentDidMount () {
-      console.log(this.props.backPath, this.props.backArgs)
       this.props.init()
     }
   }),

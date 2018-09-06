@@ -10,15 +10,20 @@ import withRouteParams from '../../services/route-params'
 
 import Call from './Call.jsx'
 
-export const waitForSupportAgent = ({ goToNextView, joinSession, showDialog, connect, history, admin, viewarApi: { appConfig }, setWaitingForSupportAgent, callClient }) => async() => {
+export const waitForSupportAgent = ({goToNextView, joinSession, showDialog, connect, history, admin, viewarApi: {appConfig, trackers}, setWaitingForSupportAgent, callClient}) => async() => {
+  let featureMap
   if (!admin) {
     await connect()
-    await joinSession({userData: { available: true }})
+    await joinSession({userData: {available: true}})
+
+    const tracker = Object.values(trackers)[0]
+    if (tracker && tracker.saveTrackingMap) {
+      featureMap = await tracker.generateTrackingMapId()
+    }
   }
 
-  if(callClient.connected && callClient.session) {
+  if (callClient.connected && callClient.session) {
     syncSubscription = callClient.getData('annotation').subscribe(annotation => {
-      console.log('receiving annotation', annotation)
       annotationManager.setAnnotation(annotation, admin)
     })
 
@@ -33,14 +38,19 @@ export const waitForSupportAgent = ({ goToNextView, joinSession, showDialog, con
     if (!admin) {
       setWaitingForSupportAgent(true)
       callSubscription = callClient.incomingCall.subscribe(async() => {
-        await callClient.answerCall({ syncScene: false })
+        await callClient.answerCall({
+          syncScene: false,
+          data: {
+            featureMap
+          }
+        })
         setWaitingForSupportAgent(false)
       })
     }
   }
 }
 
-export const onTouch = ({ syncAnnotation, setLoading, admin, annotationManager, viewarApi: { simulateTouchRay } }) => async(event) => {
+export const onTouch = ({syncAnnotation, setLoading, admin, annotationManager, viewarApi: {simulateTouchRay}}) => async(event) => {
   setLoading(true)
 
   let x, y
@@ -57,7 +67,7 @@ export const onTouch = ({ syncAnnotation, setLoading, admin, annotationManager, 
 
 }
 
-export const closeAnnotationPicker = ({ syncAnnotation, annotationManager, setShowAnnotationPicker }) => (confirmed) => {
+export const closeAnnotationPicker = ({syncAnnotation, annotationManager, setShowAnnotationPicker}) => (confirmed) => {
   setShowAnnotationPicker(false)
   if (confirmed) {
     syncAnnotation()
@@ -65,15 +75,14 @@ export const closeAnnotationPicker = ({ syncAnnotation, annotationManager, setSh
   }
 }
 
-export const syncAnnotation = ({ annotationManager, callClient, admin }) => () => {
+export const syncAnnotation = ({annotationManager, callClient, admin}) => () => {
   const annotation = admin ? annotationManager.current : annotationManager.currentUser
   if (annotation) {
-    console.log('sending annotation', annotation)
     callClient.sendData('annotation', annotation)
   }
 }
 
-export const goBack = ({ showDialog, goToNextView }) => async() => {
+export const goBack = ({goToNextView, admin, showDialog}) => async() => {
   const {confirmed} = await showDialog('CallAbortQuestion', {
     showCancel: true,
     confirmText: 'CallAbortCall'
@@ -84,7 +93,7 @@ export const goBack = ({ showDialog, goToNextView }) => async() => {
   }
 }
 
-export const saveTrackingMap = ({ setLoading, viewarApi: { trackers } }) => async() => {
+export const saveTrackingMap = ({setLoading, viewarApi: {trackers}}) => async() => {
   setLoading(true)
 
   let featureMap = ''
@@ -98,15 +107,17 @@ export const saveTrackingMap = ({ setLoading, viewarApi: { trackers } }) => asyn
   return featureMap
 }
 
-export const goToNextView = ({ admin, goTo, backPath, backArgs, goToLastView, saveTrackingMap }) => async() => {
+export const goToNextView = ({admin, setLoading, featureMap, goTo, backPath, backArgs, goToLastView, saveTrackingMap}) => async() => {
   if (admin) {
-    const featureMap = await saveTrackingMap()
     goTo('/review', {
       backPath,
       backArgs,
       featureMap,
     })
   } else {
+    setLoading(true)
+    await saveTrackingMap()
+    setLoading(false)
     goToLastView()
   }
 }
@@ -141,7 +152,7 @@ export default compose(
   }),
   lifecycle({
     async componentDidMount() {
-      const { admin, waitForSupportAgent, annotationManager, viewarApi: { cameras, coreInterface } } = this.props
+      const {featureMap, admin, waitForSupportAgent, annotationManager, viewarApi: {cameras, coreInterface}} = this.props
       await annotationManager.reset()
 
       await cameras.arCamera.activate()
@@ -152,7 +163,7 @@ export default compose(
       waitForSupportAgent()
     },
     async componentWillUnmount() {
-      const { admin, callClient, viewarApi: { coreInterface, cameras } } = this.props
+      const {admin, callClient, viewarApi: {coreInterface, cameras}} = this.props
       if (callSubscription) {
         callSubscription.unsubscribe()
       }

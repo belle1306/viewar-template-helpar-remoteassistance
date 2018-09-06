@@ -33,7 +33,9 @@ const joinSession = ({goToLastView, setLoading, callClient, showDialog}) => asyn
       confirmText: 'DialogOK'
     })
     goToLastView()
+    return false
   }
+  return true
 
   setLoading(false)
 }

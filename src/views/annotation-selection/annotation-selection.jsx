@@ -22,7 +22,7 @@ export default ({backPath, search, updateSearch, searchResult, callSupport, open
           {searchResult.map(annotation => <div className={styles.Annotation} key={annotation.id}>
             <div className={styles.Title}>{annotation.title}</div>
             <div className={styles.Tags}>
-              {annotation.tags.map(tag => <Tag key={tag} label={tag} />)}
+              {annotation.tags && annotation.tags.map(tag => <Tag key={tag} label={tag} />)}
             </div>
             <div className={styles.Description}>{annotation.description}</div>
             <Button icon="next" small className={styles.SelectButton} onClick={() => openAnnotation(annotation.id)} />

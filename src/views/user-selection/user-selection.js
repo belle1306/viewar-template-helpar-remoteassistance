@@ -22,9 +22,12 @@ export const updateClientList = ({ setClients, callClient, selectedClient, setSe
 export const call = ({ showDialog, setWaitingForUser, goTo, setLoading, password, callClient, selectedClient }) => async() => {
   const client = selectedClient
 
-  callSubscription = callClient.acceptedCall.subscribe(() => {
+  callSubscription = callClient.acceptedCall.subscribe((args = {}) => {
+    const { data = {} } = args
+    const { featureMap } = data
     setWaitingForUser(false)
     goTo('/call-admin', {
+      featureMap,
       backPath: '/user-selection',
       backArgs: {
         password,
