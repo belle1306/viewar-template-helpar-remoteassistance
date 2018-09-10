@@ -11,7 +11,7 @@
   transition: opacity 500ms linear;
   z-index: 110;
   font-size: 1.2em;
-  background: rgba(0, 0, 0, .6);
+  background: rgba(0, 0, 0, 0.6);
 }
 
 .DialogWrapper.visible {
@@ -56,14 +56,11 @@
   margin: 0;
 }
 
-@media only
-screen and (orientation: portrait) and (max-device-width: 420px) {
-
+@media only screen and (orientation: portrait) and (max-device-width: 420px) {
   .Dialog {
     position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
   }
-
 }

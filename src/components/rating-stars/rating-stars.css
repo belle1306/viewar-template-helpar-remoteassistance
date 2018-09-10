@@ -5,7 +5,8 @@
 .Star {
   width: 20px;
   height: 20px;
-  background: url('../../../assets/images/icons/icon_star_empty.svg') center / cover no-repeat;
+  background: url('../../../assets/images/icons/icon_star_empty.svg') center /
+    cover no-repeat;
   margin-right: 4px;
   transition: all 0.5s ease;
 }

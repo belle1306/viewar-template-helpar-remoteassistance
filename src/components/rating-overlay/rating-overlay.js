@@ -1,5 +1,5 @@
-import { compose } from 'recompose'
+import { compose } from 'recompose';
 
-import RatingOverlay from './rating-overlay.jsx'
+import RatingOverlay from './rating-overlay.jsx';
 
-export default compose()(RatingOverlay)
+export default compose()(RatingOverlay);

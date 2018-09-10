@@ -1,59 +1,78 @@
-import { compose, withHandlers, lifecycle, withProps, withState } from 'recompose'
-import withRouteParams from '../../services/route-params'
-import viewarApi from 'viewar-api'
-import withCallClient from '../../services/call-client'
-import { getUiConfigPath } from '../../utils'
-import { withDialogControls } from '../../services/dialog'
-import { withSetLoading } from '../../services/loading'
-import authManager from '../../services/auth-manager'
+import {
+  compose,
+  withHandlers,
+  lifecycle,
+  withProps,
+  withState,
+} from 'recompose';
+import withRouteParams from '../../services/route-params';
+import viewarApi from 'viewar-api';
+import withCallClient from '../../services/call-client';
+import { getUiConfigPath } from '../../utils';
+import { withDialogControls } from '../../services/dialog';
+import { withSetLoading } from '../../services/loading';
+import authManager from '../../services/auth-manager';
 
-import UserSelection from './user-selection.jsx'
+import UserSelection from './user-selection.jsx';
 
-export const updateClientList = ({ setClients, callClient, selectedClient, setSelectedClient }) => async() => {
-  const clients = callClient.clients.filter(client => client.data.available)
+export const updateClientList = ({
+  setClients,
+  callClient,
+  selectedClient,
+  setSelectedClient,
+}) => async () => {
+  const clients = callClient.clients.filter(client => client.data.available);
 
   if (!clients.find(client => client === selectedClient)) {
-    setSelectedClient(null)
+    setSelectedClient(null);
   }
 
-  setClients(clients)
-}
+  setClients(clients);
+};
 
-export const call = ({ showDialog, setWaitingForUser, goTo, setLoading, password, callClient, selectedClient }) => async() => {
-  const client = selectedClient
+export const call = ({
+  showDialog,
+  setWaitingForUser,
+  goTo,
+  setLoading,
+  password,
+  callClient,
+  selectedClient,
+}) => async () => {
+  const client = selectedClient;
 
   callSubscription = callClient.acceptedCall.subscribe((args = {}) => {
-    const { data = {} } = args
-    const { featureMap } = data
-    setWaitingForUser(false)
+    const { data = {} } = args;
+    const { featureMap } = data;
+    setWaitingForUser(false);
     goTo('/call-admin', {
       featureMap,
       backPath: '/user-selection',
       backArgs: {
         password,
         backPath: '/',
-      }
-    })
-  })
+      },
+    });
+  });
 
   lineBusyCallSubscription = callClient.lineBusy.subscribe(() => {
-    setWaitingForUser(false)
+    setWaitingForUser(false);
     showDialog('UserSelectionLineBusy', {
-      confirmText: 'DialogOK'
-    })
-  })
+      confirmText: 'DialogOK',
+    });
+  });
 
-  setLoading(true)
-  await callClient.call({ id: client.id })
-  setLoading(false)
+  setLoading(true);
+  await callClient.call({ id: client.id });
+  setLoading(false);
 
-  setWaitingForUser(client.id)
-}
+  setWaitingForUser(client.id);
+};
 
-let clientSubscription
-let callSubscription
-let refusedCallSubscription
-let lineBusyCallSubscription
+let clientSubscription;
+let callSubscription;
+let refusedCallSubscription;
+let lineBusyCallSubscription;
 export default compose(
   withCallClient,
   withDialogControls,
@@ -73,30 +92,40 @@ export default compose(
   }),
   lifecycle({
     async componentDidMount() {
-      const { connect, joinSession, callClient, updateClientList, viewarApi: { appConfig }, authManager, password } = this.props
+      const {
+        connect,
+        joinSession,
+        callClient,
+        updateClientList,
+        viewarApi: { appConfig },
+        authManager,
+        password,
+      } = this.props;
 
-      await connect()
-      await joinSession({sessionId: appConfig.appId, password: password})
+      await connect();
+      await joinSession({ sessionId: appConfig.appId, password: password });
 
       if (callClient.connected && callClient.session) {
-        await authManager.login(password)
-        clientSubscription = callClient.clientsUpdate.subscribe(updateClientList)
-        updateClientList()
+        await authManager.login(password);
+        clientSubscription = callClient.clientsUpdate.subscribe(
+          updateClientList
+        );
+        updateClientList();
       }
     },
     componentWillUnmount() {
       if (clientSubscription) {
-        clientSubscription.unsubscribe()
+        clientSubscription.unsubscribe();
       }
       if (callSubscription) {
-        callSubscription.unsubscribe()
+        callSubscription.unsubscribe();
       }
       if (refusedCallSubscription) {
-        refusedCallSubscription.unsubscribe()
+        refusedCallSubscription.unsubscribe();
       }
       if (lineBusyCallSubscription) {
-        lineBusyCallSubscription.unsubscribe()
+        lineBusyCallSubscription.unsubscribe();
       }
     },
   })
-)(UserSelection)
+)(UserSelection);

@@ -1,10 +1,10 @@
-import React from 'react'
-import { compose, pure, lifecycle, withState, withProps } from 'recompose'
-import { withSetLoading } from '../../../services/loading'
+import React from 'react';
+import { compose, pure, lifecycle, withState, withProps } from 'recompose';
+import { withSetLoading } from '../../../services/loading';
 
-import viewarApi from 'viewar-api'
+import viewarApi from 'viewar-api';
 
-import { initTracking, activateARCamera } from '../tracking-utils'
+import { initTracking, activateARCamera } from '../tracking-utils';
 
 export default compose(
   withSetLoading,
@@ -15,15 +15,20 @@ export default compose(
   }),
   lifecycle({
     async componentWillMount() {
-      const { setLoading, initTracking, activateARCamera, goToNext} = this.props
+      const {
+        setLoading,
+        initTracking,
+        activateARCamera,
+        goToNext,
+      } = this.props;
 
-      setLoading(true)
-      await activateARCamera(viewarApi)
-      await initTracking(tracker)
-      setLoading(false)
+      setLoading(true);
+      await activateARCamera(viewarApi);
+      await initTracking(tracker);
+      setLoading(false);
 
-      goToNext()
-    }
+      goToNext();
+    },
   }),
-  pure,
-)(() => <div></div>)
+  pure
+)(() => <div />);

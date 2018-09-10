@@ -1,63 +1,77 @@
-import { withRouter } from 'react-router'
-import { compose, getContext, withHandlers } from 'recompose'
-import PropTypes from 'prop-types'
-import { withSetLoading } from './loading'
-import { withDialogControls } from './dialog'
-import withRouterProps from '../services/route-params'
-import viewarApi from 'viewar-api'
+import { withRouter } from 'react-router';
+import { compose, getContext, withHandlers } from 'recompose';
+import PropTypes from 'prop-types';
+import { withSetLoading } from './loading';
+import { withDialogControls } from './dialog';
+import withRouterProps from '../services/route-params';
+import viewarApi from 'viewar-api';
 
-const connect = ({goToLastView, showDialog, setLoading, callClient}) => async() => {
-  setLoading(true, {message: 'MessageConnect'})
-  await callClient.connect()
-  setLoading(false)
+const connect = ({
+  goToLastView,
+  showDialog,
+  setLoading,
+  callClient,
+}) => async () => {
+  setLoading(true, { message: 'MessageConnect' });
+  await callClient.connect();
+  setLoading(false);
 
   if (!callClient.connected) {
     await showDialog('MessageConnectionFailed', {
-      confirmText: 'DialogOK'
-    })
-    goToLastView()
-    return false
+      confirmText: 'DialogOK',
+    });
+    goToLastView();
+    return false;
   }
-}
+};
 
-const joinSession = ({goToLastView, setLoading, callClient, showDialog}) => async(sessionArgs = {}) => {
-  const {sessionId = viewarApi.appConfig.appId, password, userData} = sessionArgs
+const joinSession = ({
+  goToLastView,
+  setLoading,
+  callClient,
+  showDialog,
+}) => async (sessionArgs = {}) => {
+  const {
+    sessionId = viewarApi.appConfig.appId,
+    password,
+    userData,
+  } = sessionArgs;
 
-  setLoading(true, {message: 'MessageJoin'})
-  await callClient.join({sessionId, password, userData})
-  setLoading(false)
+  setLoading(true, { message: 'MessageJoin' });
+  await callClient.join({ sessionId, password, userData });
+  setLoading(false);
 
   if (!callClient.session) {
-    setLoading(false)
+    setLoading(false);
     await showDialog('MessageJoinFailed', {
-      confirmText: 'DialogOK'
-    })
-    goToLastView()
-    return false
+      confirmText: 'DialogOK',
+    });
+    goToLastView();
+    return false;
   }
-  return true
+  return true;
 
-  setLoading(false)
-}
+  setLoading(false);
+};
 
-const disconnect = ({callClient}) => () => {
+const disconnect = ({ callClient }) => () => {
   if (callClient.session) {
-    callClient.leave()
+    callClient.leave();
   }
-}
+};
 
 export const withConnect = compose(
   withRouterProps(),
   withDialogControls,
   withSetLoading,
   getContext({
-    callClient: PropTypes.object
+    callClient: PropTypes.object,
   }),
   withHandlers({
     connect,
     disconnect,
     joinSession,
-  }),
-)
+  })
+);
 
-export default withConnect
+export default withConnect;

@@ -1,5 +1,5 @@
-import { compose, withState } from 'recompose'
+import { compose, withState } from 'recompose';
 
-import TextArea from './text-area.jsx'
+import TextArea from './text-area.jsx';
 
-export default compose()(TextArea)
+export default compose()(TextArea);

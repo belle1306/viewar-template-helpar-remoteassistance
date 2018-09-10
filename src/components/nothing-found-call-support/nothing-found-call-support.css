@@ -1,13 +1,13 @@
 .Call {
-    flex: 0 0 auto;
-    display: flex;
-    flex-flow: column;
-    align-items: center;
+  flex: 0 0 auto;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
 }
 
 .CallMessage {
 }
 
 .CallButton {
-    margin: 10px;
+  margin: 10px;
 }

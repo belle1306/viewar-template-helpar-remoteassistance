@@ -1,5 +1,5 @@
-import { compose } from 'recompose'
+import { compose } from 'recompose';
 
-import Toolbar from './toolbar.jsx'
+import Toolbar from './toolbar.jsx';
 
-export default compose()(Toolbar)
+export default compose()(Toolbar);

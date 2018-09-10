@@ -1,26 +1,43 @@
-import React from 'react'
-import cx from 'classnames'
+import React from 'react';
+import cx from 'classnames';
 
-import { translate } from '../../../services'
+import { translate } from '../../../services';
 
-import Button from '../../../components/button/button'
-import Toolbar from '../../../components/toolbar/toolbar'
-import Hint from '../../../components/hint/hint'
-import HeaderBar from '../../../components/header-bar/header-bar'
+import Button from '../../../components/button/button';
+import Toolbar from '../../../components/toolbar/toolbar';
+import Hint from '../../../components/hint/hint';
+import HeaderBar from '../../../components/header-bar/header-bar';
 
-import styles from '../calibration.css'
+import styles from '../calibration.css';
 
-export default ({confirmGround, scaleUp, scaleDown, tracking}) =>
+export default ({ confirmGround, scaleUp, scaleDown, tracking }) => (
   <div className={styles.Container}>
     <HeaderBar goBack />
     <Hint className={cx(tracking && styles.Hint)}>
-      {!tracking ? translate('CalibrationFilmFloor') : translate('CalibrationScaleGround')}
+      {!tracking
+        ? translate('CalibrationFilmFloor')
+        : translate('CalibrationScaleGround')}
     </Hint>
     <Toolbar position="left">
-      <Button hidden={!tracking} icon={'confirmGround'} onClick={confirmGround}/>
+      <Button
+        hidden={!tracking}
+        icon={'confirmGround'}
+        onClick={confirmGround}
+      />
     </Toolbar>
     <Toolbar position="right">
-      <Button hidden={!tracking} icon={'scaleGroundDown'} className={styles.Button} onClick={scaleDown}/>
-      <Button hidden={!tracking} icon={'scaleGroundUp'} className={styles.Button} onClick={scaleUp}/>
+      <Button
+        hidden={!tracking}
+        icon={'scaleGroundDown'}
+        className={styles.Button}
+        onClick={scaleDown}
+      />
+      <Button
+        hidden={!tracking}
+        icon={'scaleGroundUp'}
+        className={styles.Button}
+        onClick={scaleUp}
+      />
     </Toolbar>
   </div>
+);

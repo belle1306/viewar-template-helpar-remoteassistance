@@ -1,16 +1,26 @@
-import React from 'react'
-import { compose, branch, renderComponent, withProps, withHandlers } from 'recompose'
-import withRouteParams from '../../services/route-params'
+import React from 'react';
+import {
+  compose,
+  branch,
+  renderComponent,
+  withProps,
+  withHandlers,
+} from 'recompose';
+import withRouteParams from '../../services/route-params';
 
-import NoCalibration from './tracker/no-calibration'
-import GroundConfirmCalibration from './tracker/ground-confirm-calibration'
-import FloorOffsetCalibration from './tracker/floor-offset-calibration'
-import TrackingMapCalibration from './tracker/tracking-map-calibration'
+import NoCalibration from './tracker/no-calibration';
+import GroundConfirmCalibration from './tracker/ground-confirm-calibration';
+import FloorOffsetCalibration from './tracker/floor-offset-calibration';
+import TrackingMapCalibration from './tracker/tracking-map-calibration';
 
-import viewarApi from 'viewar-api'
+import viewarApi from 'viewar-api';
 
-import { getTracker, usesTrackingMap, usesFloorOffsetModel, usesSimpleGroundConfirm } from './tracking-utils'
-
+import {
+  getTracker,
+  usesTrackingMap,
+  usesFloorOffsetModel,
+  usesSimpleGroundConfirm,
+} from './tracking-utils';
 
 export default compose(
   withProps({
@@ -21,25 +31,34 @@ export default compose(
   }),
   withRouteParams(),
   withHandlers({
-    goToNext: ({goTo, nextView, annotationId, backPath, backArgs}) => () => {
+    goToNext: ({ goTo, nextView, annotationId, backPath, backArgs }) => () => {
       goTo(nextView, {
         annotationId,
         backPath,
         backArgs,
-      })
+      });
     },
   }),
-  branch(({getTracker, usesTrackingMap}) => usesTrackingMap(getTracker(viewarApi)),
-    renderComponent(({getTracker, ...props}) =>
+  branch(
+    ({ getTracker, usesTrackingMap }) => usesTrackingMap(getTracker(viewarApi)),
+    renderComponent(({ getTracker, ...props }) => (
       <TrackingMapCalibration tracker={getTracker(viewarApi)} {...props} />
-  )),
-  branch(({getTracker, usesFloorOffsetModel}) => usesFloorOffsetModel(getTracker(viewarApi)),
-    renderComponent(({getTracker, ...props}) =>
+    ))
+  ),
+  branch(
+    ({ getTracker, usesFloorOffsetModel }) =>
+      usesFloorOffsetModel(getTracker(viewarApi)),
+    renderComponent(({ getTracker, ...props }) => (
       <FloorOffsetCalibration tracker={getTracker(viewarApi)} {...props} />
-  )),
-  branch(({getTracker, usesSimpleGroundConfirm}) => usesSimpleGroundConfirm(getTracker(viewarApi)),
-    renderComponent(({getTracker, ...props}) =>
+    ))
+  ),
+  branch(
+    ({ getTracker, usesSimpleGroundConfirm }) =>
+      usesSimpleGroundConfirm(getTracker(viewarApi)),
+    renderComponent(({ getTracker, ...props }) => (
       <GroundConfirmCalibration tracker={getTracker(viewarApi)} {...props} />
-  )),
-)(({getTracker, ...props}) => <NoCalibration tracker={getTracker(viewarApi)} {...props}/>)
-
+    ))
+  )
+)(({ getTracker, ...props }) => (
+  <NoCalibration tracker={getTracker(viewarApi)} {...props} />
+));

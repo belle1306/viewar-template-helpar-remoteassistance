@@ -1,15 +1,15 @@
 .Container {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2em;
-    text-align: center;
-    line-height: 1.1em;
-    background: white;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    margin: 20px;
-    padding: 20px;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2em;
+  text-align: center;
+  line-height: 1.1em;
+  background: white;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: 20px;
+  padding: 20px;
 }

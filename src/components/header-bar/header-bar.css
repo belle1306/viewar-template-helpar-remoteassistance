@@ -7,7 +7,7 @@
 }
 
 .Button {
-  transition: 0.5s cubic-bezier(.38, 1.38, .73, .98);
+  transition: 0.5s cubic-bezier(0.38, 1.38, 0.73, 0.98);
   transition-property: transform, opacity;
 }
 

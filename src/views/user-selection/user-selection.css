@@ -58,7 +58,7 @@
 }
 
 .WaitForUserOverlay {
-  background: rgba(0, 0, 0, .6);
+  background: rgba(0, 0, 0, 0.6);
   position: absolute;
   left: 0;
   top: 0;
@@ -90,10 +90,7 @@
   font-size: 1.4em;
 }
 
-
-@media only
-screen and (orientation: portrait) and (max-device-width: 420px) {
-
+@media only screen and (orientation: portrait) and (max-device-width: 420px) {
   .Client {
     flex: 0 0 auto;
     margin-right: 0;
@@ -103,5 +100,4 @@ screen and (orientation: portrait) and (max-device-width: 420px) {
   .ClientList {
     flex-flow: column;
   }
-
 }

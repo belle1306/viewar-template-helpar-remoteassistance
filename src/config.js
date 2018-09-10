@@ -1,3 +1,3 @@
 export default {
-  serverUrl: '',    // Server url to connect to.
-}
+  serverUrl: '', // Server url to connect to.
+};

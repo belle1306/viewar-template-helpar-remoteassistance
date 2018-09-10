@@ -7,19 +7,19 @@ import PhonePortraitIcon from '../../../assets/images/animations/tracking_animat
 import TabletPortraitIcon from '../../../assets/images/animations/tracking_animation_tablet_portrait.gif';
 
 const landscapeDeviceTypeIcons = {
-  'phone' : PhoneLandscapeIcon,
-  'tablet' : TabletLandscapeIcon,
-}
+  phone: PhoneLandscapeIcon,
+  tablet: TabletLandscapeIcon,
+};
 
 const portraitDeviceTypeIcons = {
-  'phone' : PhonePortraitIcon,
-  'tablet' : TabletPortraitIcon,
-}
+  phone: PhonePortraitIcon,
+  tablet: TabletPortraitIcon,
+};
 
 function getIcon(deviceType) {
   const isLandscape = window.innerHeight < window.innerWidth;
 
-  if(isLandscape) {
+  if (isLandscape) {
     return landscapeDeviceTypeIcons[deviceType];
   } else {
     return portraitDeviceTypeIcons[deviceType];
@@ -28,12 +28,12 @@ function getIcon(deviceType) {
 
 function getStyle(deviceType) {
   return {
-    background: `url(${getIcon(deviceType)}) bottom / contain no-repeat`
+    background: `url(${getIcon(deviceType)}) bottom / contain no-repeat`,
   };
 }
 
-
-export const CalibratonInstruction = ({ deviceType = 'tablet' }) =>
+export const CalibratonInstruction = ({ deviceType = 'tablet' }) => (
   <div className={styles.Container}>
     <div style={getStyle(deviceType)} className={styles.DevicePictogram} />
   </div>
+);

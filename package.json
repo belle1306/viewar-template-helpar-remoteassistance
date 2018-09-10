@@ -10,7 +10,7 @@
     "start": "webpack-dev-server --mode development --env dev-core --open --config ./config/webpack.config.js",
     "start:core": "npm run start",
     "start:mock": "webpack-dev-server --mode development --env dev-mock --open --config ./config/webpack.config.js",
-    "format": "pretty-quick --write",
+    "format": "prettier --single-quote --trailing-comma es5 'src/**/*.{js,jsx,css,json}' --write",
     "precommit": "pretty-quick --staged --write"
   },
   "author": "Karl Hofer <kh@viewar.com>",

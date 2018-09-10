@@ -1,62 +1,84 @@
-import pubSub from './pub-sub'
+import pubSub from './pub-sub';
 
 import {
   compose,
   withHandlers,
   withProps,
   withState,
-  lifecycle
-} from 'recompose'
+  lifecycle,
+} from 'recompose';
 
-export const load = ({setMessage, setVisible, setShowConfirm, setShowCancel, setConfirmText, setCancelText, setWithInput, setInput, onKeyDown, onConfirm, onCancel, setInputPlaceholder, setInputPassword}) =>
-  ({message, showConfirm, showCancel, confirmText, cancelText, withInput, input, inputPlaceholder, inputPassword}) => {
-    setMessage(message)
-    setShowConfirm(showConfirm)
-    setShowCancel(showCancel)
-    setConfirmText(confirmText)
-    setCancelText(cancelText)
-    setWithInput(withInput)
-    setInput(input)
-    setVisible(true)
-    setInputPlaceholder(inputPlaceholder)
-    setInputPassword(inputPassword)
+export const load = ({
+  setMessage,
+  setVisible,
+  setShowConfirm,
+  setShowCancel,
+  setConfirmText,
+  setCancelText,
+  setWithInput,
+  setInput,
+  onKeyDown,
+  onConfirm,
+  onCancel,
+  setInputPlaceholder,
+  setInputPassword,
+}) => ({
+  message,
+  showConfirm,
+  showCancel,
+  confirmText,
+  cancelText,
+  withInput,
+  input,
+  inputPlaceholder,
+  inputPassword,
+}) => {
+  setMessage(message);
+  setShowConfirm(showConfirm);
+  setShowCancel(showCancel);
+  setConfirmText(confirmText);
+  setCancelText(cancelText);
+  setWithInput(withInput);
+  setInput(input);
+  setVisible(true);
+  setInputPlaceholder(inputPlaceholder);
+  setInputPassword(inputPassword);
 
-    keyDownFunction = (e) => onKeyDown(e, onConfirm, onCancel)
-    document.addEventListener('keydown', keyDownFunction)
-  }
+  keyDownFunction = e => onKeyDown(e, onConfirm, onCancel);
+  document.addEventListener('keydown', keyDownFunction);
+};
 
-export const onConfirm = ({prefix, setVisible, input}) => () => {
-  setVisible(false)
-  pubSub.publish(prefix + 'closeDialog', {confirmed: true, input})
+export const onConfirm = ({ prefix, setVisible, input }) => () => {
+  setVisible(false);
+  pubSub.publish(prefix + 'closeDialog', { confirmed: true, input });
 
-  document.removeEventListener('keydown', keyDownFunction)
-  keyDownFunction = null
-}
+  document.removeEventListener('keydown', keyDownFunction);
+  keyDownFunction = null;
+};
 
-export const onCancel = ({prefix, setVisible}) => () => {
-  setVisible(false)
-  pubSub.publish(prefix + 'closeDialog', {cancelled: true})
+export const onCancel = ({ prefix, setVisible }) => () => {
+  setVisible(false);
+  pubSub.publish(prefix + 'closeDialog', { cancelled: true });
 
-  document.removeEventListener('keydown', keyDownFunction)
-  keyDownFunction = null
-}
-
+  document.removeEventListener('keydown', keyDownFunction);
+  keyDownFunction = null;
+};
 
 export const onKeyDown = () => (e, onConfirm, onCancel) => {
-  if(e) {
+  if (e) {
     if (e.key === 'Enter') {
-      onConfirm()
+      onConfirm();
     } else if (e.key === 'Escape') {
-      onCancel()
+      onCancel();
     }
   }
-}
+};
 
-let keyDownFunction = null
+let keyDownFunction = null;
 export const withDialog = (prefix = '') =>
   compose(
     withProps({
-      prefix
+      prefix,
     }),
     withState('message', 'setMessage', false),
     withState('showConfirm', 'setShowConfirm', true),
@@ -79,21 +101,42 @@ export const withDialog = (prefix = '') =>
       load,
     }),
     lifecycle({
-      async componentDidMount () {
-        pubSub.subscribe(prefix + 'showDialog', this.props.load)
-      }
+      async componentDidMount() {
+        pubSub.subscribe(prefix + 'showDialog', this.props.load);
+      },
     })
-  )
+  );
 
-const showDialog = ({pubSub}) => (message, args = {}, prefix = '') => {
-  const {showConfirm = true, showCancel = false, confirmText = 'DialogConfirm', cancelText = 'DialogCancel', withInput = false, input, inputPlaceholder, inputPassword} = args
-  pubSub.publish(prefix + 'showDialog', {message, showConfirm, showCancel, confirmText, cancelText, withInput, input, inputPlaceholder, inputPassword})
-  return new Promise(resolve => pubSub.subscribe(prefix + 'closeDialog', resolve))
-}
+const showDialog = ({ pubSub }) => (message, args = {}, prefix = '') => {
+  const {
+    showConfirm = true,
+    showCancel = false,
+    confirmText = 'DialogConfirm',
+    cancelText = 'DialogCancel',
+    withInput = false,
+    input,
+    inputPlaceholder,
+    inputPassword,
+  } = args;
+  pubSub.publish(prefix + 'showDialog', {
+    message,
+    showConfirm,
+    showCancel,
+    confirmText,
+    cancelText,
+    withInput,
+    input,
+    inputPlaceholder,
+    inputPassword,
+  });
+  return new Promise(resolve =>
+    pubSub.subscribe(prefix + 'closeDialog', resolve)
+  );
+};
 
 export const withDialogControls = compose(
-  withProps({pubSub}),
+  withProps({ pubSub }),
   withHandlers({
     showDialog,
   })
-)
+);

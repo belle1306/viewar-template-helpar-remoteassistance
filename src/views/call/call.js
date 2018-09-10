@@ -1,134 +1,180 @@
-import { compose, withHandlers, withState, lifecycle, withProps } from 'recompose'
-import withCallClient from '../../services/call-client'
-import viewarApi from 'viewar-api'
-import { getUiConfigPath } from '../../utils'
-import { withDialogControls } from '../../services/dialog'
-import { withSetLoading } from '../../services/loading'
-import annotationManager from '../../services/annotation-manager'
-import { translate } from '../../services'
-import withRouteParams from '../../services/route-params'
+import {
+  compose,
+  withHandlers,
+  withState,
+  lifecycle,
+  withProps,
+} from 'recompose';
+import withCallClient from '../../services/call-client';
+import viewarApi from 'viewar-api';
+import { getUiConfigPath } from '../../utils';
+import { withDialogControls } from '../../services/dialog';
+import { withSetLoading } from '../../services/loading';
+import annotationManager from '../../services/annotation-manager';
+import { translate } from '../../services';
+import withRouteParams from '../../services/route-params';
 
-import Call from './Call.jsx'
+import Call from './Call.jsx';
 
-export const waitForSupportAgent = ({goToNextView, joinSession, showDialog, connect, history, admin, viewarApi: {appConfig, trackers}, setWaitingForSupportAgent, callClient}) => async() => {
-  let featureMap
+export const waitForSupportAgent = ({
+  goToNextView,
+  joinSession,
+  showDialog,
+  connect,
+  history,
+  admin,
+  viewarApi: { appConfig, trackers },
+  setWaitingForSupportAgent,
+  callClient,
+}) => async () => {
+  let featureMap;
   if (!admin) {
-    await connect()
-    await joinSession({userData: {available: true}})
+    await connect();
+    await joinSession({ userData: { available: true } });
 
-    const tracker = Object.values(trackers)[0]
+    const tracker = Object.values(trackers)[0];
     if (tracker && tracker.saveTrackingMap) {
-      featureMap = await tracker.generateTrackingMapId()
+      featureMap = await tracker.generateTrackingMapId();
     }
   }
 
   if (callClient.connected && callClient.session) {
-    syncSubscription = callClient.getData('annotation').subscribe(annotation => {
-      annotationManager.setAnnotation(annotation, admin)
-    })
+    syncSubscription = callClient
+      .getData('annotation')
+      .subscribe(annotation => {
+        annotationManager.setAnnotation(annotation, admin);
+      });
 
-    endCallSubscription = callClient.endedCall.subscribe(async() => {
+    endCallSubscription = callClient.endedCall.subscribe(async () => {
       await showDialog('MessageCallEnded', {
-        confirmText: 'DialogOK'
-      })
+        confirmText: 'DialogOK',
+      });
 
-      goToNextView()
-    })
+      goToNextView();
+    });
 
     if (!admin) {
-      setWaitingForSupportAgent(true)
-      callSubscription = callClient.incomingCall.subscribe(async() => {
+      setWaitingForSupportAgent(true);
+      callSubscription = callClient.incomingCall.subscribe(async () => {
         await callClient.answerCall({
           syncScene: false,
           data: {
-            featureMap
-          }
-        })
-        setWaitingForSupportAgent(false)
-      })
+            featureMap,
+          },
+        });
+        setWaitingForSupportAgent(false);
+      });
     }
   }
-}
+};
 
-export const onTouch = ({syncAnnotation, setLoading, admin, annotationManager, viewarApi: {simulateTouchRay}}) => async(event) => {
-  setLoading(true)
+export const onTouch = ({
+  syncAnnotation,
+  setLoading,
+  admin,
+  annotationManager,
+  viewarApi: { simulateTouchRay },
+}) => async event => {
+  setLoading(true);
 
-  let x, y
+  let x, y;
   if (event.type === 'click') {
-    x = event.clientX / event.target.offsetWidth
-    y = event.clientY / event.target.offsetHeight
+    x = event.clientX / event.target.offsetWidth;
+    y = event.clientY / event.target.offsetHeight;
   }
 
   if (x !== undefined && y !== undefined) {
-    await annotationManager.setTouchAnnotation({x, y}, true)
-    syncAnnotation()
+    await annotationManager.setTouchAnnotation({ x, y }, true);
+    syncAnnotation();
   }
-  setLoading(false)
+  setLoading(false);
+};
 
-}
-
-export const closeAnnotationPicker = ({syncAnnotation, annotationManager, setShowAnnotationPicker}) => (confirmed) => {
-  setShowAnnotationPicker(false)
+export const closeAnnotationPicker = ({
+  syncAnnotation,
+  annotationManager,
+  setShowAnnotationPicker,
+}) => confirmed => {
+  setShowAnnotationPicker(false);
   if (confirmed) {
-    syncAnnotation()
-    annotationManager.saveAnnotation()
+    syncAnnotation();
+    annotationManager.saveAnnotation();
   }
-}
+};
 
-export const syncAnnotation = ({annotationManager, callClient, admin}) => () => {
-  const annotation = admin ? annotationManager.current : annotationManager.currentUser
+export const syncAnnotation = ({
+  annotationManager,
+  callClient,
+  admin,
+}) => () => {
+  const annotation = admin
+    ? annotationManager.current
+    : annotationManager.currentUser;
   if (annotation) {
-    callClient.sendData('annotation', annotation)
+    callClient.sendData('annotation', annotation);
   }
-}
+};
 
-export const goBack = ({goToNextView, admin, showDialog}) => async() => {
-  const {confirmed} = await showDialog('CallAbortQuestion', {
+export const goBack = ({ goToNextView, admin, showDialog }) => async () => {
+  const { confirmed } = await showDialog('CallAbortQuestion', {
     showCancel: true,
-    confirmText: 'CallAbortCall'
-  })
+    confirmText: 'CallAbortCall',
+  });
 
   if (confirmed) {
-    goToNextView()
+    goToNextView();
   }
-}
+};
 
-export const saveTrackingMap = ({setLoading, viewarApi: {trackers}}) => async() => {
-  setLoading(true)
+export const saveTrackingMap = ({
+  setLoading,
+  viewarApi: { trackers },
+}) => async () => {
+  setLoading(true);
 
-  let featureMap = ''
-  const tracker = Object.values(trackers)[0]
+  let featureMap = '';
+  const tracker = Object.values(trackers)[0];
   if (tracker && tracker.saveTrackingMap) {
-    featureMap = await tracker.saveTrackingMap()
+    featureMap = await tracker.saveTrackingMap();
   }
 
-  setLoading(false)
+  setLoading(false);
 
-  return featureMap
-}
+  return featureMap;
+};
 
-export const goToNextView = ({annotationManager, admin, setLoading, featureMap, goTo, backPath, backArgs, goToLastView, saveTrackingMap}) => async() => {
+export const goToNextView = ({
+  annotationManager,
+  admin,
+  setLoading,
+  featureMap,
+  goTo,
+  backPath,
+  backArgs,
+  goToLastView,
+  saveTrackingMap,
+}) => async () => {
   if (admin) {
     if (annotationManager.saved.length) {
       goTo('/review', {
         backPath,
         backArgs,
         featureMap,
-      })
+      });
     } else {
-      goToLastView()
+      goToLastView();
     }
   } else {
-    setLoading(true)
-    await saveTrackingMap()
-    setLoading(false)
-    goToLastView()
+    setLoading(true);
+    await saveTrackingMap();
+    setLoading(false);
+    goToLastView();
   }
-}
+};
 
-let syncSubscription
-let callSubscription
-let endCallSubscription
+let syncSubscription;
+let callSubscription;
+let endCallSubscription;
 export default compose(
   withCallClient,
   withDialogControls,
@@ -156,37 +202,47 @@ export default compose(
   }),
   lifecycle({
     async componentDidMount() {
-      const {featureMap, admin, waitForSupportAgent, annotationManager, viewarApi: {cameras, coreInterface}} = this.props
-      await annotationManager.reset()
+      const {
+        featureMap,
+        admin,
+        waitForSupportAgent,
+        annotationManager,
+        viewarApi: { cameras, coreInterface },
+      } = this.props;
+      await annotationManager.reset();
 
-      await cameras.arCamera.activate()
+      await cameras.arCamera.activate();
       if (!admin) {
-        await coreInterface.call('setPointCloudVisibility', true, true)
+        await coreInterface.call('setPointCloudVisibility', true, true);
       }
 
-      waitForSupportAgent()
+      waitForSupportAgent();
     },
     async componentWillUnmount() {
-      const {admin, callClient, viewarApi: {coreInterface, cameras}} = this.props
+      const {
+        admin,
+        callClient,
+        viewarApi: { coreInterface, cameras },
+      } = this.props;
       if (callSubscription) {
-        callSubscription.unsubscribe()
+        callSubscription.unsubscribe();
       }
       if (syncSubscription) {
-        syncSubscription.unsubscribe()
+        syncSubscription.unsubscribe();
       }
       if (endCallSubscription) {
-        endCallSubscription.unsubscribe()
+        endCallSubscription.unsubscribe();
       }
 
       if (!admin) {
-        await coreInterface.call('setPointCloudVisibility', true, true)
-        await cameras.perspectiveCamera.activate()
+        await coreInterface.call('setPointCloudVisibility', true, true);
+        await cameras.perspectiveCamera.activate();
       }
 
-      callClient.endCall()
+      callClient.endCall();
       if (!admin) {
-        callClient.leave()
+        callClient.leave();
       }
-    }
+    },
   })
-)(Call)
+)(Call);

@@ -116,7 +116,7 @@
   bottom: 0;
   line-height: 2em;
   color: white;
-  background: rgba(0,0,0,.8);
+  background: rgba(0, 0, 0, 0.8);
   padding: 6px 4px;
   overflow: hidden;
   white-space: nowrap;
@@ -129,11 +129,8 @@
   z-index: 70;
 }
 
-@media only
-screen and (orientation: portrait) and (max-device-width: 420px) {
-
+@media only screen and (orientation: portrait) and (max-device-width: 420px) {
   .Annotation {
     flex: 0 0 calc(33% - 12px);
   }
-
 }

@@ -1,79 +1,112 @@
-import { compose, withHandlers, lifecycle, withProps, withState } from 'recompose'
-import viewarApi from 'viewar-api'
-import { getUiConfigPath } from '../../utils'
-import { withDialogControls } from '../../services/dialog'
-import { withSetLoading } from '../../services/loading'
-import withRouteParams from '../../services/route-params'
-import annotationDb from '../../services/annotation-db'
-import annotationManager from '../../services/annotation-manager'
+import {
+  compose,
+  withHandlers,
+  lifecycle,
+  withProps,
+  withState,
+} from 'recompose';
+import viewarApi from 'viewar-api';
+import { getUiConfigPath } from '../../utils';
+import { withDialogControls } from '../../services/dialog';
+import { withSetLoading } from '../../services/loading';
+import withRouteParams from '../../services/route-params';
+import annotationDb from '../../services/annotation-db';
+import annotationManager from '../../services/annotation-manager';
 
-import Review from './review.jsx'
+import Review from './review.jsx';
 
-export const init = ({setLoading, annotationDb, setAnnotations}) => async () => {
-  const annotations = annotationManager.saved
-  setAnnotations(annotations)
-}
+export const init = ({
+  setLoading,
+  annotationDb,
+  setAnnotations,
+}) => async () => {
+  const annotations = annotationManager.saved;
+  setAnnotations(annotations);
+};
 
-export const removeAnnotation = ({ annotations, setAnnotations }) => (annotation) => {
-  const index = annotations.findIndex(entry => entry.id === annotation.id)
+export const removeAnnotation = ({
+  annotations,
+  setAnnotations,
+}) => annotation => {
+  const index = annotations.findIndex(entry => entry.id === annotation.id);
   if (index !== -1) {
-    annotations.splice(index, 1)
-    setAnnotations(annotations)
+    annotations.splice(index, 1);
+    setAnnotations(annotations);
   }
-}
+};
 
-export const createTag = ({tags, setTags, tag, setTag}) => () => {
+export const createTag = ({ tags, setTags, tag, setTag }) => () => {
   if (tags.indexOf(tag) === -1 && tag) {
-    tags.push(tag)
-    setTags(tags)
+    tags.push(tag);
+    setTags(tags);
   }
-  setTag('')
-}
+  setTag('');
+};
 
-export const removeTag = ({setTags, tags}) => (tag) => {
-  const index = tags.indexOf(tag)
-  tags.splice(index, 1)
-  setTags(tags)
-}
+export const removeTag = ({ setTags, tags }) => tag => {
+  const index = tags.indexOf(tag);
+  tags.splice(index, 1);
+  setTags(tags);
+};
 
-export const updateAnnotation = ({ annotations, annotation, setAnnotation, setAnnotations }) => (details) => {
-  Object.assign(annotation, details)
-  setAnnotation(undefined)
-}
+export const updateAnnotation = ({
+  annotations,
+  annotation,
+  setAnnotation,
+  setAnnotations,
+}) => details => {
+  Object.assign(annotation, details);
+  setAnnotation(undefined);
+};
 
-export const saveReview = ({ featureMap, goToLastView, saveAnnotation, setLoading, showDialog, annotations }) => async() => {
-  const unhandledAnnotations = annotations.some(annotation => !annotation.title)
-  let save = true
+export const saveReview = ({
+  featureMap,
+  goToLastView,
+  saveAnnotation,
+  setLoading,
+  showDialog,
+  annotations,
+}) => async () => {
+  const unhandledAnnotations = annotations.some(
+    annotation => !annotation.title
+  );
+  let save = true;
 
   if (unhandledAnnotations) {
     const { confirmed } = await showDialog('ReviewContinueSaving', {
       confirmText: 'Save',
-      showCancel: true
-    })
+      showCancel: true,
+    });
 
-    save = confirmed
+    save = confirmed;
   }
 
   if (save) {
-    setLoading(true)
+    setLoading(true);
 
-    for (let annotation of annotations.filter(annotation => !!annotation.title)) {
-      await saveAnnotation(annotation)
+    for (let annotation of annotations.filter(
+      annotation => !!annotation.title
+    )) {
+      await saveAnnotation(annotation);
     }
 
-    setLoading(false)
-    goToLastView()
+    setLoading(false);
+    goToLastView();
   }
-}
+};
 
-export const saveAnnotation = ({ featureMap, annotationDb, tags }) => async(annotation) => {
+export const saveAnnotation = ({
+  featureMap,
+  annotationDb,
+  tags,
+}) => async annotation => {
   Object.assign(annotation, {
     productTags: tags,
     featureMap: featureMap || '',
-  })
+  });
 
-  await annotationDb.create(annotation)
-}
+  await annotationDb.create(annotation);
+};
 
 export default compose(
   withDialogControls,
@@ -101,8 +134,8 @@ export default compose(
     updateAnnotation,
   }),
   lifecycle({
-    componentDidMount () {
-      this.props.init()
-    }
-  }),
-)(Review)
+    componentDidMount() {
+      this.props.init();
+    },
+  })
+)(Review);

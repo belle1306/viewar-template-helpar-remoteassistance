@@ -1,10 +1,10 @@
-import firebase from 'firebase/app'
+import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
 
-import { CONFIG_DEV, CONFIG_PROD } from './constants'
+import { CONFIG_DEV, CONFIG_PROD } from './constants';
 
-const config = process.env.NODE_ENV === 'production' ? CONFIG_PROD : CONFIG_DEV
+const config = process.env.NODE_ENV === 'production' ? CONFIG_PROD : CONFIG_DEV;
 
 if (!firebase.apps.length) {
   firebase.initializeApp(config);
@@ -13,7 +13,4 @@ if (!firebase.apps.length) {
 const db = firebase.database();
 const auth = firebase.auth();
 
-export {
-  db,
-  auth,
-}
+export { db, auth };

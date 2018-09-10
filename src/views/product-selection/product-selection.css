@@ -79,7 +79,8 @@
 .NoResultImage {
   width: 60px;
   height: 60px;
-  background: url('../../../assets/images/icons/icon_arrow_up.svg') center / contain no-repeat;
+  background: url('../../../assets/images/icons/icon_arrow_up.svg') center /
+    contain no-repeat;
   margin-bottom: 16px;
 }
 

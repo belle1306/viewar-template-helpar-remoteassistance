@@ -1,21 +1,23 @@
-import { auth } from './firebase'
+import { auth } from './firebase';
 
 const createAuth = () => {
-  let user = null
+  let user = null;
 
-  const createUser = (email, password) => auth.createUserWithEmailAndPassword(email, password)
+  const createUser = (email, password) =>
+    auth.createUserWithEmailAndPassword(email, password);
 
-  const signIn = (email, password) => auth.signInWithEmailAndPassword(email, password)
+  const signIn = (email, password) =>
+    auth.signInWithEmailAndPassword(email, password);
 
-  const signOut = () => auth.signOut()
+  const signOut = () => auth.signOut();
 
-  const resetPassword = (email) => auth.sendPasswordResetEmail(email)
+  const resetPassword = email => auth.sendPasswordResetEmail(email);
 
-  const changePassword = (password) => auth.currentUser.updatePassword(password)
+  const changePassword = password => auth.currentUser.updatePassword(password);
 
   auth.onAuthStateChanged(newUser => {
-    user = newUser
-  })
+    user = newUser;
+  });
 
   return {
     createUser,
@@ -24,9 +26,13 @@ const createAuth = () => {
     resetPassword,
     changePassword,
 
-    get signedIn() { return !!user },
-    get userId() { return user && user.uid },
-  }
-}
+    get signedIn() {
+      return !!user;
+    },
+    get userId() {
+      return user && user.uid;
+    },
+  };
+};
 
-export default createAuth()
+export default createAuth();
