@@ -21,6 +21,8 @@ const WaitForSupportAgentOverlay = ({ visible }) => (
   </div>
 );
 
+const EndCallButton = ({ visible, onClick }) => {};
+
 export default ({
   admin,
   waitingForSupportAgent,
@@ -31,7 +33,13 @@ export default ({
   onTouch,
 }) => (
   <div className={cx(styles.Call)}>
-    <HeaderBar goBack={goBack} />
+    <Button
+      medium
+      icon="endcall"
+      onClick={goBack}
+      className={styles.EndCallButton}
+      hidden={showAnnotationPicker}
+    />
 
     {admin ? (
       <Fragment>
@@ -42,7 +50,7 @@ export default ({
         <Button
           medium
           onClick={() => setShowAnnotationPicker(true)}
-          icon=""
+          icon="add"
           hidden={showAnnotationPicker}
           className={styles.AnnotationButton}
         />
