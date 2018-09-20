@@ -16,9 +16,17 @@ export const getTouchResult = (x, y, radius) =>
 export const takeFreezeFrame = () =>
   viewarApi.cameras.arCamera.saveFreezeFrame();
 
+export const takeScreenshot = async () => {
+  const { screenshotManager, coreInterface } = viewarApi;
+  await screenshotManager.takeScreenshot();
+  const screenshot = await screenshotManager.saveScreenshot('annotations');
+  return coreInterface.resolveUrl(screenshot);
+};
+
 export default createAnnotationManager({
   getCategory,
   insertModel,
   getTouchResult,
   takeFreezeFrame,
+  takeScreenshot,
 });

@@ -7,8 +7,8 @@ import globalStyles from '../../../css/global.css';
 
 import Button from '../button/button';
 
-export default ({ callSupport, className }) => (
-  <div className={styles.Call}>
+export default ({ callSupport, className, hidden }) => (
+  <div className={cx(styles.Call, hidden && styles.isHidden)}>
     <div className={styles.CallMessage}>
       {translate('NothingFoundCallSupport')}
     </div>

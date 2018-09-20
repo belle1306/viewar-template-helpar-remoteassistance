@@ -51,7 +51,7 @@ export default ({
           )}
           onClick={() => setFullscreenImage(false)}
           style={{
-            backgroundImage: `url('${annotation.freezeFrame.thumbnailUrl}')`,
+            backgroundImage: `url('${annotation.screenshot}')`,
           }}
         />
 
@@ -109,7 +109,7 @@ export default ({
             <div className={styles.Right}>
               <img
                 className={styles.AnnotationImage}
-                src={annotation.freezeFrame.thumbnailUrl}
+                src={annotation.screenshot}
                 onClick={() => setFullscreenImage(true)}
               />
             </div>

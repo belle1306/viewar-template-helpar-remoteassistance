@@ -66,6 +66,7 @@ export const saveReview = ({
   setLoading,
   showDialog,
   annotations,
+  createTag,
 }) => async () => {
   const unhandledAnnotations = annotations.some(
     annotation => !annotation.title
@@ -83,6 +84,7 @@ export const saveReview = ({
 
   if (save) {
     setLoading(true);
+    createTag();
 
     for (let annotation of annotations.filter(
       annotation => !!annotation.title
@@ -124,11 +126,11 @@ export default compose(
   }),
   withHandlers({
     saveAnnotation,
+    createTag,
   }),
   withHandlers({
     init,
     removeAnnotation,
-    createTag,
     saveReview,
     removeTag,
     updateAnnotation,

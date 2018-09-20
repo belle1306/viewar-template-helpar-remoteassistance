@@ -6,6 +6,7 @@ export default ({
   getTouchResult,
   insertModel,
   takeFreezeFrame,
+  takeScreenshot,
 }) => {
   let initialized = false;
   let models = {};
@@ -14,6 +15,7 @@ export default ({
   let userInstance = {};
   let current = false;
   let freezeFrame;
+  let screenshot;
   let saved = [];
 
   const init = async onProgress => {
@@ -123,19 +125,10 @@ export default ({
         { model, pose: { position: hits.featurePoints[0].intersection } },
         user
       );
-      freezeFrame = await takeFreezeFrame();
-    } else {
-      // TODO: Debug, remove
-      await setAnnotation(
-        {
-          model,
-          pose: {
-            position: { x: Math.random(), y: Math.random(), z: Math.random() },
-          },
-        },
-        user
-      );
-      freezeFrame = await takeFreezeFrame();
+      if (!user) {
+        // freezeFrame = await takeFreezeFrame();
+        screenshot = await takeScreenshot();
+      }
     }
   };
 
@@ -143,6 +136,7 @@ export default ({
     saved.push(
       Object.assign({}, current, {
         freezeFrame,
+        screenshot,
         id: generateId(),
       })
     );

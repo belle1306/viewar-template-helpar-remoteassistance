@@ -10,6 +10,7 @@
 
 .isHidden.Button {
   opacity: 0;
+  pointer-events: none;
 }
 
 .isLarge.Button {
@@ -81,4 +82,18 @@
   -webkit-mask-position-y: calc(100% / 7 * 5);
   background-position-x: calc(100% / 7 * 5);
   background-position-y: calc(100% / 7 * 5);
+}
+
+.Button.icon-pause {
+  -webkit-mask-position-x: calc(100% / 7 * 5);
+  -webkit-mask-position-y: calc(100% / 7 * 4);
+  background-position-x: calc(100% / 7 * 5);
+  background-position-y: calc(100% / 7 * 4);
+}
+
+.Button.icon-play {
+  -webkit-mask-position-x: calc(100% / 7 * 6);
+  -webkit-mask-position-y: calc(100% / 7 * 4);
+  background-position-x: calc(100% / 7 * 6);
+  background-position-y: calc(100% / 7 * 4);
 }

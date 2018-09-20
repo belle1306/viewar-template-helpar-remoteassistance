@@ -115,14 +115,23 @@ export const syncAnnotation = ({
   }
 };
 
-export const goBack = ({ goToNextView, admin, showDialog }) => async () => {
-  const { confirmed } = await showDialog('CallAbortQuestion', {
-    showCancel: true,
-    confirmText: 'CallAbortCall',
-  });
-
-  if (confirmed) {
+export const goBack = ({
+  waitingForSupportAgent,
+  goToNextView,
+  admin,
+  showDialog,
+}) => async () => {
+  if (waitingForSupportAgent) {
     goToNextView();
+  } else {
+    const { confirmed } = await showDialog('CallAbortQuestion', {
+      showCancel: true,
+      confirmText: 'CallAbortCall',
+    });
+
+    if (confirmed) {
+      goToNextView();
+    }
   }
 };
 
@@ -152,7 +161,6 @@ export const goToNextView = ({
   backPath,
   backArgs,
   goToLastView,
-  saveTrackingMap,
 }) => async () => {
   if (admin) {
     if (annotationManager.saved.length) {
@@ -165,11 +173,17 @@ export const goToNextView = ({
       goToLastView();
     }
   } else {
-    setLoading(true);
-    await saveTrackingMap();
-    setLoading(false);
     goToLastView();
   }
+};
+
+const toggleFreeze = ({ viewarApi: { cameras }, frozen, setFrozen }) => () => {
+  if (frozen) {
+    cameras.arCamera.unfreeze();
+  } else {
+    cameras.arCamera.freeze();
+  }
+  setFrozen(!frozen);
 };
 
 let syncSubscription;
@@ -180,6 +194,7 @@ export default compose(
   withDialogControls,
   withRouteParams(),
   withSetLoading,
+  withState('frozen', 'setFrozen', false),
   withState('waitingForSupportAgent', 'setWaitingForSupportAgent', false),
   withState('showAnnotationPicker', 'setShowAnnotationPicker', false),
   withProps({
@@ -199,19 +214,18 @@ export default compose(
     onTouch,
     closeAnnotationPicker,
     goBack,
+    toggleFreeze,
   }),
   lifecycle({
     async componentDidMount() {
       const {
-        featureMap,
         admin,
         waitForSupportAgent,
         annotationManager,
-        viewarApi: { cameras, coreInterface },
+        viewarApi: { coreInterface },
       } = this.props;
       await annotationManager.reset();
 
-      await cameras.arCamera.activate();
       if (!admin) {
         await coreInterface.call('setPointCloudVisibility', true, true);
       }
@@ -222,6 +236,8 @@ export default compose(
       const {
         admin,
         callClient,
+        setLoading,
+        saveTrackingMap,
         viewarApi: { coreInterface, cameras },
       } = this.props;
       if (callSubscription) {
@@ -234,15 +250,19 @@ export default compose(
         endCallSubscription.unsubscribe();
       }
 
-      if (!admin) {
-        await coreInterface.call('setPointCloudVisibility', true, true);
-        await cameras.perspectiveCamera.activate();
-      }
-
       callClient.endCall();
       if (!admin) {
         callClient.leave();
+
+        setLoading(true);
+        await saveTrackingMap();
+        setLoading(false);
+        await coreInterface.call('setPointCloudVisibility', true, true);
+      } else {
+        await cameras.arCamera.unfreeze();
       }
+
+      await cameras.perspectiveCamera.activate();
     },
   })
 )(Call);

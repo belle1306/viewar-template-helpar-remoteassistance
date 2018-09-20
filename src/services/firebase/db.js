@@ -24,5 +24,3 @@ export const read = async path => {
     console.log(e.message);
   }
 };
-
-export const db_ = db;

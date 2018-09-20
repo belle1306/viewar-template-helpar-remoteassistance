@@ -48,9 +48,9 @@ export default ({
             />
           </div>
         ))}
-      </div>
 
-      <NothingFoundCallSupport callSupport={callSupport} />
+        <NothingFoundCallSupport callSupport={callSupport} />
+      </div>
     </div>
   </div>
 );

@@ -66,7 +66,7 @@ export default ({
             <div className={styles.Annotations}>
               {annotations.map(
                 annotation =>
-                  annotation.freezeFrame && (
+                  annotation.screenshot && (
                     <div
                       key={annotation.id}
                       className={cx(
@@ -75,7 +75,7 @@ export default ({
                       )}
                     >
                       <img
-                        src={annotation.freezeFrame.thumbnailUrl}
+                        src={annotation.screenshot}
                         onClick={() => setAnnotation(annotation)}
                       />
                       <div

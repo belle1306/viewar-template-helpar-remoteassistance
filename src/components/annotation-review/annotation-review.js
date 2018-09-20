@@ -25,7 +25,12 @@ export const removeTag = ({ setTags, tags }) => tag => {
   setTags(tags);
 };
 
-export const handleSave = ({ onSave, tags, description, title }) => () => {
+export const handleSave = ({ createTag, save }) => () => {
+  createTag();
+  save();
+};
+
+export const save = ({ onSave, tags, description, title }) => () => {
   onSave({
     tags,
     description,
@@ -59,6 +64,9 @@ export default compose(
   ),
   withHandlers({
     createTag,
+    save,
+  }),
+  withHandlers({
     removeTag,
     handleSave,
   })

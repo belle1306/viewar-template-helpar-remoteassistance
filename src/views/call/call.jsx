@@ -31,6 +31,8 @@ export default ({
   setShowAnnotationPicker,
   goBack,
   onTouch,
+  toggleFreeze,
+  frozen,
 }) => (
   <div className={cx(styles.Call)}>
     <Button
@@ -53,6 +55,20 @@ export default ({
           icon="add"
           hidden={showAnnotationPicker}
           className={styles.AnnotationButton}
+        />
+        <Button
+          medium
+          icon="pause"
+          onClick={toggleFreeze}
+          className={styles.FreezeButton}
+          hidden={!frozen || showAnnotationPicker}
+        />
+        <Button
+          medium
+          icon="play"
+          onClick={toggleFreeze}
+          className={styles.FreezeButton}
+          hidden={frozen || showAnnotationPicker}
         />
       </Fragment>
     ) : (

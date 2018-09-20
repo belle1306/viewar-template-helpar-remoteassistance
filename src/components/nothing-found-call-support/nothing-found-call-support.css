@@ -3,6 +3,13 @@
   display: flex;
   flex-flow: column;
   align-items: center;
+  transition: opacity 0.5s ease;
+  margin-top: 16px;
+}
+
+.isHidden.Call {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .CallMessage {

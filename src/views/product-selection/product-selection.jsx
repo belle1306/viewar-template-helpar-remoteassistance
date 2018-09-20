@@ -41,7 +41,7 @@ export default ({
       />
 
       <div className={styles.Products}>
-        <NoResult visible={!searchResult.length} />
+        <NoResult visible={!search} />
 
         {searchResult.map(tags => (
           <div
@@ -55,9 +55,9 @@ export default ({
             <Button icon="next" small className={styles.SelectButton} />
           </div>
         ))}
-      </div>
 
-      <NothingFoundCallSupport callSupport={callSupport} />
+        <NothingFoundCallSupport hidden={!search} callSupport={callSupport} />
+      </div>
     </div>
   </div>
 );
