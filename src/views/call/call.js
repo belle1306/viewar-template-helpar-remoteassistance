@@ -222,7 +222,7 @@ export default compose(
         admin,
         waitForSupportAgent,
         annotationManager,
-        viewarApi: { coreInterface },
+        viewarApi: { coreInterface, cameras },
       } = this.props;
       await annotationManager.reset();
 

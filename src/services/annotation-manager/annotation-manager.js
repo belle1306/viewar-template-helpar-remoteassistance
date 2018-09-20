@@ -1,5 +1,10 @@
 import viewarApi from 'viewar-api';
 import { generateId } from '../../utils';
+import Plane from './math/plane';
+import Quaternion from './math/quaternion';
+import Vector3 from './math/vector3';
+import Ray from './math/ray';
+import {} from './math';
 
 export default ({
   getCategory,
@@ -17,6 +22,10 @@ export default ({
   let freezeFrame;
   let screenshot;
   let saved = [];
+
+  //--------------------------------------------------------------------------------------------------------------------
+  // PUBLIC METHODS
+  //--------------------------------------------------------------------------------------------------------------------
 
   const init = async onProgress => {
     if (initialized) {
@@ -119,12 +128,19 @@ export default ({
   };
 
   const setTouchAnnotation = async ({ model, x, y }, user = false) => {
-    const hits = await getTouchResult(x, y, 40);
-    if (hits.featurePoints.length) {
-      await setAnnotation(
-        { model, pose: { position: hits.featurePoints[0].intersection } },
-        user
-      );
+    const hits = await getTouchResult(x, y, 1000);
+
+    let position;
+    if (hits.ray) {
+      position = await getPosition(hits);
+    }
+
+    if (!position) {
+      position = hits.featurePoints[0].intersection;
+    }
+
+    if (position) {
+      await setAnnotation({ model, pose: { position } }, user);
       if (!user) {
         // freezeFrame = await takeFreezeFrame();
         screenshot = await takeScreenshot();
@@ -141,6 +157,44 @@ export default ({
       })
     );
   };
+
+  //--------------------------------------------------------------------------------------------------------------------
+  // PRIVATE METHODS
+  //--------------------------------------------------------------------------------------------------------------------
+
+  /**
+   * Calculate position with ray casted onto plane defined by nearest three featurepoints.
+   */
+  const getPosition = async hits => {
+    const plane = getFeaturePointPlane(hits.featurePoints);
+    if (plane) {
+      const ray = new Ray(hits.ray);
+      const { intersects, distance } = plane.getRayIntersection(ray);
+      console.log(intersects, distance, ray);
+      window.ray = ray;
+      window.distane = distance;
+      if (intersects) {
+        return ray.origin.add(ray.direction.scale(distance));
+      }
+    }
+  };
+
+  /**
+   * Get plane from three nearest feature points.
+   */
+  const getFeaturePointPlane = featurePoints => {
+    if (featurePoints.length >= 3) {
+      const p1 = new Vector3(featurePoints[0].position);
+      const p2 = new Vector3(featurePoints[1].position);
+      const p3 = new Vector3(featurePoints[2].position);
+
+      return Plane.fromPoints(p1, p2, p3);
+    }
+  };
+
+  //--------------------------------------------------------------------------------------------------------------------
+  // INTERFACE
+  //--------------------------------------------------------------------------------------------------------------------
 
   return {
     init,
