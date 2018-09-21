@@ -26,7 +26,7 @@ export const init = ({
   setLoading,
   annotation,
   updateSelection,
-  viewarApi: { sceneManager, trackers },
+  viewarApi: { sceneManager, trackers, cameras },
 }) => async () => {
   setLoading(true);
 
@@ -48,6 +48,7 @@ export const init = ({
     setTracking(true);
   }
 
+  await cameras.arCamera.showPointCloud();
   sceneManager.on('selectionChanged', updateSelection);
   setLoading(false);
   setAnnotation(annotation);
@@ -57,9 +58,10 @@ export const destroy = ({
   annotationManager,
   updateSelection,
   annotation,
-  viewarApi: { sceneManager },
+  viewarApi: { sceneManager, cameras },
 }) => async () => {
   await annotationManager.reset();
+  await cameras.arCamera.hidePointCloud();
   sceneManager.off('selectionChanged', updateSelection);
 };
 

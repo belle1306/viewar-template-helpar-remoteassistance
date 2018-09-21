@@ -222,12 +222,12 @@ export default compose(
         admin,
         waitForSupportAgent,
         annotationManager,
-        viewarApi: { coreInterface, cameras },
+        viewarApi: { cameras },
       } = this.props;
       await annotationManager.reset();
 
       if (!admin) {
-        await coreInterface.call('setPointCloudVisibility', true, true);
+        await cameras.arCamera.showPointCloud();
       }
 
       waitForSupportAgent();
@@ -238,7 +238,7 @@ export default compose(
         callClient,
         setLoading,
         saveTrackingMap,
-        viewarApi: { coreInterface, cameras },
+        viewarApi: { cameras },
       } = this.props;
       if (callSubscription) {
         callSubscription.unsubscribe();
@@ -257,7 +257,7 @@ export default compose(
         setLoading(true);
         await saveTrackingMap();
         setLoading(false);
-        await coreInterface.call('setPointCloudVisibility', true, true);
+        await cameras.arCamera.hidePointCloud();
       } else {
         await cameras.arCamera.unfreeze();
       }
