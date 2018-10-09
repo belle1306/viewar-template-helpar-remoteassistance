@@ -10,8 +10,18 @@
     "start": "webpack-dev-server --mode development --env dev-core --open --config ./config/webpack.config.js",
     "start:core": "npm run start",
     "start:mock": "webpack-dev-server --mode development --env dev-mock --open --config ./config/webpack.config.js",
-    "format": "prettier --single-quote --trailing-comma es5 'src/**/*.{js,jsx,css,json}' --write",
-    "precommit": "pretty-quick --staged --write"
+    "format": "prettier --single-quote --trailing-comma es5 'src/**/*.{js,jsx,css,json}' --write"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,json,css,md, jsx}": [
+      "prettier --single-quote --trailing-comma es5 --write",
+      "git add"
+    ]
   },
   "author": "Karl Hofer <kh@viewar.com>",
   "license": "MIT",
@@ -44,13 +54,13 @@
     "html-webpack-plugin": "^3.0.6",
     "husky": "^0.14.3",
     "ip": "^1.1.5",
+    "lint-staged": "^7.3.0",
     "postcss-cssnext": "^3.1.0",
     "postcss-import": "^11.1.0",
     "postcss-loader": "^2.1.6",
     "postcss-responsive-type": "^1.0.0",
     "postcss-smart-import": "^0.7.6",
     "prettier": "^1.14.2",
-    "pretty-quick": "^1.6.0",
     "prop-types": "^15.6.2",
     "rc-progress": "^2.2.5",
     "react-intl": "^2.4.0",

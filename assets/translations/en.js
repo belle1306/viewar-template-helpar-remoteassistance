@@ -40,6 +40,7 @@ export default {
   "ReviewGeneralTags": "Product tags (e.g. 'Car', 'Audi', 'A4',...):",
   "ReviewAnnotations": "Annotations",
   "ReviewContinueSaving": "You have unhandled annotations. Continue with saving?",
+  "ReviewSavingNoTags": "Please provide at least one product tag.",
   "AnnotationReviewTitle": "Annotation Details",
   "AnnotationReviewTitleSection": "Title:",
   "AnnotationReviewTags": "Annotation specific tags (e.g. 'motoroil'):",

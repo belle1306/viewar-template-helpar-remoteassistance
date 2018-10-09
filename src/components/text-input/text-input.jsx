@@ -26,6 +26,10 @@ export default ({
         type={password ? 'password' : 'text'}
         onChange={({ target }) => setValue(target.value)}
         value={value}
+        autoComplete="off"
+        autoCorrect="off"
+        autoCapitalize="off"
+        spellCheck="false"
         placeholder={placeholder ? translate(placeholder, false) : ''}
       />
       {deleteButton && (

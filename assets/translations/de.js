@@ -41,6 +41,7 @@ export default {
   "ReviewGeneralTags": "Produkt Tags (z.B. 'Auto', 'Audi', 'A4',...):",
   "ReviewAnnotations": "Annotationen:",
   "ReviewContinueSaving": "Sie haben undbehandelte Annotation. Mit Speichern fortfahren?",
+  "ReviewSavingNoTags": "Bitte geben Sie mindestens einen Produkt Tag an.",
   "AnnotationReviewTitle": "Annotation Details",
   "AnnotationReviewTitleSection": "Titel:",
   "AnnotationReviewTags": "Annotation spepzifische Tags (z.B. 'Motoröl'):",

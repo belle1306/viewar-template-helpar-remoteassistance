@@ -32,7 +32,7 @@ import '../css/global.css';
   translationProvider.init();
 
   const callClient = await createCallClient(viewarApi, {
-    host: config.serverUrl || 'ws://3.viewar.com:3001',
+    host: config.serverUrl || 'ws://3.viewar.com:3002',
   });
 
   document.body.classList.add('global-CustomFont1');

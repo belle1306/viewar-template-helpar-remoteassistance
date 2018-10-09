@@ -50,8 +50,6 @@ const joinSession = ({
     return false;
   }
   return true;
-
-  setLoading(false);
 };
 
 const disconnect = ({ callClient }) => () => {
@@ -60,7 +58,7 @@ const disconnect = ({ callClient }) => () => {
   }
 };
 
-export const withConnect = compose(
+export const withCallClient = compose(
   withRouterProps(),
   withDialogControls,
   withSetLoading,
@@ -74,4 +72,4 @@ export const withConnect = compose(
   })
 );
 
-export default withConnect;
+export default withCallClient;

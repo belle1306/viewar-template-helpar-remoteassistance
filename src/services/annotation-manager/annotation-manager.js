@@ -135,13 +135,19 @@ export default ({
       position = await getPosition(hits);
     }
 
-    if (!position) {
+    if (!position && hits.featurePoints.length) {
       position = hits.featurePoints[0].intersection;
     }
 
+    if (viewarApi.coreInterface.platform === 'Mock') {
+      position = {x: 0, y: 0, z: 0};
+    }
+
     if (position) {
-      await setAnnotation({ model, pose: { position } }, user);
-      if (!user) {
+      if (user) {
+        setAnnotation({ model, pose: { position } }, user);
+      } else {
+        await setAnnotation({ model, pose: { position } }, user);
         // freezeFrame = await takeFreezeFrame();
         screenshot = await takeScreenshot();
       }

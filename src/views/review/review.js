@@ -62,7 +62,7 @@ export const updateAnnotation = ({
 export const saveReview = ({
   featureMap,
   goToLastView,
-  saveAnnotation,
+  saveAnnotations,
   setLoading,
   showDialog,
   annotations,
@@ -71,6 +71,7 @@ export const saveReview = ({
   const unhandledAnnotations = annotations.some(
     annotation => !annotation.title
   );
+
   let save = true;
 
   if (unhandledAnnotations) {
@@ -86,28 +87,58 @@ export const saveReview = ({
     setLoading(true);
     createTag();
 
+    const success = await saveAnnotations();
+
+    setLoading(false);
+    success && goToLastView();
+  }
+};
+
+export const saveAnnotations = ({
+  saveAnnotation,
+  annotations,
+  showDialog,
+  tags,
+}) => async() => {
+  const changedAnnotations = annotations.some(
+    annotation => annotation.title
+  );
+
+  if(changedAnnotations) {
+    if (!tags.length) {
+      await showDialog('ReviewSavingNoTags', {
+        confirmText: 'OK'
+      });
+
+      return false;
+    }
+
     for (let annotation of annotations.filter(
       annotation => !!annotation.title
     )) {
       await saveAnnotation(annotation);
     }
-
-    setLoading(false);
-    goToLastView();
   }
-};
+
+  return true;
+
+}
 
 export const saveAnnotation = ({
   featureMap,
   annotationDb,
+  annotations,
   tags,
+  showDialog,
 }) => async annotation => {
-  Object.assign(annotation, {
-    productTags: tags,
-    featureMap: featureMap || '',
-  });
+  if (tags.length) {
+    Object.assign(annotation, {
+      productTags: tags,
+      featureMap: featureMap || '',
+    });
 
-  await annotationDb.create(annotation);
+    await annotationDb.create(annotation);
+  }
 };
 
 export default compose(
@@ -127,6 +158,9 @@ export default compose(
   withHandlers({
     saveAnnotation,
     createTag,
+  }),
+  withHandlers({
+    saveAnnotations,
   }),
   withHandlers({
     init,

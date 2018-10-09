@@ -46,11 +46,11 @@ export const waitForSupportAgent = ({
       });
 
     endCallSubscription = callClient.endedCall.subscribe(async () => {
+      goToNextView();
+
       await showDialog('MessageCallEnded', {
         confirmText: 'DialogOK',
       });
-
-      goToNextView();
     });
 
     if (!admin) {
@@ -71,12 +71,8 @@ export const waitForSupportAgent = ({
 export const onTouch = ({
   syncAnnotation,
   setLoading,
-  admin,
   annotationManager,
-  viewarApi: { simulateTouchRay },
 }) => async event => {
-  setLoading(true);
-
   let x, y;
   if (event.type === 'click') {
     x = event.clientX / event.target.offsetWidth;
@@ -87,7 +83,6 @@ export const onTouch = ({
     await annotationManager.setTouchAnnotation({ x, y }, true);
     syncAnnotation();
   }
-  setLoading(false);
 };
 
 export const closeAnnotationPicker = ({

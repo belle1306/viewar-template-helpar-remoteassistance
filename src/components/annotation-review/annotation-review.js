@@ -12,7 +12,7 @@ import withRouteParams from '../../services/route-params';
 import AnnotationReview from './annotation-review.jsx';
 
 export const createTag = ({ tags, setTags, tag, setTag }) => () => {
-  if (tags.indexOf(tag) === -1) {
+  if (tags.indexOf(tag) === -1 && tag) {
     tags.push(tag);
     setTags(tags);
   }
