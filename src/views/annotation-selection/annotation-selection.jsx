@@ -33,7 +33,7 @@ export default ({
 
       <div className={styles.Annotations}>
         {searchResult.map(annotation => (
-          <div className={styles.Annotation} key={annotation.id}>
+          <div className={styles.Annotation} key={annotation.id} onClick={() => openAnnotation(annotation.id)}>
             <div className={styles.Title}>{annotation.title}</div>
             <div className={styles.Tags}>
               {annotation.tags &&
@@ -44,7 +44,6 @@ export default ({
               icon="next"
               small
               className={styles.SelectButton}
-              onClick={() => openAnnotation(annotation.id)}
             />
           </div>
         ))}
