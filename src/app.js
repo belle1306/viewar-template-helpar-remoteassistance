@@ -7,12 +7,11 @@ import Call from './views/call/call.js';
 import ProductSelection from './views/product-selection/product-selection.js';
 import UserSelection from './views/user-selection/user-selection.js';
 import Calibration from './views/calibration/calibration.js';
-import AnnotationSelection from './views/annotation-selection/annotation-selection.js';
 import Annotation from './views/annotation/annotation.js';
 import Review from './views/review/review.js';
 import ConnectionMonitor from './views/connection-monitor';
 
-import Spinner from './components/spinner/spinner.jsx';
+import LoadingOverlay from './components/loading-overlay/loading-overlay.jsx';
 import Toast from './components/toast/toast';
 import Dialog from './components/dialog/dialog';
 import TrackingMapProgress from './components/tracking-map-progress/tracking-map-progress'
@@ -23,7 +22,7 @@ import { withDialog } from './services/dialog';
 
 import googleAnalytics from './services/google-analytics/index';
 
-const EnhancedSpinner = withLoading()(Spinner);
+const EnhancedSpinner = withLoading()(LoadingOverlay);
 const EnhancedToast = withToast()(Toast);
 const EnhancedDialog = withDialog()(Dialog);
 const EnhancedTrackingMapProgress = withTrackingMapProgress()(TrackingMapProgress);
@@ -84,11 +83,6 @@ export default ({}) => (
               exact
               path="/product-selection/:args?"
               component={ProductSelection}
-            />
-            <Route
-              exact
-              path="/annotation-selection/:args?"
-              component={AnnotationSelection}
             />
             <Route exact path="/review/:args?" component={Review} />
           </Switch>

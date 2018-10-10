@@ -8,11 +8,12 @@ export default {
   "DialogYes": "Ja",
   "DialogNo": "Nein",
   // Home
-  "HomeStart": "Support",
+  "HomeStart": "Help me!",
   "HomeLogin": "Einloggen",
   "HomeLoginText": "Einloggen als Support Assistent:",
   "HomePassword": "Password",
   "HomeLoading": "Loading...",
+  "HomeCopyright": "Copyright©2018 by ViewAR GmbH.<br/>All rights reserved.",
   // Call
   "CallWaitForSupportAgent": "Warte auf Supportmitarbeiter...",
   "CallAbortQuestion": "Wollen Sie den aktuellen Anruf beenden?",
@@ -29,7 +30,7 @@ export default {
   "CalibrationFilmFloor": "Bitte filmen Sie den Boden.",
   "CalibrationScaleGround": "Skalieren Sie den Boden und bestätigen Sie anschließend.",
   // Product Selection
-  "ProductSelectionTitle": "Wählen Sie ihr Produkt",
+  "ProductSelectionTitle": "Für welches Thema benötigen Sie Hilfe?",
   "ProductSelectionNoResult": "Geben Sie ihre Produktstichwörter oben ein.",
   // Annotation Selection
   "AnnotationSelectionTitle": "Wo liegt ihr Problem?",
@@ -54,11 +55,12 @@ export default {
   "MessageJoin": "Sitzung beitreten, bitte warten.",
   "MessageJoinFailed": "Fehler beim Beitreten der Sitzung.",
   // Nothing Found
-  "NothingFoundCallSupport": "Nichts gefunden? Rufen Sie den Support an",
+  "NothingFoundCallSupport": "Nichts gefunden?",
+  "NothingFoundCallSupportButton": "Support Anrufen",
   "SearchPlaceholder": "Suchen...",
   "RatingOverlayMessage": "Bitte bewerten Sie diese Information. Wollen Sie ander Hilfsthemen sehen oder den Support anrufen?",
-  "RatingOverlayBack": "Zurück",
-  "RatingOverlayCall": "Anrufen",
+  "RatingOverlayBack": "Andere Hilfsthemen",
+  "RatingOverlayCall": "Support Anrufen",
   "AnnotationPickerHint": "Platzieren Sie ihr Annotation durch einen Touch.",
   "Save": "Speichern",
   "TrackingMapSaveInProgress": "Bearbeite und speichere Anrufinformationen. Bitte schließen Sie die App nicht, bevor der Vorgang abgeschlossen ist.",

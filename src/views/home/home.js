@@ -30,7 +30,7 @@ export const init = ({
 
   disconnect();
 
-  await cameras.perspectiveCamera.activate();
+  await cameras.arCamera.activate();
   await resetTrackers();
   await authManager.readPersisted();
 
@@ -55,23 +55,26 @@ export const goToUserSelection = ({
   setLoading,
   authManager,
   showDialog,
+  loadingDone,
 }) => async () => {
-  if (authManager.user) {
-    goTo('/user-selection', {
-      password: authManager.token,
-    });
-  } else {
-    const { confirmed, input } = await showDialog('HomeLoginText', {
-      input: authManager.token || '',
-      withInput: true,
-      inputPassword: true,
-      inputPlaceholder: 'HomePassword',
-      showCancel: true,
-      confirmText: 'HomeLogin',
-    });
+  if (loadingDone) {
+    if (authManager.user) {
+      goTo('/user-selection', {
+        password: authManager.token,
+      });
+    } else {
+      const {confirmed, input} = await showDialog('HomeLoginText', {
+        input: authManager.token || '',
+        withInput: true,
+        inputPassword: true,
+        inputPlaceholder: 'HomePassword',
+        showCancel: true,
+        confirmText: 'HomeLogin',
+      });
 
-    if (confirmed && input) {
-      goTo('/user-selection', { password: input });
+      if (confirmed && input) {
+        goTo('/user-selection', {password: input});
+      }
     }
   }
 };

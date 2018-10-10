@@ -21,7 +21,7 @@ export const init = ({
   updateSearch,
 }) => async () => {
   setLoading(true);
-  await annotationDb.prepareData('productTags');
+  await annotationDb.prepareData('annotations');
   updateSearch(input || '');
   setLoading(false);
 };
@@ -32,22 +32,8 @@ export const updateSearch = ({
   setSearchResult,
 }) => value => {
   setSearch(value);
-  const searchResult = annotationDb.searchForProductTags(value);
+  const searchResult = annotationDb.searchForAnnotations(value);
   setSearchResult(searchResult);
-};
-
-export const goToAnnotationSelection = ({
-  goTo,
-  createPathWithArgs,
-  search,
-}) => tags => {
-  const tagsParam = tags.map(encodeURI).join('&');
-
-  goTo('/annotation-selection', {
-    tags: tagsParam,
-    backPath: '/product-selection/',
-    backArgs: { input: search },
-  });
 };
 
 export const callSupport = ({ goTo, search }) => () => {
@@ -56,6 +42,37 @@ export const callSupport = ({ goTo, search }) => () => {
     backArgs: { input: search },
   });
 };
+
+export const openAnnotation = ({
+  goTo,
+  backPath,
+  backArgs,
+  search,
+}) => annotationId => {
+  goTo('/calibration-annotation', {
+    annotationId,
+    backPath: '/product-selection',
+    backArgs: {
+      input: search,
+      backPath,
+      backArgs: backArgs,
+    },
+  });
+};
+
+export const trimDescription = (text) => {
+  const maxLength = 110;
+  if (text.length > maxLength) {
+    let sliced = text.slice(0, maxLength - 3);
+    let lastSpace = sliced.lastIndexOf(' ');
+    if (lastSpace !== sliced.length - 1) {
+      sliced = sliced.slice(0, lastSpace);
+    }
+    return sliced + ' (...)';
+  }
+
+  return text;
+}
 
 export default compose(
   withDialogControls,
@@ -67,13 +84,14 @@ export default compose(
     viewarApi,
     getUiConfigPath,
     annotationDb,
+    trimDescription,
   }),
   withHandlers({
     updateSearch,
   }),
   withHandlers({
     init,
-    goToAnnotationSelection,
+    openAnnotation,
     callSupport,
   }),
   lifecycle({

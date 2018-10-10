@@ -5,7 +5,7 @@ import { translate } from '../../services';
 import styles from './call.css';
 import global from '../../../css/global.css';
 
-import HeaderBar from '../../components/header-bar/header-bar';
+import Hint from '../../components/hint/hint';
 import Button from '../../components/button/button';
 import AnnotationPicker from '../../components/annotation-picker/annotation-picker';
 
@@ -19,8 +19,6 @@ const WaitForSupportAgentOverlay = ({ visible }) => (
     {translate('CallWaitForSupportAgent')}
   </div>
 );
-
-const EndCallButton = ({ visible, onClick }) => {};
 
 export default ({
   admin,
@@ -74,7 +72,7 @@ export default ({
       <Fragment>
         <WaitForSupportAgentOverlay visible={waitingForSupportAgent} />
         <div className={styles.TouchOverlay} onClick={onTouch} />
-        <div className={cx(styles.Hint)}>{translate('CallAnnotateHint')}</div>
+        {!waitingForSupportAgent && <Hint className={cx(styles.Hint)}>{translate('CallAnnotateHint')}</Hint>}
       </Fragment>
     )}
   </div>

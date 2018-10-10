@@ -14,13 +14,14 @@ export default ({
   goHomeFunction,
   goBackFunction,
   showHomeIconOnBack,
+  showCancelIconOnBack,
   dark,
   className,
 }) => (
   <div className={cx(styles.Container, className)}>
     <Button
       onClick={goBackFunction}
-      icon={showHomeIconOnBack ? 'home' : 'back'}
+      icon={showHomeIconOnBack ? 'home' : (showCancelIconOnBack ? 'cancel' : 'back')}
       size={'small'}
       dark={dark}
       className={cx(!goBack && styles.isHidden, styles.Button)}

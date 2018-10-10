@@ -1,10 +1,15 @@
 .Call {
+  margin-top: 2rem;
   flex: 0 0 auto;
   display: flex;
   flex-flow: column;
   align-items: center;
   transition: opacity 0.5s ease;
-  margin-top: 16px;
+  background-color: #003ba1;
+  padding: 2.6rem 3rem;
+  color: white;
+  width: 100%;
+  transform: translateX(-3rem);
 }
 
 .isHidden.Call {
@@ -13,8 +18,33 @@
 }
 
 .CallMessage {
+  font-size: 2.5em;
 }
 
 .CallButton {
-  margin: 10px;
+  white-space: nowrap;
+  border-radius: 1000px;
+  padding: 0.9rem 3rem;
+  box-sizing: border-box;
+  height: auto;
+  font-size: 2em;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-top: 0.9rem;
+}
+
+.CallButtonIcon {
+  width: 2rem;
+  height: 2rem;
+  -webkit-mask-position-x: calc(100% / 7 * 7);
+  -webkit-mask-position-y: calc(100% / 7 * 2);
+  background-position-x: calc(100% / 7 * 7);
+  background-position-y: calc(100% / 7 * 2);
+  background-color: white;
+}
+
+.CallButtonText {
+  flex: 1 0 auto;
+  text-align: center;
 }

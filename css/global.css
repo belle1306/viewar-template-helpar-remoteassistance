@@ -51,11 +51,12 @@ a:visited {
 }
 
 .LogoImage {
-  background-image: url('../assets/images/viewar_logo.svg');
+  background-image: url('../assets/images/logo_helpar.svg');
 }
 
 .BackgroundImage {
-  background-image: url('../assets/images/viewar_background.jpg');
+  background: white;
+  /*background-image: url('../assets/images/bg_helpar.png');*/
 }
 
 .ButtonImage {
@@ -66,5 +67,5 @@ a:visited {
 }
 
 .ButtonColor {
-  background-color: rgb(189, 24, 25);
+  background-color: #006DFF;
 }

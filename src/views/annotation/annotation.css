@@ -12,25 +12,10 @@
   margin: 20px;
   transition: opacity 0.5s ease;
   pointer-events: none;
+  border-radius: 10px;
+  font-size: 1.3em;
 }
 
-.Hint {
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  bottom: 10%;
-  border-radius: 1000px;
-  padding: 10px 20px;
-  color: white;
-  background: rgba(0, 0, 0, 0.8);
-  text-align: center;
-  line-height: 1.2em;
-  white-space: nowrap;
-  transition: opacity 0.5s ease;
-  pointer-events: none;
-}
-
-.isHidden.Hint,
 .isHidden.Description {
   opacity: 0;
 }

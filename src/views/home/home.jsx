@@ -7,9 +7,9 @@ import styles from './home.css';
 import global from '../../../css/global.css';
 
 import Logo from '../../components/logo/logo';
-import Button from '../../components/button/button';
 import TextButton from '../../components/text-button/text-button';
-import LoadingBar from '../../components/loading-bar/loading-bar';
+import Spinner from '../../components/spinner/spinner.jsx';
+import Background from '../../components/background/background.jsx';
 
 export default ({
   goToProductSelection,
@@ -17,25 +17,21 @@ export default ({
   loadingDone,
   progress,
 }) => (
-  <div className={cx(styles.Home, global.BackgroundImage)}>
-    <Logo className={styles.Logo} />
-    <Button
-      icon="login"
-      className={styles.LoginButton}
+  <div className={cx(styles.Home)}>
+    <Logo
+      className={styles.Logo}
       onClick={goToUserSelection}
-      hidden={!loadingDone}
     />
     <TextButton
       label="HomeStart"
       className={styles.StartButton}
       hidden={!loadingDone}
-      round
-      large
       onClick={goToProductSelection}
     />
-    <div className={cx(styles.LoadingText, loadingDone && styles.isHidden)}>
-      {translate('HomeLoading')}
+
+    <div className={cx(styles.Loading, loadingDone && styles.isHidden)}>
+      <Spinner/>
     </div>
-    <LoadingBar visible={!loadingDone} progress={progress} />
+    <div className={styles.Copyright}>{translate('HomeCopyright')}</div>
   </div>
 );

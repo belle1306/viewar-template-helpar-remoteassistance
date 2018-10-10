@@ -7,17 +7,48 @@
   position: absolute;
   left: 0;
   top: 0;
-}
-
-.ProductSelectionContent {
-  position: absolute;
   display: flex;
   flex-flow: column;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  top: 60px;
-  padding: 12px;
+  justify-content: center;
+  align-items: center;
+}
+
+.Header {
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #003BA1;
+  font-size: 2.6em;
+  margin-bottom: 0.5rem;
+  line-height: 1.1em;
+  transition: bottom 0.5s ease;
+  width: calc(100% - 9rem);
+  text-align: center;
+}
+
+.hasSearchResults.Header {
+  bottom: 100%;
+}
+
+.hasSearchResults.SearchBar {
+  top: 1.5rem;
+  max-width: 100%;
+}
+
+.hasSearchResults.Annotations {
+  display: flex;
+  top: calc(0.7rem * 2 + 1.8rem + 2rem + 3rem);
+}
+
+.SearchBar {
+  margin-top: 0.5rem;
+  position: absolute;
+  top: 50%;
+  left: 3rem;
+  right: 3rem;
+  transition: all 0.5s ease;
+  transition-property: max-width, top;
 }
 
 .SelectProductInput {
@@ -25,65 +56,59 @@
   flex: 0 0 auto;
 }
 
-.Products {
-  flex: 1 1 auto;
+.Annotations {
+  position: absolute;
+  margin-top: 0.5rem;
+  padding: 0 3rem;
+  left: 0;
+  right: 0;
+  top: 100%;
+  bottom: 0;
+  transition: top 0.5s ease;
   display: flex;
   overflow-y: auto;
   flex-flow: column;
-  position: relative;
-  margin: 16px 0;
+  -webkit-overflow-scrolling: touch;
 }
 
-.Product {
-  display: flex;
-  margin-top: 16px;
-  position: relative;
-  min-height: 32px;
-  border-bottom: 1px solid grey;
-  padding: 0 30px 16px 0;
-  line-height: 16px;
-  flex-flow: row wrap;
+.Annotation:first-child {
+  border-top: 0;
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.Annotation {
   flex: 0 0 auto;
-  cursor: pointer;
-}
-
-.Product:last-of-type {
-  border-bottom: 0;
-}
-
-.SelectButton {
-  position: absolute;
-  right: 0;
-  top: calc(50% - 16px);
-  margin: 0;
-  transform: translateY(-50%);
-}
-
-.NoResult {
-  pointer-events: none;
-  transition: opacity 0.5s ease;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  white-space: nowrap;
   display: flex;
   flex-flow: column;
-  align-items: center;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #ccc;
 }
 
-.NoResultText {
+.Title {
+  font-size: 2em;
+  line-height: 2em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #006DFF;
+  font-weight: bold;
+}
+
+.Description {
   font-size: 1.4em;
+  line-height: 1.2em;
 }
 
-.NoResultImage {
-  width: 60px;
-  height: 60px;
-  background: url('../../../assets/images/icons/icon_arrow_up.svg') center /
-    contain no-repeat;
-  margin-bottom: 16px;
+.Filler {
+  flex: 1 1 auto;
 }
 
-.isHidden.NoResult {
-  opacity: 0;
+
+@media only screen and (orientation: landscape) {
+  .SearchBar {
+    max-width: 30vmax;
+    margin: 1rem auto 0 auto;
+  }
 }

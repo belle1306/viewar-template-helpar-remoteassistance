@@ -3,15 +3,21 @@ import cx from 'classnames';
 import { translate } from '../../services';
 
 import styles from './nothing-found-call-support.css';
-import globalStyles from '../../../css/global.css';
-
-import Button from '../button/button';
+import global from '../../../css/global.css';
 
 export default ({ callSupport, className, hidden }) => (
   <div className={cx(styles.Call, hidden && styles.isHidden)}>
     <div className={styles.CallMessage}>
       {translate('NothingFoundCallSupport')}
     </div>
-    <Button icon="call" className={styles.CallButton} onClick={callSupport} />
+    <div
+      className={cx(styles.CallButton, global.ButtonColor)}
+      onClick={callSupport}
+    >
+      <div className={cx(styles.CallButtonIcon, global.ButtonImage)} />
+      <div className={styles.CallButtonText}>
+        {translate('NothingFoundCallSupportButton')}
+      </div>
+    </div>
   </div>
 );

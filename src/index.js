@@ -28,6 +28,7 @@ import '../css/global.css';
   });
   merge(config, viewarApi.appConfig.uiConfig);
 
+
   await googleAnalytics.init();
   translationProvider.init();
 

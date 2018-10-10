@@ -8,6 +8,7 @@ import global from '../../../css/global.css';
 import HeaderBar from '../../components/header-bar/header-bar';
 import Button from '../../components/button/button';
 import RatingOverlay from '../../components/rating-overlay/rating-overlay';
+import Hint from '../../components/hint/hint';
 
 export default ({
   tracking,
@@ -19,7 +20,7 @@ export default ({
   rateAnnotation,
 }) => (
   <div className={cx(styles.Annotation)}>
-    <HeaderBar goBack={showRateOverlay} />
+    <HeaderBar goBack={showRateOverlay} showCancelIconOnBack />
     <RatingOverlay
       visible={rateOverlayVisible}
       onClose={closeRateOverlay}
@@ -35,14 +36,9 @@ export default ({
         >
           {annotation.description}
         </div>
-        <div
-          className={cx(
-            styles.Hint,
-            (descriptionVisible || rateOverlayVisible) && styles.isHidden
-          )}
-        >
+        <Hint hidden={descriptionVisible || rateOverlayVisible}>
           {translate(tracking ? 'AnnotationHint' : 'AnnotationFilmLearnedArea')}
-        </div>
+        </Hint>
       </Fragment>
     )}
   </div>

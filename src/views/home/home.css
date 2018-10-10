@@ -1,18 +1,21 @@
 .Home {
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
   width: 100vw;
   height: 100vh;
   position: absolute;
   left: 0;
   top: 0;
+  background-color: rgba(255, 255, 255, .9);
 }
 
-.Logo {
+.Home .Logo {
   position: absolute;
-  left: 20px;
-  top: 20px;
+  left: 50%;
+  top: 15%;
+  transform: translateX(-50%);
+  width: 34vmin;
+  height: 50%;
+  background-position: top center;
+  background-size: contain;
 }
 
 .LoginButton {
@@ -21,25 +24,44 @@
   top: 0;
 }
 
-.StartButton {
+.Home .StartButton {
   position: absolute;
-  bottom: 25vmax;
-  left: 50%;
-  transform: translate(-50%, 50%);
-}
-
-.LoadingText {
-  position: absolute;
-  bottom: 6px;
+  bottom: 20vmax;
   left: 50%;
   transform: translateX(-50%);
-  color: rgb(189, 24, 25);
-  font-size: 1.2em;
-  line-height: 2em;
-  transition: opacity 0.5s ease;
-  pointer-events: none;
+  white-space: nowrap;
+  width: 44vmin;
+  border-radius: 1000px;
+  padding: 1.1rem 0;
+  height: auto;
+  font-size: 2em;
 }
 
-.isHidden.LoadingText {
+.Loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
+.isHidden.Loading {
   opacity: 0;
+}
+
+.Copyright {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translate(-50%);
+  line-height: 1.2em;
+  text-align: center;
+  color: #666;
+  font-size: 1.1em;
+  white-space: nowrap;
+  pointer-events: none;
 }

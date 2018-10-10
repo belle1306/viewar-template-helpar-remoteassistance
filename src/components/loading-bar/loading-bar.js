@@ -8,7 +8,7 @@ export default ({ visible, progress }) => (
   <div className={cx(styles.LoadingBar, !visible && styles.isHidden)}>
     <div className={cx(styles.ProgressBar)}>
       <span
-        className={cx(styles.Progress, global.ButtonColor)}
+        className={cx(styles.Progress)}
         style={{ width: `${progress}%` }}
       />
     </div>

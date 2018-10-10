@@ -1,27 +1,42 @@
 .TextInput {
   position: relative;
-  border: 1px solid rgb(189, 24, 25);
+  border-radius: 1000px;
+  background-color: #f1f1f1;
+  font-size: 1.8em;
+  padding: 0.7rem 2rem;
+  box-sizing: border-box;
 }
 
 .TextInput input {
-  padding: 8px 16px;
   width: 100%;
   box-sizing: border-box;
   color: #666;
+  padding: 1rem;
+  background-color: #f1f1f1;
 }
 
-.DeleteButton {
-  color: rgb(189, 24, 25);
+.SearchButton {
+  background-color: #006DFF;
   position: absolute;
-  right: 0;
+  right: 2rem;
+  width: 2rem;
+  height: 2rem;
   top: 50%;
   transform: translateY(-50%);
-  padding: 0 8px;
-  font-size: 1.6em;
   cursor: pointer;
-  font-family: 'Lucida Console', Monaco, monospace;
+  -webkit-mask-position-x: calc(100% / 7 * 2);
+  -webkit-mask-position-y: calc(100% / 7 * 3);
+  background-position-x: calc(100% / 7 * 2);
+  background-position-y: calc(100% / 7 * 3);
 }
 
-.withDelete.TextInput input {
-  padding: 8px 30px 8px 16px;
+.hasInput .SearchButton {
+  -webkit-mask-position-x: calc(100% / 7 * 2);
+  -webkit-mask-position-y: calc(100% / 7 * 0);
+  background-position-x: calc(100% / 7 * 2);
+  background-position-y: calc(100% / 7 * 0);
+}
+
+.withSearch.TextInput input {
+  padding-right: 3rem;
 }

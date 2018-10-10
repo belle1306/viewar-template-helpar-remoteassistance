@@ -3,7 +3,7 @@ import cx from 'classnames';
 import { translate } from '../../services';
 
 import styles from './text-input.css';
-import globalStyles from '../../../css/global.css';
+import global from '../../../css/global.css';
 
 export default ({
   className,
@@ -11,13 +11,14 @@ export default ({
   value,
   placeholder,
   setValue,
-  deleteButton,
+  searchButton,
   password,
 }) => (
   <div
     className={cx(
       styles.TextInput,
-      deleteButton && styles.withDelete,
+      searchButton && styles.withSearch,
+      value && styles.hasInput,
       className
     )}
   >
@@ -32,10 +33,8 @@ export default ({
         spellCheck="false"
         placeholder={placeholder ? translate(placeholder, false) : ''}
       />
-      {deleteButton && (
-        <div className={styles.DeleteButton} onClick={() => setValue('')}>
-          x
-        </div>
+      {searchButton && (
+        <div className={cx(styles.SearchButton, global.ButtonImage)} onClick={() => setValue('')} />
       )}
     </form>
   </div>

@@ -1,0 +1,71 @@
+.Container {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  opacity: 0;
+  background-color: white;
+  transition: opacity 500ms linear;
+}
+
+.Container.visible {
+  transition: none;
+  pointer-events: all;
+  opacity: 1;
+}
+
+.loadingSpinner {
+  width: 40px;
+  height: 40px;
+
+  position: relative;
+  margin: 100px auto;
+}
+
+.loadingText {
+  position: absolute;
+  left: 50%;
+  top: calc(50% + 3rem);
+  transform: translate(-50%, -50%);
+  color: #003BA1;
+  line-height: 1.3em;
+  font-size: 1.8em;
+}
+
+.ProgressSpinner {
+  z-index: 110;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-flow: column;
+  transition: opacity 0.3s linear;
+}
+
+.Loading {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  font-size: 1em;
+  letter-spacing: 1px;
+  z-index: 130;
+}
+
+.Spinner {
+  width: 7em;
+  height: 7em;
+  position: relative;
+  z-index: 120;
+  /*background: rgba(255, 255, 255, 0.2);*/
+  border-radius: 50%;
+}
+
+

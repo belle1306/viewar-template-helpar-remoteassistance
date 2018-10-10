@@ -2,13 +2,13 @@
 }
 
 .WaitForSupportAgentOverlay {
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(255, 255, 255, .9);
   position: absolute;
   left: 0;
   top: 0;
   width: 100vw;
   height: 100vh;
-  color: white;
+  color: #003BA1;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -38,23 +38,11 @@
   z-index: 30;
 }
 
-.Hint {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+.Call .Hint {
   bottom: calc(60px + 20px * 2 + 20px);
-  border-radius: 1000px;
-  padding: 10px 20px;
-  color: white;
-  background: rgba(0, 0, 0, 0.8);
-  text-align: center;
-  line-height: 1.2em;
-  white-space: nowrap;
-  transition: opacity 0.5s ease;
-  pointer-events: none;
 }
 
-.EndCallButton {
+.Call .EndCallButton {
   position: absolute;
   left: 50%;
   bottom: 20px;

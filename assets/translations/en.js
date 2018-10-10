@@ -8,11 +8,12 @@ export default {
   "DialogYes": "Yes",
   "DialogNo": "No",
   // Home
-  "HomeStart": "Get Support",
+  "HomeStart": "Help me!",
   "HomeLogin": "Login",
   "HomeLoginText": "Login as support assistant:",
   "HomePassword": "Password",
   "HomeLoading": "Loading...",
+  "HomeCopyright": "Copyright©2018 by ViewAR GmbH.<br/>All rights reserved.",
   // Call
   "CallWaitForSupportAgent": "Waiting for support agent...",
   "CallAbortQuestion": "Do you want to end the current call?",
@@ -28,7 +29,7 @@ export default {
   "CalibrationARCore": "Please film the floor and move your device sideways.",
   "CalibrationFilmFloor": "Please film the floor.",
   // Product Selection
-  "ProductSelectionTitle": "Select your product",
+  "ProductSelectionTitle": "For which topic you need help?",
   "ProductSelectionNoResult": "Enter your product keywords above.",
   // Annotation Selection
   "AnnotationSelectionTitle": "Whats your issue?",
@@ -53,11 +54,12 @@ export default {
   "MessageJoin": "Joining session, please wait.",
   "MessageJoinFailed": "Failed to join the channel.",
   // Misc
-  "NothingFoundCallSupport": "Nothing found? Call Support",
+  "NothingFoundCallSupport": "No useful results?",
+  "NothingFoundCallSupportButton": "Call Support",
   "SearchPlaceholder": "Search...",
   "RatingOverlayMessage": "Please rate this information. Do you want to see other help topics or call a support assistant?",
-  "RatingOverlayBack": "Go Back",
-  "RatingOverlayCall": "Call",
+  "RatingOverlayBack": "Other Help Topic",
+  "RatingOverlayCall": "Call Assistant",
   "AnnotationPickerHint": "Insert annotation with a touch.",
   "Save": "Save",
   "TrackingMapSaveInProgress": "Processing and uploading call data. Please do not close the app until its completed.",

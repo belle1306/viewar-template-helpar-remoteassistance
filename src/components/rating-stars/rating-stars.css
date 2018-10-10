@@ -3,8 +3,8 @@
 }
 
 .Star {
-  width: 20px;
-  height: 20px;
+  width: 26px;
+  height: 26px;
   background: url('../../../assets/images/icons/icon_star_empty.svg') center /
     cover no-repeat;
   margin-right: 4px;
