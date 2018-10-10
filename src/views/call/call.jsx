@@ -7,7 +7,6 @@ import global from '../../../css/global.css';
 
 import HeaderBar from '../../components/header-bar/header-bar';
 import Button from '../../components/button/button';
-
 import AnnotationPicker from '../../components/annotation-picker/annotation-picker';
 
 const WaitForSupportAgentOverlay = ({ visible }) => (

@@ -15,8 +15,10 @@ import ConnectionMonitor from './views/connection-monitor';
 import Spinner from './components/spinner/spinner.jsx';
 import Toast from './components/toast/toast';
 import Dialog from './components/dialog/dialog';
+import TrackingMapProgress from './components/tracking-map-progress/tracking-map-progress'
 
 import { withLoading, withToast } from './services/loading';
+import { withTrackingMapProgress } from './services/tracking-map';
 import { withDialog } from './services/dialog';
 
 import googleAnalytics from './services/google-analytics/index';
@@ -24,6 +26,7 @@ import googleAnalytics from './services/google-analytics/index';
 const EnhancedSpinner = withLoading()(Spinner);
 const EnhancedToast = withToast()(Toast);
 const EnhancedDialog = withDialog()(Dialog);
+const EnhancedTrackingMapProgress = withTrackingMapProgress()(TrackingMapProgress);
 
 const GaMonitor = compose(
   withRouter,
@@ -38,6 +41,7 @@ const GaMonitor = compose(
 
 export default ({}) => (
   <Fragment>
+    <EnhancedTrackingMapProgress key="trackingMapProgress" />
     <EnhancedToast key="toast" />
     <EnhancedSpinner key="spinner" />
     <EnhancedDialog key="dialog" />
@@ -49,7 +53,7 @@ export default ({}) => (
             <Route
               exact
               path="/annotation/:args?"
-              component={(...props) => <Annotation {...props} />}
+              component={Annotation}
             />
             <Route
               exact

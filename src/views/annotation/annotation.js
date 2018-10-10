@@ -13,6 +13,7 @@ import annotationManager from '../../services/annotation-manager';
 import annotationDb from '../../services/annotation-db';
 import withRouteParams from '../../services/route-params';
 import { translate } from '../../services';
+import { withTrackingMap } from '../../services/tracking-map';
 
 import Annotation from './annotation.jsx';
 
@@ -26,11 +27,12 @@ export const init = ({
   setLoading,
   annotation,
   updateSelection,
+  loadTrackingMap = () => { console.error('Annotation view has no loadTrackingMap function.'); },
   viewarApi: { sceneManager, trackers, cameras },
 }) => async () => {
   setLoading(true);
-
   const annotation = await annotationDb.get(annotationId);
+  setLoading(false);
 
   if (annotation.model) {
     annotationManager.setAnnotation(annotation, false);
@@ -38,9 +40,9 @@ export const init = ({
 
   if (annotation.featureMap) {
     const tracker = Object.values(trackers)[0];
-    if (tracker && tracker.loadTrackingMap) {
+    if (tracker) {
       tracker.on('trackingTargetStatusChanged', updateTracking);
-      await tracker.loadTrackingMap(annotation.featureMap);
+      await loadTrackingMap(annotation.featureMap)
     }
 
     updateTracking();
@@ -50,7 +52,6 @@ export const init = ({
 
   await cameras.arCamera.showPointCloud();
   sceneManager.on('selectionChanged', updateSelection);
-  setLoading(false);
   setAnnotation(annotation);
 };
 
@@ -119,6 +120,7 @@ export const updateTracking = ({
 };
 
 export default compose(
+  withTrackingMap,
   withDialogControls,
   withSetLoading,
   withState('annotation', 'setAnnotation', undefined),

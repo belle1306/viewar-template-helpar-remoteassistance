@@ -60,4 +60,6 @@ export default {
   "RatingOverlayCall": "Call",
   "AnnotationPickerHint": "Insert annotation with a touch.",
   "Save": "Save",
+  "TrackingMapSaveInProgress": "Processing and uploading call data. Please do not close the app until its completed.",
+  "TrackingMapLoadInProgress": "Loading map...",
 }

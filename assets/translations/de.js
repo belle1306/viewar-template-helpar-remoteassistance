@@ -61,4 +61,6 @@ export default {
   "RatingOverlayCall": "Anrufen",
   "AnnotationPickerHint": "Platzieren Sie ihr Annotation durch einen Touch.",
   "Save": "Speichern",
+  "TrackingMapSaveInProgress": "Bearbeite und speichere Anrufinformationen. Bitte schließen Sie die App nicht, bevor der Vorgang abgeschlossen ist.",
+  "TrackingMapLoadInProgress": "Lade Karte...",
 }

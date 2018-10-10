@@ -13,6 +13,7 @@ import { withSetLoading } from '../../services/loading';
 import annotationManager from '../../services/annotation-manager';
 import { translate } from '../../services';
 import withRouteParams from '../../services/route-params';
+import { withTrackingMap } from '../../services/tracking-map';
 
 import Call from './Call.jsx';
 
@@ -130,23 +131,6 @@ export const goBack = ({
   }
 };
 
-export const saveTrackingMap = ({
-  setLoading,
-  viewarApi: { trackers },
-}) => async () => {
-  setLoading(true);
-
-  let featureMap = '';
-  const tracker = Object.values(trackers)[0];
-  if (tracker && tracker.saveTrackingMap) {
-    featureMap = await tracker.saveTrackingMap();
-  }
-
-  setLoading(false);
-
-  return featureMap;
-};
-
 export const goToNextView = ({
   annotationManager,
   admin,
@@ -185,6 +169,7 @@ let syncSubscription;
 let callSubscription;
 let endCallSubscription;
 export default compose(
+  withTrackingMap,
   withCallClient,
   withDialogControls,
   withRouteParams(),
@@ -196,9 +181,6 @@ export default compose(
     viewarApi,
     getUiConfigPath,
     annotationManager,
-  }),
-  withHandlers({
-    saveTrackingMap,
   }),
   withHandlers({
     syncAnnotation,
@@ -232,7 +214,7 @@ export default compose(
         admin,
         callClient,
         setLoading,
-        saveTrackingMap,
+        saveTrackingMap = () => { console.error('Call view has no saveTrackingMap function.'); },
         viewarApi: { cameras },
       } = this.props;
       if (callSubscription) {
