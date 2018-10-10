@@ -2,9 +2,9 @@
   color: white;
   cursor: pointer;
   box-sizing: border-box;
-  padding: 0 20px;
-  height: 2em;
-  border-radius: 1em;
+  padding: 0 1em;
+  height: 3em;
+  border-radius: 1000px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,20 +17,4 @@
 
 .isInactive.TextButton {
   background-color: #666;
-}
-
-.isRound.TextButton {
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.isLarge.TextButton {
-  width: 100px;
-  height: 100px;
-  font-size: 1.4em;
 }

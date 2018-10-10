@@ -37,14 +37,23 @@
 .CallButtonIcon {
   width: 2rem;
   height: 2rem;
-  -webkit-mask-position-x: calc(100% / 7 * 7);
-  -webkit-mask-position-y: calc(100% / 7 * 2);
-  background-position-x: calc(100% / 7 * 7);
-  background-position-y: calc(100% / 7 * 2);
+  -webkit-mask-position-x: calc(100% / 7 * 3);
+  -webkit-mask-position-y: calc(100% / 7 * 0);
+  background-position-x: calc(100% / 7 * 3);
+  background-position-y: calc(100% / 7 * 0);
   background-color: white;
 }
 
 .CallButtonText {
   flex: 1 0 auto;
   text-align: center;
+  font-weight: bold;
+}
+
+
+
+@media only screen and (orientation: landscape) {
+  .CallButton {
+    max-width: 30vmax;
+  }
 }

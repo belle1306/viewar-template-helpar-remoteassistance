@@ -5,6 +5,7 @@ import { translate } from '../../services';
 import styles from './annotation-picker.css';
 import globalStyles from '../../../css/global.css';
 
+import Hint from '../hint/hint';
 import Button from '../button/button';
 
 export default ({
@@ -29,21 +30,22 @@ export default ({
               selected === model.id && styles.isSelected
             )}
           >
-            <div
-              className={styles.AnnotationImage}
-              style={{ backgroundImage: `url('${model.imageUrl}')` }}
+            <Button
+              medium
+              className={styles.AnnotationButton}
+              icon={`annotation_${model.foreignKey}`}
               onClick={() => setSelected(model.id)}
             />
           </div>
         ))}
       </div>
       <div className={styles.Buttons}>
-        <Button className={styles.Button} icon="confirm" onClick={confirm} />
-        <Button className={styles.Button} icon="cancel" onClick={cancel} />
+        <Button className={styles.Button} medium icon="confirm" onClick={confirm} />
+        <Button className={styles.Button} medium icon="cancel" onClick={cancel} />
       </div>
-      <div className={cx(styles.Hint, !selected && styles.isHidden)}>
+      <Hint hidden={!selected} >
         {translate('AnnotationPickerHint')}
-      </div>
+      </Hint>
     </div>
   </Fragment>
 );

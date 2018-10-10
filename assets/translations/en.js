@@ -15,12 +15,12 @@ export default {
   "HomeLoading": "Loading...",
   "HomeCopyright": "Copyright©2018 by ViewAR GmbH.<br/>All rights reserved.",
   // Call
-  "CallWaitForSupportAgent": "Waiting for support agent...",
+  "CallWaitForSupportAgent": "Waiting for Support Agent...",
   "CallAbortQuestion": "Do you want to end the current call?",
   "CallAbortCall": "End call",
   "CallAnnotateHint": "Touch to highlight a point.",
   // User Selection
-  "UserSelectionWaitForUser": "Waiting for user...",
+  "UserSelectionWaitForUser": "Waiting for User...",
   "UserSelectionLineBusy": "Line is busy.",
   "UserSelectionEmptyList": "No available support requests",
   "UserSelectionAnswerCall": "Answer call",

@@ -18,14 +18,8 @@ import UserSelection from './user-selection.jsx';
 export const updateClientList = ({
   setClients,
   callClient,
-  selectedClient,
-  setSelectedClient,
 }) => async () => {
   const clients = callClient.clients.filter(client => client.data.available);
-
-  if (!clients.find(client => client === selectedClient)) {
-    setSelectedClient(null);
-  }
 
   setClients(clients);
 };
@@ -37,10 +31,7 @@ export const call = ({
   setLoading,
   password,
   callClient,
-  selectedClient,
-}) => async () => {
-  const client = selectedClient;
-
+}) => async (clientId) => {
   callSubscription = callClient.acceptedCall.subscribe((args = {}) => {
     const { data = {} } = args;
     const { featureMap } = data;
@@ -62,12 +53,28 @@ export const call = ({
     });
   });
 
-  setLoading(true);
-  await callClient.call({ id: client.id });
-  setLoading(false);
-
-  setWaitingForUser(client.id);
+  setWaitingForUser(true);
+  await callClient.call({ id: clientId });
 };
+
+export const formatTime = (timestamp) => {
+  const date = new Date(timestamp)
+  return isNaN(timestamp) ? timestamp : date.toLocaleString()
+}
+
+export const trimTopic = (text) => {
+  const maxLength = 110;
+  if (text.length > maxLength) {
+    let sliced = text.slice(0, maxLength - 3);
+    let lastSpace = sliced.lastIndexOf(' ');
+    if (lastSpace !== sliced.length - 1) {
+      sliced = sliced.slice(0, lastSpace);
+    }
+    return sliced + ' (...)';
+  }
+
+  return text;
+}
 
 let clientSubscription;
 let callSubscription;
@@ -78,13 +85,14 @@ export default compose(
   withDialogControls,
   withSetLoading,
   withRouteParams(),
-  withState('selectedClient', 'setSelectedClient', null),
   withState('clients', 'setClients', []),
   withState('waitingForUser', 'setWaitingForUser', false),
   withProps({
     viewarApi,
     getUiConfigPath,
     authManager,
+    trimTopic,
+    formatTime,
   }),
   withHandlers({
     updateClientList,

@@ -24,10 +24,25 @@
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
-  -webkit-mask-position-x: calc(100% / 7 * 2);
-  -webkit-mask-position-y: calc(100% / 7 * 3);
-  background-position-x: calc(100% / 7 * 2);
-  background-position-y: calc(100% / 7 * 3);
+  -webkit-mask-position-x: calc(100% / 7 * 1);
+  -webkit-mask-position-y: calc(100% / 7 * 0);
+  background-position-x: calc(100% / 7 * 1);
+  background-position-y: calc(100% / 7 * 0);
+}
+
+.AddButton {
+  background-color: #006DFF;
+  position: absolute;
+  right: 2rem;
+  width: 2rem;
+  height: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  -webkit-mask-position-x: calc(100% / 7 * 6);
+  -webkit-mask-position-y: calc(100% / 7 * 0);
+  background-position-x: calc(100% / 7 * 6);
+  background-position-y: calc(100% / 7 * 0);
 }
 
 .hasInput .SearchButton {
@@ -35,6 +50,9 @@
   -webkit-mask-position-y: calc(100% / 7 * 0);
   background-position-x: calc(100% / 7 * 2);
   background-position-y: calc(100% / 7 * 0);
+  width: 1.25rem;
+  height: 1.25rem;
+  margin: 0 calc(2rem - 1.25rem);
 }
 
 .withSearch.TextInput input {

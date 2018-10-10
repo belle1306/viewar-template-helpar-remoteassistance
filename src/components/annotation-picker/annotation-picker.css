@@ -1,43 +1,41 @@
 .AnnotationPicker {
   transition: opacity 0.5s ease;
-  display: flex;
   position: absolute;
   left: 0;
   bottom: 0;
+  top: 0;
   right: 0;
-  flex-flow: column-reverse;
   z-index: 10;
 }
 
 .Annotations {
+  position: absolute;
+  left: 0;
+  bottom: 0;
   flex: 0 0 auto;
   overflow-x: auto;
   display: flex;
+  flex-flow: column;
   z-index: 35;
 }
 
 .Annotation {
-  position: relative;
-  flex: 1 0 auto;
-  border: 1px solid white;
-  max-width: 20vh;
-}
-
-.Annotation::before {
-  content: '';
-  float: left;
-  padding-bottom: 100%;
+  flex: 0 0 auto;
+  margin: 20px;
+  padding: 6px;
 }
 
 .isSelected.Annotation {
-  border: 1px solid rgb(189, 24, 25);
+  border: 2px solid #006DFF;
+  border-radius: 100%;
+  padding: 4px;
+  box-sizing: border-box;
 }
 
-.AnnotationImage {
-  background: center / cover no-repeat;
-  width: 100%;
-  height: 100%;
+.Annotations .AnnotationButton {
+  margin: 0;
 }
+
 
 .Container:before {
   content: '';
@@ -46,10 +44,12 @@
 }
 
 .Buttons {
-  flex: 0 0 auto;
+  position: absolute;
+  right: 0;
+  bottom: 0;
   z-index: 40;
   display: flex;
-  justify-content: flex-end;
+  flex-flow: column;
 }
 
 .Buttons .Button {
@@ -67,22 +67,5 @@
 
 .isHidden.AnnotationPicker {
   pointer-events: none;
-  opacity: 0;
-}
-
-.Hint {
-  border-radius: 1000px;
-  padding: 10px 20px;
-  color: white;
-  background: rgba(0, 0, 0, 0.8);
-  text-align: center;
-  line-height: 1.2em;
-  white-space: nowrap;
-  transition: opacity 0.5s ease;
-  pointer-events: none;
-  align-self: center;
-}
-
-.isHidden.Hint {
   opacity: 0;
 }

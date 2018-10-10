@@ -20,8 +20,6 @@ export default ({
       styles.TextButton,
       global.ButtonColor,
       hidden && styles.isHidden,
-      round && styles.isRound,
-      large && styles.isLarge,
       inactive && styles.isInactive,
       className
     )}

@@ -39,11 +39,6 @@
   display: flex;
 }
 
-.AnnotationReview .CreateTagButton {
-  flex: 0 0 auto;
-  margin: 0 0 0 12px;
-}
-
 .TagInput {
   flex: 1 0 auto;
 }

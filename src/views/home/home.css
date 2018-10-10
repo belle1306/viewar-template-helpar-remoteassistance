@@ -37,6 +37,20 @@
   font-size: 2em;
 }
 
+.StartButton:after {
+  content: '';
+  position: absolute;
+  background-color: #006DFF;
+  -webkit-mask-size: 800%;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-image: url('../../../assets/images/helpar_buttons.svg');
+  width: 1.5rem;
+  height: 1.5rem;
+  bottom: 0;
+  transform: translateY(calc(100% - 1px));
+  pointer-events: none;
+}
+
 .Loading {
   position: absolute;
   top: 50%;

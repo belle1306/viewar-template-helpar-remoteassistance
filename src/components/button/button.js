@@ -4,9 +4,11 @@ import cx from 'classnames';
 import styles from './button.css';
 import global from '../../../css/global.css';
 
-export default ({ hidden, icon, large, small, medium, className, onClick }) => (
+export default ({ green, red, hidden, icon, large, small, medium, className, onClick }) => (
   <div
     className={cx(
+      green && styles.colorGreen,
+      red && styles.colorRed,
       styles.Button,
       global.ButtonColor,
       global.ButtonImage,

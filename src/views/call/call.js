@@ -24,6 +24,7 @@ export const waitForSupportAgent = ({
   connect,
   history,
   admin,
+  topic,
   viewarApi: { appConfig, trackers },
   setWaitingForSupportAgent,
   callClient,
@@ -31,7 +32,11 @@ export const waitForSupportAgent = ({
   let featureMap;
   if (!admin) {
     await connect();
-    await joinSession({ userData: { available: true } });
+    await joinSession({ userData: {
+      available: true,
+      topic,
+      timestamp: Date.now(),
+    } });
 
     const tracker = Object.values(trackers)[0];
     if (tracker && tracker.saveTrackingMap) {

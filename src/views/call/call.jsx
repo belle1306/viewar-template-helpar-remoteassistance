@@ -16,7 +16,10 @@ const WaitForSupportAgentOverlay = ({ visible }) => (
       !visible && styles.isHidden
     )}
   >
-    {translate('CallWaitForSupportAgent')}
+    <div className={styles.WaitMessage}>
+      {translate('CallWaitForSupportAgent')}
+    </div>
+    <div className={styles.WaitAnimation}></div>
   </div>
 );
 
@@ -34,6 +37,7 @@ export default ({
   <div className={cx(styles.Call)}>
     <Button
       medium
+      red
       icon="endcall"
       onClick={goBack}
       className={styles.EndCallButton}

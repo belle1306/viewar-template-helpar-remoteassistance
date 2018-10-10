@@ -5,8 +5,7 @@ import { translate } from '../../services';
 import styles from './user-selection.css';
 import global from '../../../css/global.css';
 
-import HeaderBar from '../../components/header-bar/header-bar';
-import TextButton from '../../components/text-button/text-button';
+import Button from '../../components/button/button';
 
 const WaitForUserOverlay = ({ visible }) => (
   <div className={cx(styles.WaitForUserOverlay, !visible && styles.isHidden)}>
@@ -16,44 +15,41 @@ const WaitForUserOverlay = ({ visible }) => (
 
 export default ({
   clients,
-  selectedClient,
-  setSelectedClient,
   call,
   waitingForUser,
+  trimTopic,
+  formatTime,
 }) => (
   <div className={cx(styles.UserSelection, global.BackgroundImage)}>
-    <HeaderBar goBack />
     <WaitForUserOverlay visible={waitingForUser} />
-    <div className={styles.Content}>
+    <div className={styles.Clients}>
       {clients.length === 0 && (
         <div className={styles.EmptyClientList}>
           {translate('UserSelectionEmptyList')}
         </div>
       )}
-      <div className={styles.ClientList}>
-        {clients.map(client => (
-          <div
-            className={cx(
-              styles.Client,
-              selectedClient === client && styles.isSelected
-            )}
-            key={client.id}
-            onClick={() => setSelectedClient(client)}
-          >
-            {client.id}
+      {clients.map(client => (
+        <div
+          className={cx(
+            styles.Client,
+          )}
+          key={client.id}
+        >
+          <div className={styles.Info}>
+            <div className={styles.Time}>{formatTime(client.data.timestamp)}</div>
+            <div className={styles.Topic}>{trimTopic(client.data.topic)}</div>
           </div>
-        ))}
-      </div>
-      <div className={styles.Buttons}>
-        {clients.length !== 0 && (
-          <TextButton
-            className={cx(styles.CallButton)}
-            inactive={!selectedClient}
-            label="UserSelectionAnswerCall"
-            onClick={call}
-          />
-        )}
-      </div>
+          <div className={styles.Call}>
+            <Button
+              medium
+              green
+              icon="call"
+              onClick={() => call(client.id)}
+              className={styles.CallButton}
+            />
+          </div>
+        </div>
+      ))}
     </div>
   </div>
 );

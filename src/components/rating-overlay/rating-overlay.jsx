@@ -18,11 +18,13 @@ export default ({ className, visible, onRate, onClose }) => (
 
       <div className={styles.Buttons}>
         <ButtonWithText
+          medium
           icon="back"
           label="RatingOverlayBack"
           onClick={() => onClose(true)}
         />
         <ButtonWithText
+          medium
           icon="call"
           label="RatingOverlayCall"
           onClick={() => onClose(false)}

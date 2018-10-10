@@ -10,7 +10,7 @@
   opacity: 0;
   transition: opacity 500ms linear;
   z-index: 110;
-  font-size: 1.2em;
+  font-size: 1.4em;
   background: rgba(0, 0, 0, 0.6);
 }
 
@@ -25,18 +25,19 @@
   align-items: center;
   flex-flow: column;
   background-color: white;
-  margin: 20px;
-  padding: 20px;
+  margin: 1rem;
+  padding: 1rem;
   border-radius: 10px;
-  font-size: 1.3em;
 }
 
 .Content {
   width: 100%;
 }
 
-.Input {
-  margin-top: 10px;
+.DialogWrapper .Input {
+  margin-top: 1rem;
+  font-size: 1em;
+  padding: 0.3rem 1rem;
 }
 
 .Message {
@@ -44,14 +45,15 @@
 
 .Buttons {
   display: flex;
-  margin-top: 20px;
+  margin-top: 1rem;
   width: 100%;
   justify-content: center;
   box-sizing: border-box;
 }
 
 .Button {
-  margin-right: 8px;
+  margin-right: 1rem;
+  flex: 1 0 auto;
 }
 
 .Button:last-child {

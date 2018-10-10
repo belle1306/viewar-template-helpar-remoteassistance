@@ -40,6 +40,7 @@ export const callSupport = ({ goTo, search }) => () => {
   goTo('/calibration-call', {
     backPath: '/product-selection/',
     backArgs: { input: search },
+    topic: search,
   });
 };
 

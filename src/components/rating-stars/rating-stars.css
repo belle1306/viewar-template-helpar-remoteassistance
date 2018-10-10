@@ -3,16 +3,25 @@
 }
 
 .Star {
+  background-color: black;
   width: 26px;
   height: 26px;
-  background: url('../../../assets/images/icons/icon_star_empty.svg') center /
-    cover no-repeat;
   margin-right: 4px;
-  transition: all 0.5s ease;
+  -webkit-mask-size: 800%;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-image: url('../../../assets/images/helpar_buttons.svg');
+  -webkit-mask-position-x: calc(100% / 7 * 1);
+  -webkit-mask-position-y: calc(100% / 7 * 2);
+  background-position-x: calc(100% / 7 * 1);
+  background-position-y: calc(100% / 7 * 2);
 }
 
 .isChecked.Star {
-  background-image: url('../../../assets/images/icons/icon_star_filled.svg');
+  background-color: #003BA1;
+  -webkit-mask-position-x: calc(100% / 7 * 0);
+  -webkit-mask-position-y: calc(100% / 7 * 2);
+  background-position-x: calc(100% / 7 * 0);
+  background-position-y: calc(100% / 7 * 2);
 }
 
 .Star:last-child {

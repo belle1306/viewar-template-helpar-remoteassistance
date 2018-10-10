@@ -83,14 +83,8 @@ export default ({
                     className={styles.TagInput}
                     value={tag}
                     setValue={setTag}
-                    deleteButton
+                    addButton
                     onSubmit={createTag}
-                  />
-                  <Button
-                    className={styles.CreateTagButton}
-                    icon="add"
-                    small
-                    onClick={createTag}
                   />
                 </div>
                 <div className={styles.Tags}>

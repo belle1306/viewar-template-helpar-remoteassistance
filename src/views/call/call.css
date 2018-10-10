@@ -12,9 +12,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.3em;
   transition: opacity 0.5s ease;
   z-index: 40;
+  flex-flow: column;
 }
 
 .TouchOverlay {
@@ -56,4 +56,20 @@
   left: 0;
   bottom: 20px;
   z-index: 30;
+}
+
+.WaitMessage {
+  font-size: 2.6em;
+  line-height: 1.1em;
+  width: calc(100% - 9rem);
+  text-align: center;
+}
+
+.WaitAnimation {
+  background: url('../../../assets/images/animations/waiting_support_animation.gif')
+  center / contain no-repeat;
+  width: 9rem;
+  height: 9rem;
+  margin-top: 1rem;
+  margin-bottom: 100px;
 }

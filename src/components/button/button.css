@@ -28,72 +28,136 @@
   height: 30px;
 }
 
+.colorRed.Button {
+  background-color: #ff0000;
+}
+
+.colorGreen.Button {
+  background-color: #00cc00;
+}
+
 .Button.icon-back {
-  -webkit-mask-position-x: calc(100% / 7 * 7);
+  -webkit-mask-position-x: calc(100% / 7 * 2);
   -webkit-mask-position-y: calc(100% / 7 * 2);
-  background-position-x: calc(100% / 7 * 7);
+  background-position-x: calc(100% / 7 * 2);
   background-position-y: calc(100% / 7 * 2);
 }
 
-.Button.icon-login {
-  -webkit-mask-position-x: calc(100% / 7 * 0);
-  -webkit-mask-position-y: calc(100% / 7 * 5);
-  background-position-x: calc(100% / 7 * 0);
-  background-position-y: calc(100% / 7 * 5);
-}
-
 .Button.icon-add {
-  -webkit-mask-position-x: calc(100% / 7 * 0);
+  -webkit-mask-position-x: calc(100% / 7 * 6);
   -webkit-mask-position-y: calc(100% / 7 * 0);
-  background-position-x: calc(100% / 7 * 0);
+  background-position-x: calc(100% / 7 * 6);
   background-position-y: calc(100% / 7 * 0);
 }
 
-.Button.icon-next {
-  -webkit-mask-position-x: calc(100% / 7 * 0);
-  -webkit-mask-position-y: calc(100% / 7 * 7);
-  background-position-x: calc(100% / 7 * 0);
-  background-position-y: calc(100% / 7 * 7);
+.Button.icon-confirm {
+  -webkit-mask-position-x: calc(100% / 7 * 2);
+  -webkit-mask-position-y: calc(100% / 7 * 1);
+  background-position-x: calc(100% / 7 * 2);
+  background-position-y: calc(100% / 7 * 1);
 }
 
-.Button.icon-confirm {
+.Button.icon-cancel {
+  -webkit-mask-position-x: calc(100% / 7 * 3);
+  -webkit-mask-position-y: calc(100% / 7 * 1);
+  background-position-x: calc(100% / 7 * 3);
+  background-position-y: calc(100% / 7 * 1);
+}
+
+.Button.icon-call {
+  -webkit-mask-position-x: calc(100% / 7 * 4);
+  -webkit-mask-position-y: calc(100% / 7 * 0);
+  background-position-x: calc(100% / 7 * 4);
+  background-position-y: calc(100% / 7 * 0);
+}
+
+.Button.icon-call2 {
+  -webkit-mask-position-x: calc(100% / 7 * 3);
+  -webkit-mask-position-y: calc(100% / 7 * 0);
+  background-position-x: calc(100% / 7 * 3);
+  background-position-y: calc(100% / 7 * 0);
+}
+
+.Button.icon-endcall {
+  -webkit-mask-position-x: calc(100% / 7 * 5);
+  -webkit-mask-position-y: calc(100% / 7 * 0);
+  background-position-x: calc(100% / 7 * 5);
+  background-position-y: calc(100% / 7 * 0);
+}
+
+.Button.icon-pause {
+  -webkit-mask-position-x: calc(100% / 7 * 0);
+  -webkit-mask-position-y: calc(100% / 7 * 1);
+  background-position-x: calc(100% / 7 * 0);
+  background-position-y: calc(100% / 7 * 1);
+}
+
+.Button.icon-play {
+  -webkit-mask-position-x: calc(100% / 7 * 0);
+  -webkit-mask-position-y: calc(100% / 7 * 1);
+  background-position-x: calc(100% / 7 * 0);
+  background-position-y: calc(100% / 7 * 1);
+}
+
+.Button.icon-star {
   -webkit-mask-position-x: calc(100% / 7 * 1);
   -webkit-mask-position-y: calc(100% / 7 * 2);
   background-position-x: calc(100% / 7 * 1);
   background-position-y: calc(100% / 7 * 2);
 }
 
-.Button.icon-cancel {
-  -webkit-mask-position-x: calc(100% / 7 * 2);
+.Button.icon-star2 {
+  -webkit-mask-position-x: calc(100% / 7 * 0);
+  -webkit-mask-position-y: calc(100% / 7 * 2);
+  background-position-x: calc(100% / 7 * 0);
+  background-position-y: calc(100% / 7 * 2);
+}
+
+.Button.icon-annotation_mark {
+  -webkit-mask-position-x: calc(100% / 7 * 4);
+  -webkit-mask-position-y: calc(100% / 7 * 1);
+  background-position-x: calc(100% / 7 * 4);
+  background-position-y: calc(100% / 7 * 1);
+}
+
+.Button.icon-annotation_helpar_user_highlight {
+  -webkit-mask-position-x: calc(100% / 7 * 5);
+  -webkit-mask-position-y: calc(100% / 7 * 1);
+  background-position-x: calc(100% / 7 * 5);
+  background-position-y: calc(100% / 7 * 1);
+}
+
+.Button.icon-annotation_right {
+  -webkit-mask-position-x: calc(100% / 7 * 6);
+  -webkit-mask-position-y: calc(100% / 7 * 1);
+  background-position-x: calc(100% / 7 * 6);
+  background-position-y: calc(100% / 7 * 1);
+}
+
+.Button.icon-annotation_left {
+  -webkit-mask-position-x: calc(100% / 7 * 7);
+  -webkit-mask-position-y: calc(100% / 7 * 1);
+  background-position-x: calc(100% / 7 * 7);
+  background-position-y: calc(100% / 7 * 1);
+}
+
+.Button.icon-pencil {
+  -webkit-mask-position-x: calc(100% / 7 * 7);
   -webkit-mask-position-y: calc(100% / 7 * 0);
-  background-position-x: calc(100% / 7 * 2);
+  background-position-x: calc(100% / 7 * 7);
   background-position-y: calc(100% / 7 * 0);
 }
 
-.Button.icon-call {
+.Button.icon-account {
+  -webkit-mask-position-x: calc(100% / 7 * 3);
+  -webkit-mask-position-y: calc(100% / 7 * 2);
+  background-position-x: calc(100% / 7 * 3);
+  background-position-y: calc(100% / 7 * 2);
+}
+
+.Button.icon-logout {
   -webkit-mask-position-x: calc(100% / 7 * 4);
-  -webkit-mask-position-y: calc(100% / 7 * 5);
+  -webkit-mask-position-y: calc(100% / 7 * 2);
   background-position-x: calc(100% / 7 * 4);
-  background-position-y: calc(100% / 7 * 5);
-}
-
-.Button.icon-endcall {
-  -webkit-mask-position-x: calc(100% / 7 * 5);
-  -webkit-mask-position-y: calc(100% / 7 * 5);
-  background-position-x: calc(100% / 7 * 5);
-  background-position-y: calc(100% / 7 * 5);
-}
-
-.Button.icon-pause {
-  -webkit-mask-position-x: calc(100% / 7 * 5);
-  -webkit-mask-position-y: calc(100% / 7 * 4);
-  background-position-x: calc(100% / 7 * 5);
-  background-position-y: calc(100% / 7 * 4);
-}
-
-.Button.icon-play {
-  -webkit-mask-position-x: calc(100% / 7 * 6);
-  -webkit-mask-position-y: calc(100% / 7 * 4);
-  background-position-x: calc(100% / 7 * 6);
-  background-position-y: calc(100% / 7 * 4);
+  background-position-y: calc(100% / 7 * 2);
 }

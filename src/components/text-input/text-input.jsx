@@ -12,6 +12,7 @@ export default ({
   placeholder,
   setValue,
   searchButton,
+  addButton,
   password,
 }) => (
   <div
@@ -35,6 +36,9 @@ export default ({
       />
       {searchButton && (
         <div className={cx(styles.SearchButton, global.ButtonImage)} onClick={() => setValue('')} />
+      )}
+      {!searchButton && addButton && (
+        <div className={cx(styles.AddButton, global.ButtonImage)} onClick={handleSubmit} />
       )}
     </form>
   </div>

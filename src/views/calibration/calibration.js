@@ -31,8 +31,9 @@ export default compose(
   }),
   withRouteParams(),
   withHandlers({
-    goToNext: ({ goTo, nextView, annotationId, backPath, backArgs }) => () => {
+    goToNext: ({ goTo, nextView, annotationId, backPath, backArgs, topic }) => () => {
       goTo(nextView, {
+        topic,
         annotationId,
         backPath,
         backArgs,
