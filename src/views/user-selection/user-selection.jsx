@@ -6,6 +6,7 @@ import styles from './user-selection.css';
 import global from '../../../css/global.css';
 
 import Button from '../../components/button/button';
+import AdminHeaderBar from '../../components/admin-header-bar/admin-header-bar';
 
 const WaitForUserOverlay = ({ visible }) => (
   <div className={cx(styles.WaitForUserOverlay, !visible && styles.isHidden)}>
@@ -19,8 +20,10 @@ export default ({
   waitingForUser,
   trimTopic,
   formatTime,
+  userName,
 }) => (
   <div className={cx(styles.UserSelection, global.BackgroundImage)}>
+    <AdminHeaderBar userName={userName} />
     <WaitForUserOverlay visible={waitingForUser} />
     <div className={styles.Clients}>
       {clients.length === 0 && (

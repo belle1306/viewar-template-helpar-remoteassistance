@@ -12,6 +12,7 @@ import { withSetLoading } from '../../services/loading';
 import withRouteParams from '../../services/route-params';
 import annotationDb from '../../services/annotation-db';
 import annotationManager from '../../services/annotation-manager';
+import authManager from '../../services/auth-manager';
 
 import Review from './review.jsx';
 
@@ -21,6 +22,7 @@ export const init = ({
   setAnnotations,
 }) => async () => {
   const annotations = annotationManager.saved;
+
   setAnnotations(annotations);
 };
 
@@ -149,12 +151,13 @@ export default compose(
   withState('tag', 'setTag', ''),
   withState('tags', 'setTags', []),
   withState('annotation', 'setAnnotation', null),
-  withProps({
+  withProps(() => ({
     viewarApi,
     getUiConfigPath,
     annotationDb,
     annotationManager,
-  }),
+    userName: authManager.user.name,
+  })),
   withHandlers({
     saveAnnotation,
     createTag,

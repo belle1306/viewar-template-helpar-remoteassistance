@@ -13,7 +13,6 @@ import Button from '../../components/button/button';
 import TextButton from '../../components/text-button/text-button';
 import Tag from '../../components/tag/tag';
 
-// TODO: Work with ids (generate in annotation-manager).
 export default ({
   tags,
   onClose,
@@ -40,79 +39,67 @@ export default ({
       className
     )}
   >
-    <HeaderBar goBack={onClose} title="AnnotationReviewTitle" />
-
     {annotation && (
       <Fragment>
-        <div
-          className={cx(
-            styles.FullscreenImage,
-            !fullscreenImage && styles.isHidden
-          )}
-          onClick={() => setFullscreenImage(false)}
-          style={{
-            backgroundImage: `url('${annotation.screenshot}')`,
-          }}
-        />
-
         <div
           className={cx(
             styles.AnnotationReviewContent,
             fullscreenImage && styles.isHidden
           )}
         >
-          <div className={styles.Rows}>
-            <div className={styles.Left}>
-              <div className={styles.Section}>
-                <div className={styles.Title}>
-                  {translate('AnnotationReviewTitleSection')}
-                </div>
-                <TextInput
-                  className={styles.Title}
-                  value={title}
-                  setValue={setTitle}
-                />
-              </div>
-
-              <div className={styles.Section}>
-                <div className={styles.Title}>
-                  {translate('AnnotationReviewTags')}
-                </div>
-                <div className={styles.TagSearch}>
-                  <TextInput
-                    className={styles.TagInput}
-                    value={tag}
-                    setValue={setTag}
-                    addButton
-                    onSubmit={createTag}
-                  />
-                </div>
-                <div className={styles.Tags}>
-                  {tags.map(tag => (
-                    <Tag
-                      key={tag}
-                      className={styles.tag}
-                      label={tag}
-                      onClick={() => removeTag(tag)}
-                    />
-                  ))}
-                </div>
-              </div>
+          <div className={styles.Section}>
+            <div className={styles.Header}>
+              {translate('AnnotationReviewTitle')}
             </div>
+          </div>
+          <div
+            className={cx(
+              styles.FullscreenImage,
+              !fullscreenImage && styles.isHidden
+            )}
+            onClick={() => setFullscreenImage(false)}
+            style={{
+              backgroundImage: `url('${annotation.screenshot}')`,
+            }}
+          />
 
-            <div className={styles.Right}>
-              <img
-                className={styles.AnnotationImage}
-                src={annotation.screenshot}
-                onClick={() => setFullscreenImage(true)}
+          <div className={styles.Section}>
+            <div className={styles.Title}>{translate('AnnotationReviewTitleSection')}</div>
+            <TextInput
+              className={styles.TagInput}
+              value={title}
+              setValue={setTitle}
+            />
+          </div>
+
+          <div className={styles.Section}>
+            <div className={styles.Title}>{translate('ReviewGeneralTags')}</div>
+            <div className={styles.TagSearch}>
+              <TextInput
+                className={styles.TagInput}
+                placeholder="ReviewYourTags"
+                value={tag}
+                setValue={setTag}
+                onSubmit={createTag}
+                addButton
               />
             </div>
+            {!!tags.length && (
+              <div className={styles.Tags}>
+                {tags.map(tag => (
+                  <Tag
+                    key={tag}
+                    className={styles.Tag}
+                    label={tag}
+                    onClick={() => removeTag(tag)}
+                  />
+                ))}
+              </div>
+            )}
           </div>
 
           <div className={cx(styles.Section, styles.SectionDescription)}>
-            <div className={styles.Title}>
-              {translate('AnnotationReviewDescription')}
-            </div>
+            <div className={styles.Title}>{translate('AnnotationReviewDescription')}</div>
             <TextArea
               className={styles.Description}
               value={description}
@@ -121,7 +108,7 @@ export default ({
           </div>
 
           <div className={styles.Buttons}>
-            <TextButton label="Save" onClick={() => handleSave(annotation)} />
+            <TextButton label="Save" onClick={() => handleSave(annotation)} className={styles.SaveButton} />
           </div>
         </div>
       </Fragment>

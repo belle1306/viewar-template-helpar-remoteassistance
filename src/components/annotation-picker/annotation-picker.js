@@ -58,7 +58,11 @@ export default compose(
   withProps(({ annotationManager }) => ({
     models: annotationManager.models,
   })),
-  withPropsOnChange(['visible'], ({ annotationManager, visible }) => {
+  withPropsOnChange(['visible'], ({ models, setSelected, selected, annotationManager, visible }) => {
+    if (!selected && models.length) {
+      setSelected(models[0].id);
+    }
+
     const previousAnnotation = visible ? annotationManager.current : null;
 
     return {

@@ -7,14 +7,14 @@
   position: absolute;
   left: 0;
   top: 0;
-  padding: 20px;
+  padding: 2rem;
   box-sizing: border-box;
 }
 
 .Clients {
   position: absolute;
-  top: 0;
-  bottom: 0;
+  top: 8rem;
+  max-height: calc(100% - 8rem);
   left: 0;
   right: 0;
   display: flex;
@@ -101,4 +101,52 @@
 
 .Call .CallButton {
   margin: 0;
+}
+
+@media only screen and (orientation: landscape) {
+  .Clients {
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  .Client {
+    width: 50%;
+    box-sizing: border-box;
+    justify-self: flex-start;
+    align-self: flex-start;
+  }
+
+  .Client:nth-child(2) {
+    border-top: 0;
+    margin-top: 0;
+    padding-top: 0;
+  }
+}
+
+@media only screen and (orientation: landscape) and (max-device-width: 1200px) {
+  .Client:nth-child(2n) {
+    width: calc(50% - 2rem);
+    margin-left: 2rem;
+  }
+}
+
+@media only screen and (orientation: landscape) and (min-device-width: 1201px) {
+
+  .Client {
+    width: 33%;
+  }
+
+  .Client:nth-child(3) {
+    border-top: 0;
+    margin-top: 0;
+    padding-top: 0;
+  }
+
+  .Client:nth-child(3n + 1),
+  .Client:nth-child(3n) {
+    width: calc(33% - 2rem);
+    margin-left: 2rem;
+  }
+
 }

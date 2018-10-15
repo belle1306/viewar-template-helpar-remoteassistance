@@ -10,6 +10,12 @@
   transition: opacity 0.5s ease;
 }
 
+.Header {
+  color: #003BA1;
+  font-size: 2.6em;
+  line-height: 1.1em;
+}
+
 .AnnotationReviewContent {
   position: absolute;
   display: flex;
@@ -17,22 +23,34 @@
   left: 0;
   right: 0;
   bottom: 0;
-  top: 60px;
-  padding: 12px;
-  transition: opacity 0.5s ease;
+  top: 8rem;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 2rem;
 }
 
 .Section {
   flex: 0 0 auto;
   display: flex;
   flex-flow: column;
-  margin-bottom: 12px;
+  margin: 0;
+  padding: 2rem 0;
+  box-sizing: border-box;
+  border-bottom: 1px solid #ccc;
+}
+
+.Section:first-child {
+  padding-top: 0;
+}
+
+.Section:last-child {
+  border-bottom: none;
 }
 
 .Title {
-  font-size: 1.1em;
-  margin-bottom: 6px;
+  font-size: 1.3em;
+  line-height: 2rem;
+  padding: 0 3rem;
 }
 
 .TagSearch {
@@ -40,70 +58,30 @@
 }
 
 .TagInput {
-  flex: 1 0 auto;
+  flex: 1 1 auto;
 }
 
 .Tags {
   display: flex;
   flex-flow: row wrap;
-  margin-top: 6px;
+  margin-top: 0.5rem;
 }
 
 .Tag {
-  flex: 0 0 auto;
+  flex: 0 0 calc(50% - 4rem);
+  max-width: calc(50% - 4rem);
 }
 
-.Section.SectionDescription {
-  flex: 1 0 auto;
-}
-
-.Description {
-  flex: 1 0 auto;
-  display: flex;
-  flex-flow: column;
-}
-
-.Description textarea {
-  flex: 1 0 auto;
-  height: auto;
+.Tag:nth-child(2n) {
+  margin-right: 1.5rem;
 }
 
 .Buttons {
-  flex: 0 0 auto;
+  margin-top: 2rem;
+  flex: 1 0 auto;
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
-}
-
-.Rows {
-  display: flex;
-  flex-flow: row;
-}
-
-.Left {
-  flex: 1 1 auto;
-  display: flex;
-  flex-flow: column;
-}
-
-.Right {
-  flex: 0 0 auto;
-  margin-left: 20px;
-}
-
-.AnnotationImage {
-  width: 30vmin;
-}
-
-.FullscreenImage {
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  background: center / contain no-repeat;
-  z-index: 999;
-  transition: opacity 0.5s ease;
 }
 
 .isHidden.AnnotationReview,
@@ -111,4 +89,32 @@
 .isHidden.AnnotationReviewContent {
   pointer-events: none;
   opacity: 0;
+}
+
+.SaveButton {
+  border-radius: 1000px;
+  padding: 1.1rem 0;
+  height: auto;
+  font-size: 2em;
+  flex: 1 0 auto;
+}
+
+@media only screen and (orientation: landscape) {
+  .SaveButton {
+    max-width: 30vmax;
+    margin: 0 auto;
+  }
+
+  .Tag {
+    flex: 0 0 calc(25% - 4rem);
+    max-width: calc(25% - 4rem);
+  }
+
+  .Tag:nth-child(2n) {
+    margin-right: 2rem;
+  }
+
+  .Tag:nth-child(4n) {
+    margin-right: 1.5rem;
+  }
 }

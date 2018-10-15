@@ -1,0 +1,50 @@
+.Container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  z-index: 50;
+  background-color: #003ba1;
+  padding: 2rem;
+  color: white;
+  align-items: center;
+  z-index: 90;
+}
+
+.Container .Avatar {
+  flex: 0 0 auto;
+  height: 4rem;
+  width: 4rem;
+  background-color: white;
+  margin: 0 1rem 0 0;
+  cursor: default;
+}
+
+.UserDetails {
+  flex: 1 1 auto;
+  font-size: 1.2rem;
+  margin-right: 1.5rem;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+}
+
+.UserWelcome {
+  line-height: 1.8rem;
+}
+
+.UserName {
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.8rem;
+}
+
+.LogOutButton {
+  flex: 0 0 auto;
+  background-color: #006afd;
+  margin: 0;
+}

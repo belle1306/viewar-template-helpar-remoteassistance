@@ -176,9 +176,6 @@ export default ({
     if (plane) {
       const ray = new Ray(hits.ray);
       const { intersects, distance } = plane.getRayIntersection(ray);
-      console.log(intersects, distance, ray);
-      window.ray = ray;
-      window.distane = distance;
       if (intersects) {
         return ray.origin.add(ray.direction.scale(distance));
       }

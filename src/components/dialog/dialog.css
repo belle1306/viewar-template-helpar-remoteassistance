@@ -54,6 +54,7 @@
 .Button {
   margin-right: 1rem;
   flex: 1 0 auto;
+  min-width: 100px;
 }
 
 .Button:last-child {

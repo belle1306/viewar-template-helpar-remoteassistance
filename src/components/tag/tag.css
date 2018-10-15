@@ -1,13 +1,13 @@
 .Tag {
-  padding: 0 8px;
   display: flex;
   align-items: center;
   color: white;
-  background-color: #0089e0;
-  margin: 0 18px 7px 0;
-  height: 24px;
-  border-radius: 4px 0 0 4px;
+  background-color: #006afc;
+  margin: 0 2rem 0.5rem 0;
+  padding: 1rem 0.5rem 1rem 1.5rem;
   position: relative;
+  border-radius: 1000px 0 0 1000px;
+  font-size: 1.4em;
 }
 
 .Tag:before {
@@ -15,23 +15,34 @@
   float: left;
   position: absolute;
   top: 0;
-  right: -12px;
-  width: 0;
-  height: 0;
-  border-color: transparent transparent transparent #0089e0;
-  border-style: solid;
-  border-width: 12px 0 12px 12px;
+  right: -1.5rem;
+  height: 100%;
+  width: 1.5rem;
+  background-color: #006afc;
+  border-radius: 0 1000px 1000px 0;
+}
+
+.Label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .Tag:after {
   content: '';
   position: absolute;
-  top: 10px;
-  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  right: -0.5rem;
   float: left;
-  width: 4px;
-  height: 4px;
-  border-radius: 2px;
-  background: #fff;
-  box-shadow: -1px -1px 2px #004977;
+  width: 0.5rem;
+  height: 0.5rem;
+  -webkit-mask-size: 800%;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-image: url('../../../assets/images/helpar_buttons.svg');
+  -webkit-mask-position-x: calc(100% / 7 * 2);
+  -webkit-mask-position-y: calc(100% / 7 * 0);
+  background-position-x: calc(100% / 7 * 2);
+  background-position-y: calc(100% / 7 * 0);
+  background-color: white;
 }

@@ -8,6 +8,10 @@
   pointer-events: all;
 }
 
+.Button:focus {
+  outline: 0;
+}
+
 .isHidden.Button {
   opacity: 0;
   pointer-events: none;

@@ -86,6 +86,7 @@ export default compose(
   withSetLoading,
   withRouteParams(),
   withState('clients', 'setClients', []),
+  withState('userName', 'setUserName', ''),
   withState('waitingForUser', 'setWaitingForUser', false),
   withProps({
     viewarApi,
@@ -108,6 +109,7 @@ export default compose(
         viewarApi: { appConfig },
         authManager,
         password,
+        setUserName,
       } = this.props;
 
       await connect();
@@ -115,6 +117,7 @@ export default compose(
 
       if (callClient.connected && callClient.session) {
         await authManager.login(password);
+        setUserName(authManager.user.name);
         clientSubscription = callClient.clientsUpdate.subscribe(
           updateClientList
         );

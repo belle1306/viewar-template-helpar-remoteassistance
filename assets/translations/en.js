@@ -38,10 +38,11 @@ export default {
   "AnnotationFilmLearnedArea": "Please film your product.",
   // Review
   "ReviewTitle": "Review your assistance",
-  "ReviewGeneralTags": "Product tags (e.g. 'Car', 'Audi', 'A4',...):",
-  "ReviewAnnotations": "Annotations",
+  "ReviewGeneralTags": "Enter tags like Car, Audi, A4, etc.",
   "ReviewContinueSaving": "You have unhandled annotations. Continue with saving?",
   "ReviewSavingNoTags": "Please provide at least one product tag.",
+  "ReviewYourTags": "Your Tags ...",
+  "ReviewSave": "Save Review",
   "AnnotationReviewTitle": "Annotation Details",
   "AnnotationReviewTitleSection": "Title:",
   "AnnotationReviewTags": "Annotation specific tags (e.g. 'motoroil'):",
@@ -64,4 +65,6 @@ export default {
   "Save": "Save",
   "TrackingMapSaveInProgress": "Processing and uploading call data. Please do not close the app until its completed.",
   "TrackingMapLoadInProgress": "Loading map...",
+  "AdminWelcome": "Welcome,",
+  "AdminLogout": "Log out?",
 }

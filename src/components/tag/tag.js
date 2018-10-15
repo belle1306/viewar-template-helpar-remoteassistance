@@ -9,6 +9,8 @@ export default ({ className, onClick, label }) => (
     className={cx(styles.Tag, className)}
     onClick={() => onClick && onClick()}
   >
-    {label}
+    <div className={styles.Label}>
+      {label}
+    </div>
   </div>
 );
