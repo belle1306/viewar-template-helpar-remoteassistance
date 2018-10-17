@@ -9,7 +9,7 @@ import global from '../../../css/global.css';
 import Logo from '../../components/logo/logo';
 import TextButton from '../../components/text-button/text-button';
 import Spinner from '../../components/spinner/spinner.jsx';
-import Background from '../../components/background/background.jsx';
+import Button from '../../components/button/button';
 
 export default ({
   goToProductSelection,
@@ -20,7 +20,13 @@ export default ({
   <div className={cx(styles.Home)}>
     <Logo
       className={styles.Logo}
+    />
+    <Button
       onClick={goToUserSelection}
+      className={styles.LoginButton}
+      hidden={!loadingDone}
+      small
+      icon="logout"
     />
     <TextButton
       label="HomeStart"

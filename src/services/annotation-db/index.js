@@ -259,6 +259,8 @@ const createAnnotationDb = () => {
   }) => {
     await initDb();
 
+    console.log('ID', id);
+
     const newData = {
       annotations: {
         id,

@@ -19,7 +19,7 @@ export default ({
   setSelected,
 }) => (
   <Fragment>
-    <div className={styles.TouchOverlay} onClick={touch} />
+    <div className={cx(styles.TouchOverlay, !visible && styles.isHidden)} onClick={touch} />
     <div className={cx(styles.AnnotationPicker, !visible && styles.isHidden)}>
       <div className={styles.Annotations}>
         {models.map(model => (

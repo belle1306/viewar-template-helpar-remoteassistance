@@ -7,6 +7,7 @@ import styles from './product-selection.css';
 import global from '../../../css/global.css';
 
 import TextInput from '../../components/text-input/text-input';
+import Button from '../../components/button/button';
 import NothingFoundCallSupport from '../../components/nothing-found-call-support/nothing-found-call-support';
 
 export default ({
@@ -20,6 +21,12 @@ export default ({
 }) => (
   <div className={cx(styles.ProductSelection, global.BackgroundImage)}>
     <div className={cx(styles.Header, search && styles.hasSearchResults)}>{translate('ProductSelectionTitle')}</div>
+
+    <Button
+      className={cx(styles.BackButton, search && styles.isHidden)}
+      icon="close"
+      onClick={() => goTo('/')}
+    />
 
     <div className={cx(styles.SearchBar, search && styles.hasSearchResults)}>
       <TextInput
@@ -47,7 +54,7 @@ export default ({
         </div>
       ))}
 
-      <div className={styles.Filler} />
+      {/*<div className={styles.Filler} />*/}
       <NothingFoundCallSupport callSupport={callSupport} />
     </div>
   </div>

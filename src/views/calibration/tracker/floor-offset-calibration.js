@@ -60,7 +60,7 @@ export default compose(
       onTrackingChanged,
       goToNext,
     }) => async () => {
-      setLoading(true);
+      setLoading(true, {opaque: true});
 
       tracker.off('trackingTargetStatusChanged', onTrackingChanged);
       await tracker.confirmGroundPosition();
@@ -86,7 +86,7 @@ export default compose(
 
       setDeviceType(getDeviceType(viewarApi));
 
-      setLoading(true);
+      setLoading(true, {opaque: true});
       await activateARCamera(viewarApi);
       await insertFloorOffsetModel(viewarApi);
       await initTracking(tracker);

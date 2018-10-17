@@ -20,6 +20,10 @@
   opacity: 1;
 }
 
+.Container.opaque {
+  background-color: rgba(255, 255, 255, .85);
+}
+
 .loadingSpinner {
   width: 40px;
   height: 40px;

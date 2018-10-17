@@ -105,6 +105,19 @@
   flex: 1 1 auto;
 }
 
+.BackButton {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: opacity 0.5s ease;
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.isHidden.BackButton {
+  opacity: 0;
+  pointer-events: none;
+}
 
 @media only screen and (orientation: landscape) {
   .SearchBar {

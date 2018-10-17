@@ -37,7 +37,6 @@
   margin: 0;
 }
 
-
 .Container:before {
   content: '';
   float: left;
@@ -66,6 +65,7 @@
   bottom: 0;
 }
 
+.isHidden.TouchOverlay,
 .isHidden.AnnotationPicker {
   pointer-events: none;
   opacity: 0;

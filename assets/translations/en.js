@@ -22,7 +22,7 @@ export default {
   // User Selection
   "UserSelectionWaitForUser": "Waiting for User...",
   "UserSelectionLineBusy": "Line is busy.",
-  "UserSelectionEmptyList": "No available support requests",
+  "UserSelectionEmptyList": "Currently there are no incoming support requests",
   "UserSelectionAnswerCall": "Answer call",
   // Calibration
   "CalibrationARKit": "Please film the floor and move your device sideways.",

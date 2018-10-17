@@ -76,7 +76,6 @@ export const waitForSupportAgent = ({
 
 export const onTouch = ({
   syncAnnotation,
-  setLoading,
   annotationManager,
 }) => async event => {
   let x, y;
@@ -139,7 +138,6 @@ export const goBack = ({
 export const goToNextView = ({
   annotationManager,
   admin,
-  setLoading,
   featureMap,
   goTo,
   backPath,

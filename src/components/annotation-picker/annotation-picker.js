@@ -16,7 +16,7 @@ export const touch = ({
   annotationManager,
 }) => async event => {
   if (selected) {
-    setLoading(true);
+    setLoading(true, {opaque: true});
 
     let x, y;
     if (event.type === 'click') {
@@ -42,7 +42,7 @@ export const cancel = ({
   setLoading,
   onClose,
 }) => () => {
-  setLoading(true);
+  setLoading(true, {opaque: true});
   annotationManager.setAnnotation(previous);
   setLoading(false);
 

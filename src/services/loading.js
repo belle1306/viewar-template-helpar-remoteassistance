@@ -13,11 +13,13 @@ export const load = ({
   setProgress,
   setMessage,
   setWithProgress,
-}) => ({ loading, progress = 0, withProgress = false, message }) => {
+  setOpaque,
+}) => ({ loading, progress = 0, withProgress = false, message, opaque }) => {
   setLoading(loading);
   setProgress(progress);
   setWithProgress(withProgress);
   setMessage(message);
+  setOpaque(opaque);
 };
 
 export const withLoading = (prefix = '') =>
@@ -26,6 +28,7 @@ export const withLoading = (prefix = '') =>
     withState('message', 'setMessage', null),
     withState('progress', 'setProgress', 0),
     withState('withProgress', 'setWithProgress', false),
+    withState('opaque', 'setOpaque', false),
     withHandlers({
       load,
     }),
@@ -37,12 +40,13 @@ export const withLoading = (prefix = '') =>
   );
 
 const setLoading = ({ pubSub }) => (value, args = {}) => {
-  const { withProgress = false, progress = 0, prefix = '', message } = args;
+  const { withProgress = false, opaque = false, progress = 0, prefix = '', message } = args;
   pubSub.publish(prefix + 'loadingState', {
     loading: value,
     progress,
     withProgress,
     message,
+    opaque,
   });
 };
 

@@ -30,10 +30,19 @@ export const updateSearch = ({
   annotationDb,
   setSearch,
   setSearchResult,
-}) => value => {
+  setLoading,
+}) => async(value) => {
   setSearch(value);
-  const searchResult = annotationDb.searchForAnnotations(value);
-  setSearchResult(searchResult);
+
+  if(!value) {
+    setLoading(true);
+    await annotationDb.prepareData('annotations');
+    setSearchResult([]);
+    setLoading(false);
+  } else {
+    const searchResult = annotationDb.searchForAnnotations(value);
+    setSearchResult(searchResult);
+  }
 };
 
 export const callSupport = ({ goTo, search }) => () => {

@@ -8,12 +8,13 @@ import global from '../../../css/global.css';
 
 import { Circle } from 'rc-progress';
 
-export default ({ loading, withProgress, progress, message }) => (
+export default ({ loading, withProgress, opaque, progress, message }) => (
   <div
     className={cx(
       styles.Container,
       global.OverlayBackgroundColor,
-      loading && styles.visible
+      loading && styles.visible,
+      opaque && styles.opaque,
     )}
   >
     {loading &&

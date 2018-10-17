@@ -22,7 +22,7 @@ export default {
   // User Selection
   "UserSelectionWaitForUser": "Warte auf User...",
   "UserSelectionLineBusy": "Leitung ist besetzt.",
-  "UserSelectionEmptyList": "Keine Supportanfragen verfügbar",
+  "UserSelectionEmptyList": "Im Moment sind keine eingehenden Support Anfragen vorhanden.",
   "UserSelectionAnswerCall": "Anruf annehmen",
   // Calibration
   "CalibrationARKit": "Filmen Sie den Boden und bewegen Sie das Gerät seitlich.",

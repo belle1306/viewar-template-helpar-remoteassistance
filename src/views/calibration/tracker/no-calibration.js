@@ -20,9 +20,10 @@ export default compose(
         initTracking,
         activateARCamera,
         goToNext,
+        tracker,
       } = this.props;
 
-      setLoading(true);
+      setLoading(true, {opaque: true});
       await activateARCamera(viewarApi);
       await initTracking(tracker);
       setLoading(false);
