@@ -1,8 +1,8 @@
 export const DEFAULT_SEARCH_OPTIONS = {
   shouldSort: true,
-  threshold: 0.6,
+  threshold: 0.0,   // 0.0 => exact match, disable fuzzy logic search.
   location: 0,
-  distance: 100,
+  distance: 0,      // 0 => exact match, disable fuzzy logic search.
   maxPatternLength: 32,
   minMatchCharLength: 1,
 };
