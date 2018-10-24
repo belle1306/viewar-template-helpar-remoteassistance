@@ -10,11 +10,13 @@ import Logo from '../../components/logo/logo';
 import TextButton from '../../components/text-button/text-button';
 import Spinner from '../../components/spinner/spinner.jsx';
 import Button from '../../components/button/button';
+import CallSupportButton from '../../components/call-support-button/call-support-button';
 
 export default ({
   goToProductSelection,
   goToUserSelection,
   loadingDone,
+  callSupport,
   progress,
 }) => (
   <div className={cx(styles.Home)}>
@@ -28,6 +30,7 @@ export default ({
       small
       icon="logout"
     />
+    <CallSupportButton className={styles.CallButton} hidden={!loadingDone} callSupport={callSupport} />
     <TextButton
       label="HomeStart"
       className={styles.StartButton}

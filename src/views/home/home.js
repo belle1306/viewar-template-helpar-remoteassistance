@@ -85,6 +85,13 @@ export const updateProgress = ({ setProgress, setStatus }) => count => {
   setProgress(progress);
 };
 
+export const callSupport = ({ goTo }) => () => {
+  goTo('/calibration-call', {
+    backPath: '/',
+    topic: 'Unknown',
+  });
+};
+
 export default compose(
   withCallClient,
   withRouteParams(),
@@ -106,6 +113,7 @@ export default compose(
     init,
     goToUserSelection,
     goToProductSelection,
+    callSupport,
   }),
   lifecycle({
     componentDidMount() {

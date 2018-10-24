@@ -30,7 +30,7 @@
   left: 50%;
   transform: translateX(-50%);
   white-space: nowrap;
-  width: 44vmin;
+  width: 50vmin;
   border-radius: 1000px;
   padding: 1.1rem 0;
   height: auto;
@@ -49,6 +49,17 @@
   bottom: 0;
   transform: translateY(calc(100% - 1px));
   pointer-events: none;
+}
+
+.Home .CallButton {
+  position: absolute;
+  bottom: 20vmax;
+  left: 50%;
+  transform: translate(-50%, -100%);
+  width: 50vmin;
+  margin-bottom: 0.5rem;
+  background-color: #003ba1;
+  padding: 0.9rem 1rem;
 }
 
 .Loading {
