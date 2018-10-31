@@ -19,7 +19,7 @@ export const updateClientList = ({
   setClients,
   callClient,
 }) => async () => {
-  const clients = callClient.clients.filter(client => client.data.available);
+  const clients = callClient.clients.filter(client => client.data.available && client.role === 'Client');
 
   setClients(clients);
 };
@@ -62,7 +62,7 @@ export const formatTime = (timestamp) => {
   return isNaN(timestamp) ? timestamp : date.toLocaleString()
 }
 
-export const trimTopic = (text) => {
+export const trimTopic = (text = '') => {
   const maxLength = 110;
   if (text.length > maxLength) {
     let sliced = text.slice(0, maxLength - 3);
@@ -113,7 +113,7 @@ export default compose(
       } = this.props;
 
       await connect();
-      await joinSession({ sessionId: appConfig.appId, password: password });
+      await joinSession({ sessionId: appConfig.appId, password: password, userData: { available: false } });
 
       if (callClient.connected && callClient.session) {
         await authManager.login(password);
