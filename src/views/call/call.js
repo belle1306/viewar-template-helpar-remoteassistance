@@ -230,7 +230,7 @@ export default compose(
         endCallSubscription.unsubscribe();
       }
 
-      callClient.endCall();
+      await callClient.endCall();
       if (!admin) {
         callClient.leave();
 
@@ -239,6 +239,7 @@ export default compose(
         setLoading(false);
         await cameras.arCamera.hidePointCloud();
       } else {
+        callClient.setData({available: false});
         await cameras.arCamera.unfreeze();
       }
 
