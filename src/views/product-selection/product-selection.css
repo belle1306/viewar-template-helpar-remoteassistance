@@ -119,6 +119,14 @@
   pointer-events: none;
 }
 
+.Tags {
+  display: flex;
+}
+
+.Tag {
+  margin-right: 0.5rem;
+}
+
 @media only screen and (orientation: landscape) {
   .SearchBar {
     max-width: 30vmax;

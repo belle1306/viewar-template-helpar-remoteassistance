@@ -48,6 +48,7 @@ export const waitForSupportAgent = ({
     syncSubscription = callClient
       .getData('annotation')
       .subscribe(annotation => {
+        console.log('receive annotation', annotation);
         annotationManager.setAnnotation(annotation, admin);
       });
 
@@ -112,6 +113,7 @@ export const syncAnnotation = ({
     : annotationManager.currentUser;
   if (annotation) {
     callClient.sendData('annotation', annotation);
+    console.log('send annotation', annotation);
   }
 };
 

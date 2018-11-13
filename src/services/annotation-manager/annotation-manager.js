@@ -145,7 +145,7 @@ export default ({
 
     if (position) {
       if (user) {
-        setAnnotation({ model, pose: { position } }, user);
+        await setAnnotation({ model, pose: { position } }, user);
       } else {
         await setAnnotation({ model, pose: { position } }, user);
         // freezeFrame = await takeFreezeFrame();

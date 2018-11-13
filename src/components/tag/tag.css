@@ -46,3 +46,11 @@
   background-position-y: calc(100% / 7 * 0);
   background-color: white;
 }
+
+.Tag.noDelete:after {
+  width: 0.2rem;
+  height: 0.2rem;
+  background: white;
+  -webkit-mask-image: none;
+  border-radius: 100%;
+}

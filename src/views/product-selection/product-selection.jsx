@@ -6,6 +6,7 @@ import { translate } from '../../services';
 import styles from './product-selection.css';
 import global from '../../../css/global.css';
 
+import Tag from '../../components/tag/tag';
 import TextInput from '../../components/text-input/text-input';
 import Button from '../../components/button/button';
 import NothingFoundCallSupport from '../../components/nothing-found-call-support/nothing-found-call-support';
@@ -47,6 +48,9 @@ export default ({
         >
           <div className={styles.Title} onClick={() => openAnnotation(annotation.id)}>
             {annotation.title}
+          </div>
+          <div className={styles.Tags}>
+            {[...annotation.productTags || [], ...annotation.tags || []].map(tag => <Tag label={tag} className={styles.Tag} key={tag} noDelete/>)}
           </div>
           <div className={styles.Description}>
             {trimDescription(annotation.description)}

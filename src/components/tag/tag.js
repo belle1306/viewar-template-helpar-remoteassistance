@@ -4,9 +4,9 @@ import cx from 'classnames';
 import styles from './tag.css';
 import global from '../../../css/global.css';
 
-export default ({ className, onClick, label }) => (
+export default ({ className, noDelete, onClick, label }) => (
   <div
-    className={cx(styles.Tag, className)}
+    className={cx(styles.Tag, noDelete && styles.noDelete, className)}
     onClick={() => onClick && onClick()}
   >
     <div className={styles.Label}>
