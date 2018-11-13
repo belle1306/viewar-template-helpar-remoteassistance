@@ -27,7 +27,7 @@ export default {
   // Calibration
   "CalibrationARKit": "Filmen Sie den Boden und bewegen Sie das Gerät seitlich.",
   "CalibrationARCore": "Filmen Sie den Boden und bewegen Sie das Gerät seitlich.",
-  "CalibrationFilmFloor": "Bitte filmen Sie den Boden.",
+  "CalibrationFilmFloor": "Bitte filmen Sie das Objekt.",
   "CalibrationScaleGround": "Skalieren Sie den Boden und bestätigen Sie anschließend.",
   // Product Selection
   "ProductSelectionTitle": "Für welches Thema benötigen Sie Hilfe?",

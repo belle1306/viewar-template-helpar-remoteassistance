@@ -27,7 +27,7 @@ export default {
   // Calibration
   "CalibrationARKit": "Please film the floor and move your device sideways.",
   "CalibrationARCore": "Please film the floor and move your device sideways.",
-  "CalibrationFilmFloor": "Please film the floor.",
+  "CalibrationFilmFloor": "Please film the object.",
   // Product Selection
   "ProductSelectionTitle": "For which topic you need help?",
   "ProductSelectionNoResult": "Enter your product keywords above.",

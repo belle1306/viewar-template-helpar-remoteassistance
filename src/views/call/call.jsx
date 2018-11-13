@@ -59,14 +59,14 @@ export default ({
         />
         <Button
           medium
-          icon="pause"
+          icon="play"
           onClick={toggleFreeze}
           className={styles.FreezeButton}
           hidden={!frozen || showAnnotationPicker}
         />
         <Button
           medium
-          icon="play"
+          icon="pause"
           onClick={toggleFreeze}
           className={styles.FreezeButton}
           hidden={frozen || showAnnotationPicker}
