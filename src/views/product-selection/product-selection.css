@@ -121,15 +121,35 @@
 
 .Tags {
   display: flex;
+  flex-flow: row wrap;
+  margin-bottom: 0.5rem;
 }
 
 .Tag {
-  margin-right: 0.5rem;
+  flex: 0 0 calc(50% - 4rem);
+  max-width: calc(50% - 4rem);
+}
+
+.Tag:nth-child(2n) {
+  margin-right: 1.5rem;
 }
 
 @media only screen and (orientation: landscape) {
   .SearchBar {
     max-width: 30vmax;
     margin: 1rem auto 0 auto;
+  }
+
+  .Tag {
+    flex: 0 0 calc(25% - 4rem);
+    max-width: calc(25% - 4rem);
+  }
+  
+  .Tag:nth-child(2n) {
+    margin-right: 2rem;
+  }
+
+  .Tag:nth-child(4n) {
+    margin-right: 1.5rem;
   }
 }
