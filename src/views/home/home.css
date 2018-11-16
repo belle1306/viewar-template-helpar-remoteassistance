@@ -90,3 +90,14 @@
   white-space: nowrap;
   pointer-events: none;
 }
+
+
+@media only
+screen and (max-device-width : 414px) {
+  .Home .CallButton {
+    width: 65vmin;
+  }
+  .Home .StartButton {
+    width: 65vmin;
+  }
+}
