@@ -18,7 +18,7 @@
   bottom: 50%;
   left: 50%;
   transform: translateX(-50%);
-  color: #003BA1;
+  color: #003ba1;
   font-size: 2.6em;
   margin-bottom: 0.5rem;
   line-height: 1.1em;
@@ -92,8 +92,9 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: #006DFF;
+  color: #006dff;
   font-weight: bold;
+  cursor: pointer;
 }
 
 .Description {
@@ -144,7 +145,7 @@
     flex: 0 0 calc(25% - 4rem);
     max-width: calc(25% - 4rem);
   }
-  
+
   .Tag:nth-child(2n) {
     margin-right: 2rem;
   }

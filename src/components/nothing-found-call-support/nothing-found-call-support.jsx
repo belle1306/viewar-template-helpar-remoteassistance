@@ -12,6 +12,6 @@ export default ({ callSupport, className, hidden }) => (
     <div className={styles.CallMessage}>
       {translate('NothingFoundCallSupport')}
     </div>
-    <CallSupportButton className={styles.CallButton} />
+    <CallSupportButton className={styles.CallButton} callSupport={callSupport} />
   </div>
 );

@@ -28,7 +28,6 @@ import '../css/global.css';
   });
   merge(config, viewarApi.appConfig.uiConfig);
 
-
   await googleAnalytics.init();
   translationProvider.init();
 
@@ -75,6 +74,6 @@ import '../css/global.css';
   render(AppWithContext);
 
   if (module.hot) {
-    module.hot.accept('./app', () => render(App));
+    module.hot.accept(App, () => render(AppWithContext));
   }
 })();
