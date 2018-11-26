@@ -21,7 +21,7 @@ const createAuthManager = () => {
     username = name.username;
   };
 
-  const login = async password => {
+  const login = async (username, password) => {
     token = password;
     username = username || generateUserName();
 
@@ -35,11 +35,11 @@ const createAuthManager = () => {
 
   const generateUserName = () => {
     return `Support Agent ${generateRandomNumber(1, 1000)}`;
-  }
+  };
 
   const generateRandomNumber = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
+  };
 
   return {
     login,

@@ -15,11 +15,10 @@ import authManager from '../../services/auth-manager';
 
 import UserSelection from './user-selection.jsx';
 
-export const updateClientList = ({
-  setClients,
-  callClient,
-}) => async () => {
-  const clients = callClient.clients.filter(client => client.data.available && client.role === 'Client');
+export const updateClientList = ({ setClients, callClient }) => async () => {
+  const clients = callClient.clients.filter(
+    client => client.data.available && client.role === 'Client'
+  );
 
   setClients(clients);
 };
@@ -30,8 +29,9 @@ export const call = ({
   goTo,
   setLoading,
   password,
+  username,
   callClient,
-}) => async (clientId) => {
+}) => async clientId => {
   callSubscription = callClient.acceptedCall.subscribe((args = {}) => {
     const { data = {} } = args;
     const { featureMap } = data;
@@ -40,6 +40,7 @@ export const call = ({
       featureMap,
       backPath: '/user-selection',
       backArgs: {
+        username,
         password,
         backPath: '/',
       },
@@ -57,10 +58,10 @@ export const call = ({
   await callClient.call({ id: clientId });
 };
 
-export const formatTime = (timestamp) => {
-  const date = new Date(timestamp)
-  return isNaN(timestamp) ? timestamp : date.toLocaleString()
-}
+export const formatTime = timestamp => {
+  const date = new Date(timestamp);
+  return isNaN(timestamp) ? timestamp : date.toLocaleString();
+};
 
 export const trimTopic = (text = '') => {
   const maxLength = 110;
@@ -74,7 +75,7 @@ export const trimTopic = (text = '') => {
   }
 
   return text;
-}
+};
 
 let clientSubscription;
 let callSubscription;
@@ -108,15 +109,21 @@ export default compose(
         updateClientList,
         viewarApi: { appConfig },
         authManager,
+        username,
         password,
         setUserName,
       } = this.props;
 
       await connect();
-      await joinSession({ sessionId: appConfig.appId, password: password, userData: { available: false } });
+      await joinSession({
+        sessionId: appConfig.appId,
+        username,
+        password,
+        userData: { available: false },
+      });
 
       if (callClient.connected && callClient.session) {
-        await authManager.login(password);
+        await authManager.login(username, password);
         setUserName(authManager.user.name);
         clientSubscription = callClient.clientsUpdate.subscribe(
           updateClientList

@@ -33,12 +33,13 @@ const joinSession = ({
 }) => async (sessionArgs = {}) => {
   const {
     sessionId = viewarApi.appConfig.appId,
+    username,
     password,
     userData,
   } = sessionArgs;
 
   setLoading(true, { message: 'MessageJoin' });
-  await callClient.join({ sessionId, password, userData });
+  await callClient.join({ sessionId, username, password, userData });
   setLoading(false);
 
   if (!callClient.session) {

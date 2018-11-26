@@ -45,38 +45,38 @@ export const resetTrackers = ({ viewarApi }) => async () => {
 };
 
 export const goToProductSelection = ({ goTo }) => async () => {
-  goTo('/product-selection', {
-    // input: 'auto'
-  });
+  goTo('/product-selection');
 };
 
 export const goToUserSelection = ({
   goTo,
-  setLoading,
   authManager,
-  showDialog,
   loadingDone,
+  setLoginVisible,
+  getUiConfigPath,
+  setUsername,
+  setPassword,
 }) => async () => {
   if (loadingDone) {
     if (authManager.user) {
-      goTo('/user-selection', {
-        password: authManager.token,
-      });
+      setUsername(authManager.user.name);
+      setPassword(authManager.token);
     } else {
-      const {confirmed, input} = await showDialog('HomeLoginText', {
-        input: authManager.token || '',
-        withInput: true,
-        inputPassword: true,
-        inputPlaceholder: 'HomePassword',
-        showCancel: true,
-        confirmText: 'HomeLogin',
-      });
-
-      if (confirmed && input) {
-        goTo('/user-selection', {password: input});
+      if (getUiConfigPath('demo')) {
+        setUsername('demo');
+        setPassword('demo');
+      } else {
+        setUsername('');
+        setPassword('');
       }
     }
+
+    setLoginVisible(true);
   }
+};
+
+export const login = ({ username, password, goTo }) => () => {
+  goTo('/user-selection', { username, password });
 };
 
 export const updateProgress = ({ setProgress, setStatus }) => count => {
@@ -97,6 +97,9 @@ export default compose(
   withRouteParams(),
   withDialogControls,
   withSetLoading,
+  withState('loginVisible', 'setLoginVisible', false),
+  withState('username', 'setUsername', ''),
+  withState('password', 'setPassword', ''),
   withState('loadingDone', 'setLoadingDone', false),
   withState('progress', 'setProgress', 0),
   withProps({
@@ -114,6 +117,7 @@ export default compose(
     goToUserSelection,
     goToProductSelection,
     callSupport,
+    login,
   }),
   lifecycle({
     componentDidMount() {

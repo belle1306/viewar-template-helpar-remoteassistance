@@ -11,13 +11,20 @@ import TextButton from '../../components/text-button/text-button';
 import Spinner from '../../components/spinner/spinner.jsx';
 import Button from '../../components/button/button';
 import CallSupportButton from '../../components/call-support-button/call-support-button';
+import LoginDialog from '../../components/login-dialog/login-dialog';
 
 export default ({
   goToProductSelection,
   goToUserSelection,
   loadingDone,
   callSupport,
-  progress,
+  username,
+  setUsername,
+  password,
+  setPassword,
+  loginVisible,
+  setLoginVisible,
+  login,
 }) => (
   <div className={cx(styles.Home)}>
     <Logo
@@ -36,6 +43,16 @@ export default ({
       className={styles.StartButton}
       hidden={!loadingDone}
       onClick={goToProductSelection}
+    />
+
+    <LoginDialog
+      visible={loginVisible}
+      username={username}
+      setUsername={setUsername}
+      password={password}
+      setPassword={setPassword}
+      onCancel={() => setLoginVisible(false)}
+      onConfirm={login}
     />
 
     <div className={cx(styles.Loading, loadingDone && styles.isHidden)}>
