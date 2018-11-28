@@ -15,8 +15,12 @@
   background-color: #f1f1f1;
 }
 
+.TextInput input::placeholder {
+  line-height: 2rem;
+}
+
 .SearchButton {
-  background-color: #006DFF;
+  background-color: #006dff;
   position: absolute;
   right: 2rem;
   width: 2rem;
@@ -31,7 +35,7 @@
 }
 
 .AddButton {
-  background-color: #006DFF;
+  background-color: #006dff;
   position: absolute;
   right: 2rem;
   width: 2rem;
