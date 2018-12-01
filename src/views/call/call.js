@@ -32,11 +32,13 @@ export const waitForSupportAgent = ({
   let featureMap;
   if (!admin) {
     await connect();
-    await joinSession({ userData: {
-      available: true,
-      topic,
-      timestamp: Date.now(),
-    } });
+    await joinSession({
+      userData: {
+        available: true,
+        topic,
+        timestamp: Date.now(),
+      },
+    });
 
     const tracker = Object.values(trackers)[0];
     if (tracker && tracker.saveTrackingMap) {
@@ -48,7 +50,6 @@ export const waitForSupportAgent = ({
     syncSubscription = callClient
       .getData('annotation')
       .subscribe(annotation => {
-        console.log('receive annotation', annotation);
         annotationManager.setAnnotation(annotation, admin);
       });
 
@@ -113,7 +114,6 @@ export const syncAnnotation = ({
     : annotationManager.currentUser;
   if (annotation) {
     callClient.sendData('annotation', annotation);
-    console.log('send annotation', annotation);
   }
 };
 
@@ -219,7 +219,9 @@ export default compose(
         admin,
         callClient,
         setLoading,
-        saveTrackingMap = () => { console.error('Call view has no saveTrackingMap function.'); },
+        saveTrackingMap = () => {
+          console.error('Call view has no saveTrackingMap function.');
+        },
         viewarApi: { cameras },
       } = this.props;
       if (callSubscription) {
@@ -241,7 +243,7 @@ export default compose(
         setLoading(false);
         await cameras.arCamera.hidePointCloud();
       } else {
-        callClient.setData({available: false});
+        callClient.setData({ available: false });
         await cameras.arCamera.unfreeze();
       }
 
