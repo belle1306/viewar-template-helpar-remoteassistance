@@ -45,8 +45,9 @@ export default ({
         <div
           className={styles.Annotation}
           key={annotation.id}
+          onClick={() => openAnnotation(annotation.id)}
         >
-          <div className={styles.Title} onClick={() => openAnnotation(annotation.id)}>
+          <div className={styles.Title}>
             {annotation.title}
           </div>
           <div className={styles.Tags}>
