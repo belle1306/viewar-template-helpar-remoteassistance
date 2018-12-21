@@ -18,15 +18,24 @@ import annotationManager from '../../services/annotation-manager';
 import Home from './home.jsx';
 
 export const init = ({
-  viewarApi: { coreInterface, cameras },
+  viewarApi: { coreInterface, cameras, trackers },
   disconnect,
   setLoadingDone,
   annotationManager,
   resetTrackers,
   authManager,
   updateProgress,
+  showDialog,
 }) => async () => {
   setLoadingDone(false);
+
+  if (!trackers.Remote || !trackers.Placenote) {
+    showDialog('InvalidTrackerConfiguration', {
+      showCancel: false,
+      showConfirm: false,
+    });
+    return;
+  }
 
   disconnect();
 
