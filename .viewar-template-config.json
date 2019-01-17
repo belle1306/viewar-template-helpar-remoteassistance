@@ -1,0 +1,49 @@
+{
+  "tracking": {
+    "Placenote": [
+      {
+        "name": "Placenote",
+        "config": {
+          "configFile": "vuforia/ViewAR1",
+          "autostart": false,
+          "framesPerSecond": 30,
+          "groundConfirm": "none"
+        },
+        "targets": [
+          {
+            "name": "dummyTarget",
+            "type": "ground",
+            "handling": "camera",
+            "useTimeout": true,
+            "targetTimeout": 0.5,
+            "active": true
+          },
+          {
+            "name": "placenoteTarget",
+            "type": "map",
+            "handling": "object",
+            "useTimeout": true,
+            "targetTimeout": 0.5,
+            "active": true
+          }
+        ]
+      },
+      {
+        "name": "Remote",
+        "config": {
+          "autostart": false,
+          "port": 9400
+        },
+        "targets": [
+          {
+            "name": "dummyTarget",
+            "type": "map",
+            "handling": "camera",
+            "useTimeout": true,
+            "targetTimeout": 3
+          }
+        ]
+      }
+    ]
+  }
+}
