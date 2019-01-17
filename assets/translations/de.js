@@ -78,4 +78,5 @@ export default {
   LoginUsernamePlaceholder: 'Username',
   LoginPasswordPlaceholder: 'Password',
   SpinnerText: 'Loading...',
+  InvalidTrackerConfiguration: 'Error: Invalid tracker configuration.',
 };

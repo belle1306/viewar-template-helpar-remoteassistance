@@ -33,7 +33,7 @@ export default ({
     } else {
       const { modelManager } = viewarApi;
 
-      const category = getCategory();
+      const category = await getCategory();
       if (category) {
         for (let model of category.children) {
           models[model.id] = model;
@@ -140,7 +140,7 @@ export default ({
     }
 
     if (viewarApi.coreInterface.platform === 'Mock') {
-      position = {x: 0, y: 0, z: 0};
+      position = { x: 0, y: 0, z: 0 };
     }
 
     if (position) {

@@ -69,7 +69,7 @@ const createAnnotationDb = () => {
    * Helper function to compose annotation out of each individual part.
    */
   const assignDataEntry = (type, entries) => {
-    Object.entries(data[type]).forEach(([id, entry]) => {
+    Object.entries(data[type] || {}).forEach(([id, entry]) => {
       assignEntry(id, entry, type, entries);
     });
   };
@@ -258,8 +258,6 @@ const createAnnotationDb = () => {
     model,
   }) => {
     await initDb();
-
-    console.log('ID', id);
 
     const newData = {
       annotations: {
