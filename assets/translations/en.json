@@ -14,6 +14,7 @@
   "CallAbortQuestion": "Do you want to end the current call?",
   "CallAbortCall": "End call",
   "CallAnnotateHint": "Touch to highlight a point.",
+  "CallDrawHint": "Draw on the screen.",
   "UserSelectionWaitForUser": "Waiting for User...",
   "UserSelectionLineBusy": "Line is busy.",
   "UserSelectionEmptyList": "Currently there are no incoming support requests",

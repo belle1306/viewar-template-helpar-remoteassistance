@@ -8,6 +8,7 @@ import global from '../../../css/global.css';
 import Hint from '../../components/hint/hint';
 import Button from '../../components/button/button';
 import AnnotationPicker from '../../components/annotation-picker/annotation-picker';
+import DrawCanvas from '../../components/draw-canvas/draw-canvas';
 
 const WaitForSupportAgentOverlay = ({ visible }) => (
   <div
@@ -46,10 +47,11 @@ export default ({
 
     {admin ? (
       <Fragment>
-        <AnnotationPicker
+        <DrawCanvas disabled={!showAnnotationPicker} onClose={closeAnnotationPicker} />
+        {/* <AnnotationPicker
           visible={showAnnotationPicker}
           onClose={closeAnnotationPicker}
-        />
+        /> */}
         <Button
           medium
           onClick={() => setShowAnnotationPicker(true)}
@@ -74,9 +76,10 @@ export default ({
       </Fragment>
     ) : (
       <Fragment>
+        <DrawCanvas/>
         <WaitForSupportAgentOverlay visible={waitingForSupportAgent} />
         <div className={styles.TouchOverlay} onClick={onTouch} />
-        {!waitingForSupportAgent && <Hint className={cx(styles.Hint)}>{translate('CallAnnotateHint')}</Hint>}
+        {!waitingForSupportAgent && <Hint className={cx(styles.Hint)}>{translate('CallDrawHint')}</Hint>}
       </Fragment>
     )}
   </div>

@@ -8,6 +8,7 @@ import { compose, withContext } from 'recompose';
 import viewarApi from 'viewar-api';
 import appState from './services/app-state';
 import authManager from './services/auth-manager';
+import sceneDraw from './services/scene-draw';
 import annotationDb from './services/annotation-db';
 import googleAnalytics from './services/google-analytics/index';
 import annotationManager from './services/annotation-manager';
@@ -48,6 +49,7 @@ import '../css/global.css';
     annotationDb,
     auth,
     db,
+    sceneDraw,
   });
 
   const rootElement =
