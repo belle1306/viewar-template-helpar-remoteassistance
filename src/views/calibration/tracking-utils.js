@@ -3,12 +3,8 @@ export const FLOOR_MODEL_ID = 'FloorOffsetInstance';
 export const FLOOR_MODEL_FOREIGN_KEY = 'floor_offset';
 export const FLOOR_MODEL_FALLBACK_ID = '40848';
 
-export const getTracker = ({ trackers }) => {
-  if (trackers && Object.keys(trackers).length) {
-    return Object.values(trackers)[0];
-  }
-
-  return null;
+export const getTracker = ({ tracker }) => {
+  return tracker;
 };
 
 export const usesTrackingMap = tracker => tracker && tracker.loadTrackingMap;

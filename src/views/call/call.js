@@ -25,7 +25,7 @@ export const waitForSupportAgent = ({
   history,
   admin,
   topic,
-  viewarApi: { appConfig, trackers },
+  viewarApi: { appConfig, tracker },
   setWaitingForSupportAgent,
   callClient,
 }) => async () => {
@@ -40,9 +40,14 @@ export const waitForSupportAgent = ({
       },
     });
 
-    const tracker = Object.values(trackers)[0];
-    if (tracker && tracker.saveTrackingMap) {
-      featureMap = await tracker.generateTrackingMapId();
+    if (tracker) {
+      if (tracker.saveTrackingMap) {
+        featureMap = await tracker.generateTrackingMapId();
+      }
+
+      if (tracker.startMeshScan) {
+        await tracker.startMeshScan();
+      }
     }
   }
 
@@ -204,11 +209,11 @@ export default compose(
         admin,
         waitForSupportAgent,
         annotationManager,
-        viewarApi: { cameras },
+        viewarApi: { cameras, tracker },
       } = this.props;
       await annotationManager.reset();
 
-      if (!admin) {
+      if (!admin && tracker && !tracker.startMeshScan) {
         await cameras.arCamera.showPointCloud();
       }
 
@@ -219,10 +224,10 @@ export default compose(
         admin,
         callClient,
         setLoading,
-        saveTrackingMap = () => {
+        saveTrackingMap = async () => {
           console.error('Call view has no saveTrackingMap function.');
         },
-        viewarApi: { cameras },
+        viewarApi: { cameras, tracker },
       } = this.props;
       if (callSubscription) {
         callSubscription.unsubscribe();
@@ -240,6 +245,12 @@ export default compose(
 
         setLoading(true);
         await saveTrackingMap();
+
+        if (tracker.startMeshScan) {
+          await tracker.stopMeshScan();
+          await tracker.resetMeshScan();
+        }
+
         setLoading(false);
         await cameras.arCamera.hidePointCloud();
       } else {

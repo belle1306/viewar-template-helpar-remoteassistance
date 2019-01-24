@@ -29,7 +29,7 @@ export const init = ({
 }) => async () => {
   setLoadingDone(false);
 
-  if (!trackers.Remote || !trackers.Placenote) {
+  if (!trackers.Remote || (!trackers.Placenote && !trackers.SixDegrees)) {
     showDialog('InvalidTrackerConfiguration', {
       showCancel: false,
       showConfirm: false,
