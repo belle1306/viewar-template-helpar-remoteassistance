@@ -2,11 +2,8 @@ import React from 'react';
 
 import viewarApi from 'viewar-api';
 
-import { addLocaleData } from 'react-intl';
-import deLocaleData from 'react-intl/locale-data/de';
-import enLocaleData from 'react-intl/locale-data/en';
-import en from '../../assets/translations/en.js';
-import de from '../../assets/translations/de.js';
+import en from '../../assets/translations/en.json';
+import de from '../../assets/translations/de.json';
 
 const MOBILEPHONE_SUFFIX = '_Phone';
 const WEBVERSION_SUFFIX = '_Web';
@@ -38,10 +35,10 @@ function createTranslationProvider() {
 
   return translationProvider;
 
+  /**
+   * Initialize translations.
+   */
   function init() {
-    addLocaleData(deLocaleData);
-    addLocaleData(enLocaleData);
-
     if (viewarApi.coreInterface.platform === 'Emscripten') {
       isWebVersion = true;
     }
@@ -68,6 +65,9 @@ function createTranslationProvider() {
     });
   }
 
+  /**
+   * Set language by key.
+   */
   function setLanguage(lang) {
     if (translationList[lang]) {
       language = lang;
@@ -75,6 +75,9 @@ function createTranslationProvider() {
     }
   }
 
+  /**
+   * Translate a specific key.
+   */
   function translateFn(id, asHtml = true) {
     let translation = getTranslation(id);
 
@@ -98,12 +101,23 @@ function createTranslationProvider() {
     }
   }
 
+  /**
+   * Get translation by key.
+   */
   function getTranslation(id, suffix = '', defaultValue = null) {
     if (strNotNull(translations[id + suffix])) {
       return translations[id + suffix];
     } else {
-      return defaultValue;
+      const fallback = getFallbackTranslation(id + suffix);
+      return strNotNull(fallback) ? fallback : defaultValue;
     }
+  }
+
+  /**
+   * Get fallback translation of key (first language in list).
+   */
+  function getFallbackTranslation(id) {
+    return Object.values(translationList)[0][id];
   }
 
   function strNotNull(string) {
