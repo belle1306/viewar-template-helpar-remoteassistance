@@ -33,6 +33,9 @@ export default ({
   onTouch,
   toggleFreeze,
   frozen,
+  perspective,
+  togglePerspective,
+  unpause,
 }) => (
   <div className={cx(styles.Call)}>
     <Button
@@ -59,17 +62,24 @@ export default ({
         />
         <Button
           medium
+          icon='pause'
+          onClick={togglePerspective}
+          className={styles.PerspectiveButton}
+          hidden={showAnnotationPicker || perspective || frozen}
+        />
+        <Button
+          medium
           icon="play"
-          onClick={toggleFreeze}
-          className={styles.FreezeButton}
-          hidden={!frozen || showAnnotationPicker}
+          onClick={unpause}
+          className={styles.UnpauseButton}
+          hidden={(!frozen && !perspective) || showAnnotationPicker}
         />
         <Button
           medium
           icon="pause"
           onClick={toggleFreeze}
           className={styles.FreezeButton}
-          hidden={frozen || showAnnotationPicker}
+          hidden={frozen || showAnnotationPicker || perspective}
         />
       </Fragment>
     ) : (

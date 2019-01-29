@@ -2,13 +2,13 @@
 }
 
 .WaitForSupportAgentOverlay {
-  background: rgba(255, 255, 255, .9);
+  background: rgba(255, 255, 255, 0.9);
   position: absolute;
   left: 0;
   top: 0;
   width: 100vw;
   height: 100vh;
-  color: #003BA1;
+  color: #003ba1;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -51,6 +51,14 @@
   z-index: 50;
 }
 
+.PerspectiveButton {
+  position: absolute;
+  left: 0;
+  bottom: calc(60px + 20px * 2 + 20px);
+  z-index: 30;
+}
+
+.UnpauseButton,
 .FreezeButton {
   position: absolute;
   left: 0;
@@ -67,7 +75,7 @@
 
 .WaitAnimation {
   background: url('../../../assets/images/animations/waiting_support_animation.gif')
-  center / contain no-repeat;
+    center / contain no-repeat;
   width: 9rem;
   height: 9rem;
   margin-top: 1rem;
