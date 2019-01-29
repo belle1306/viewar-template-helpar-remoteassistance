@@ -11,14 +11,16 @@ const DEFAULT_RAY = {
   direction: { x: 0, y: 1, z: 0 },
 };
 
-export default (
+export const NAME_PREFIX = 'drawing_';
+
+export const createDrawing = ({
   canvas,
   material,
   width = 6,
+  useMesh = false,
   color = '#FF0000',
-  name = generateId()
-) => {
-  console.log(`[Drawing] new drawing: ${name}`);
+  name = generateId(),
+}) => {
   const context = canvas.getContext('2d');
   context.strokeStyle = color;
   context.lineWidth = width;
@@ -41,21 +43,47 @@ export default (
 
     // Simulate touch ray.
     const { x: screenX, y: screenY } = convertCanvasToScreenCoordinates(x, y);
-    const {
-      featurePoints,
-      ray,
-    } = await viewarApi.sceneManager.simulateTouchRay(screenX, screenY, 100);
+    const touchResult = await viewarApi.sceneManager.simulateTouchRay(
+      screenX,
+      screenY,
+      useMesh ? 0 : 100
+    );
+    const { instances, featurePoints, ray } = touchResult;
 
     // Calculate plane.
-    if (featurePoints.length >= 3) {
-      const p1 = new Vector3(featurePoints[0].position);
-      plane = Plane.fromNormalPoint(
-        Vector3.Z_AXIS.rotate(pose.orientation),
-        p1
+    if (useMesh) {
+      // Filter drawing meshs.
+      let filteredInstances = instances.filter(
+        instance => !instance.meshid.startsWith(NAME_PREFIX)
       );
+      if (filteredInstances.length) {
+        // Create plane from intersection.
+        const point = new Vector3(filteredInstances[0].intersection[0]);
+
+        // const {normalX, normalY, normalZ } = filteredInstances[0].intersection[0];
+        // const normal = new Vector3(normalX, normalY, normalZ);
+        const normal = Vector3.Z_AXIS.rotate(pose.orientation);
+
+        plane = Plane.fromNormalPoint(normal, point);
+      } else {
+        console.error('[Drawing] No mesh hit for plane.', touchResult);
+        plane = Plane.XZ_PLANE;
+      }
     } else {
-      console.error('Not enough feature points for plane');
-      plane = Plane.XZ_PLANE;
+      // Create plane from nearest featurepoint.
+      if (featurePoints.length >= 1) {
+        const point = new Vector3(featurePoints[0].position);
+        plane = Plane.fromNormalPoint(
+          Vector3.Z_AXIS.rotate(pose.orientation),
+          point
+        );
+      } else {
+        console.error(
+          '[Drawing] Not enough feature points for plane.',
+          touchResult
+        );
+        plane = Plane.XZ_PLANE;
+      }
     }
 
     // Add start position to path.

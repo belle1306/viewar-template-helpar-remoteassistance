@@ -11,7 +11,7 @@ const MaterialButton = ({setMaterial, material, option}) =>
 const SizeButton = ({label, widthValue, setWidth, width}) =>
   <div className={cx(styles.Button, global.ButtonColor, width === widthValue && styles.isActive)} onClick={() => setWidth(widthValue)}>{label}</div>
 
-export default ({disabled, material, updateMaterial, materials, updateWidth, width, addRef, canvasId, clear, onClose}) =>
+export default ({disabled, material, updateMaterial, materials, updateWidth, width, addRef, canvasId, handleConfirm, handleCancel, admin}) =>
   <div className={cx(styles.Container, disabled && styles.isDisabled)}>
     <div className={styles.Buttons}>
       <div className={styles.Materials}>
@@ -21,11 +21,8 @@ export default ({disabled, material, updateMaterial, materials, updateWidth, wid
       </div>
 
       <div className={styles.Sizes}>
-        <Button className={styles.Button} medium icon="confirm" onClick={onClose} />
-        <Button className={styles.Button} medium icon="cancel" onClick={() => {
-          clear();
-          onClose();
-        }} />
+        {admin && <Button className={styles.Button} medium icon="confirm" onClick={handleConfirm} />}
+        {admin && <Button className={styles.Button} medium icon="cancel" onClick={handleCancel} />}
       </div>
       
       {/* <div className={cx(styles.Button, styles.DeleteButton)} onClick={clear} />

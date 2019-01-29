@@ -11,6 +11,7 @@ import { getUiConfigPath } from '../../utils';
 import { withDialogControls } from '../../services/dialog';
 import { withSetLoading } from '../../services/loading';
 import annotationManager from '../../services/annotation-manager';
+import sceneDraw from '../../services/scene-draw';
 import { translate } from '../../services';
 import withRouteParams from '../../services/route-params';
 import { withTrackingMap } from '../../services/tracking-map';
@@ -25,6 +26,7 @@ export const waitForSupportAgent = ({
   history,
   admin,
   topic,
+  meshScan,
   viewarApi: { appConfig, tracker },
   setWaitingForSupportAgent,
   callClient,
@@ -45,17 +47,24 @@ export const waitForSupportAgent = ({
         featureMap = await tracker.generateTrackingMapId();
       }
 
-      if (tracker.startMeshScan) {
+      if (meshScan) {
         await tracker.startMeshScan();
       }
     }
   }
 
   if (callClient.connected && callClient.session) {
-    syncSubscription = callClient
+    syncAnnotationSubscription = callClient
       .getData('annotation')
       .subscribe(annotation => {
         annotationManager.setAnnotation(annotation, admin);
+      });
+
+    syncAnnotationSubscription = callClient
+      .getData('drawing')
+      .subscribe(drawing => {
+        console.log('[Call] received drawing', drawing);
+        sceneDraw.insertDrawing(drawing);
       });
 
     endCallSubscription = callClient.endedCall.subscribe(async () => {
@@ -73,6 +82,7 @@ export const waitForSupportAgent = ({
           syncScene: false,
           data: {
             featureMap,
+            meshScan: tracker && !!tracker.startMeshScan,
           },
         });
         setWaitingForSupportAgent(false);
@@ -203,7 +213,19 @@ const unpause = ({
   }
 };
 
-let syncSubscription;
+const syncDrawing = ({ callClient }) => drawing => {
+  const { material, name, width } = drawing;
+  const path = drawing.projectPathOntoPlane();
+  callClient.sendData('drawing', {
+    path,
+    material: material.name,
+    width,
+    name,
+  });
+};
+
+let syncDrawingSubscription;
+let syncAnnotationSubscription;
 let callSubscription;
 let endCallSubscription;
 export default compose(
@@ -233,6 +255,7 @@ export default compose(
     closeAnnotationPicker,
     goBack,
     unpause,
+    syncDrawing,
   }),
   lifecycle({
     async componentDidMount() {
@@ -240,11 +263,12 @@ export default compose(
         admin,
         waitForSupportAgent,
         annotationManager,
+        meshScan,
         viewarApi: { cameras, tracker },
       } = this.props;
       await annotationManager.reset();
 
-      if (!admin && tracker && !tracker.startMeshScan) {
+      if (!admin && !meshScan) {
         await cameras.arCamera.showPointCloud();
       }
 
@@ -258,13 +282,17 @@ export default compose(
         saveTrackingMap = async () => {
           console.error('Call view has no saveTrackingMap function.');
         },
+        meshScan,
         viewarApi: { cameras, tracker },
       } = this.props;
       if (callSubscription) {
         callSubscription.unsubscribe();
       }
-      if (syncSubscription) {
-        syncSubscription.unsubscribe();
+      if (syncAnnotationSubscription) {
+        syncAnnotationSubscription.unsubscribe();
+      }
+      if (syncDrawingSubscription) {
+        syncDrawingSubscription.unsubscribe();
       }
       if (endCallSubscription) {
         endCallSubscription.unsubscribe();
@@ -277,7 +305,7 @@ export default compose(
         setLoading(true);
         await saveTrackingMap();
 
-        if (tracker.startMeshScan) {
+        if (meshScan) {
           await tracker.stopMeshScan();
           await tracker.resetMeshScan();
         }

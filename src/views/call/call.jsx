@@ -37,6 +37,8 @@ export default ({
   perspective,
   togglePerspective,
   unpause,
+  meshScan,
+  syncDrawing
 }) => (
   <div className={cx(styles.Call)}>
     <Button
@@ -50,7 +52,7 @@ export default ({
 
     {admin ? (
       <Fragment>
-        <DrawCanvas disabled={!showAnnotationPicker} onClose={closeAnnotationPicker} />
+        <DrawCanvas disabled={!showAnnotationPicker} onCancel={closeAnnotationPicker} onConfirm={closeAnnotationPicker} admin drawOnMesh={meshScan} onSync={syncDrawing} />
         {/* <AnnotationPicker
           visible={showAnnotationPicker}
           onClose={closeAnnotationPicker}
@@ -86,7 +88,7 @@ export default ({
       </Fragment>
     ) : (
       <Fragment>
-        <DrawCanvas/>
+        <DrawCanvas drawOnMesh={meshScan} onSync={syncDrawing} />
         <WaitForSupportAgentOverlay visible={waitingForSupportAgent} />
         <div className={styles.TouchOverlay} onClick={onTouch} />
         {!waitingForSupportAgent && <Hint className={cx(styles.Hint)}>{translate('CallDrawHint')}</Hint>}

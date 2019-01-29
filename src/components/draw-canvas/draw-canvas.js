@@ -17,7 +17,10 @@ export const init = ({
   onScreenResize,
   getRefs,
   canvasId,
+  admin,
   sceneDraw,
+  onDraw,
+  drawOnMesh,
 }) => () => {
   const { canvas } = getRefs();
 
@@ -34,13 +37,22 @@ export const init = ({
   setMaterials(sceneDraw.materials);
   setMaterial(sceneDraw.material);
   sceneDraw.registerCanvas(canvas);
+  sceneDraw.drawName = admin ? 'admin' : 'user';
+  sceneDraw.drawOnMesh = drawOnMesh;
+  sceneDraw.on('draw', onDraw);
   clear();
 };
 
-export const destroy = ({ onScreenResize, getRefs, sceneDraw }) => () => {
+export const destroy = ({
+  onDraw,
+  onScreenResize,
+  getRefs,
+  sceneDraw,
+}) => () => {
   const { canvas } = getRefs();
 
   sceneDraw.unregisterCanvas(canvas);
+  sceneDraw.off('draw', onDraw);
   window.removeEventListener('resize', onScreenResize);
 };
 
@@ -80,6 +92,39 @@ export const clear = ({ sceneDraw }) => () => {
   sceneDraw.clear();
 };
 
+export const handleConfirm = ({
+  sceneDraw,
+  onConfirm,
+  admin,
+  onSync,
+}) => () => {
+  if (admin) {
+    // Sync drawing.
+    const drawing = sceneDraw.currentDrawing;
+    if (drawing) {
+      onSync(drawing);
+    }
+    onConfirm();
+  }
+};
+
+export const handleCancel = ({ sceneDraw, onCancel, admin, onSync }) => () => {
+  if (admin) {
+    // Sync drawing.
+    const drawing = sceneDraw.currentDrawing;
+    if (drawing) {
+      sceneDraw.removeDrawing(drawing);
+    }
+    onCancel();
+  }
+};
+
+export const onDraw = ({ admin, sceneDraw, onSync }) => drawing => {
+  if (!admin) {
+    onSync(drawing);
+  }
+};
+
 export default compose(
   withState('materials', 'setMaterials', []),
   withState('material', 'setMaterial', ''),
@@ -95,10 +140,13 @@ export default compose(
     updateMaterial,
     updateWidth,
     clear,
+    onDraw,
   }),
   withHandlers({
     init,
     destroy,
+    handleConfirm,
+    handleCancel,
   }),
   lifecycle({
     componentDidMount() {

@@ -42,3 +42,16 @@ export const parseMaterialOptions = description => {
 
   return options;
 };
+
+export const assign = (target, ...sources) => {
+  sources.forEach(source =>
+    Object.keys(source || {}).forEach(key =>
+      Object.defineProperty(
+        target,
+        key,
+        Object.getOwnPropertyDescriptor(source, key)
+      )
+    )
+  );
+  return target;
+};

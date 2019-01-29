@@ -4,11 +4,15 @@ import Plane from './math/plane';
 import Vector3 from './math/vector3';
 import Ray from './math/ray';
 import throttle from 'lodash/throttle';
-import { parseMaterialOptions } from './utils';
+import { parseMaterialOptions, assign } from './utils';
+import { createDrawing, NAME_PREFIX } from './drawing';
+import makeEmitter from './emitter';
 
 const UPDATE_INTERVAL = 50;
 
-export default ({ createDrawing }) => {
+export default () => {
+  const sceneDraw = makeEmitter({});
+
   const canvasRegistry = new Map();
   const activeDrawings = new Map();
 
@@ -17,6 +21,8 @@ export default ({ createDrawing }) => {
   let materials = [];
   let material;
   let width = 6;
+  let drawOnMesh = false;
+  let drawName = null;
 
   //--------------------------------------------------------------------------------------------------------------------
   // PUBLIC MEMBERS
@@ -73,12 +79,28 @@ export default ({ createDrawing }) => {
   };
 
   const clear = async () => {
-    await Promise.all(
-      drawings.map(drawing =>
-        viewarApi.coreInterface.call('removeMesh', drawing.name)
-      )
-    );
+    await Promise.all(drawings.map(removeDrawing));
     drawings = [];
+  };
+
+  const insertDrawing = ({ path, material, width, name }) => {
+    if (path.length > 1) {
+      viewarApi.coreInterface.call(
+        'draw',
+        JSON.stringify({
+          path,
+          material,
+          width,
+          type: 'line',
+          name,
+        })
+      );
+    }
+  };
+
+  const removeDrawing = async drawing => {
+    console.log('[SceneDraw] removeDrawing', drawing);
+    await viewarApi.coreInterface.call('removeMesh', drawing.name);
   };
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -192,7 +214,13 @@ export default ({ createDrawing }) => {
     const canvas = canvasRegistry.get(id);
 
     if (canvas) {
-      const drawing = createDrawing(canvas, material, width);
+      const drawing = createDrawing({
+        canvas,
+        material,
+        width,
+        useMesh: drawOnMesh,
+        name: drawName,
+      });
       await drawing.start(x, y);
 
       activeDrawings.set(id, drawing);
@@ -231,7 +259,7 @@ export default ({ createDrawing }) => {
    */
   const draw3D = async drawing => {
     const projectedPath = drawing.projectPathOntoPlane();
-    console.log(`[SceneDraw] draw path`, projectedPath);
+    console.log(`[SceneDraw] draw path`, drawing.name, projectedPath);
 
     if (projectedPath.length > 1) {
       viewarApi.coreInterface.call(
@@ -246,6 +274,8 @@ export default ({ createDrawing }) => {
       );
     }
 
+    sceneDraw.emit('draw', drawing);
+
     await new Promise(resolve => {
       setTimeout(() => resolve(), 200);
     });
@@ -256,12 +286,17 @@ export default ({ createDrawing }) => {
   // INTERFACE
   //--------------------------------------------------------------------------------------------------------------------
 
-  return {
+  return assign(sceneDraw, {
     initMaterials,
     registerCanvas,
     unregisterCanvas,
     clear,
+    insertDrawing,
+    removeDrawing,
 
+    get drawings() {
+      return drawings;
+    },
     get materials() {
       return materials;
     },
@@ -277,5 +312,21 @@ export default ({ createDrawing }) => {
     get width() {
       return width;
     },
-  };
+    set drawOnMesh(newDrawOnMesh) {
+      drawOnMesh = newDrawOnMesh;
+    },
+    get drawOnMesh() {
+      return drawOnMesh;
+    },
+    set drawName(newDrawName) {
+      drawName = NAME_PREFIX + newDrawName;
+    },
+    get drawName() {
+      return drawName;
+    },
+    get currentDrawing() {
+      // Only possible if drawName is set.
+      return drawings.find(drawing => drawing.name === drawName);
+    },
+  });
 };
