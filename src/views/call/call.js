@@ -175,6 +175,34 @@ const toggleFreeze = ({ viewarApi: { cameras }, frozen, setFrozen }) => () => {
   setFrozen(!frozen);
 };
 
+const togglePerspective = ({
+  viewarApi: { cameras },
+  perspective,
+  setPerspective,
+}) => async () => {
+  if (perspective) {
+    cameras.arCamera.activate();
+  } else {
+    await cameras.perspectiveCamera.activate();
+    await cameras.perspectiveCamera.zoomToFit();
+  }
+
+  setPerspective(!perspective);
+};
+
+const unpause = ({
+  toggleFreeze,
+  togglePerspective,
+  perspective,
+  frozen,
+}) => () => {
+  if (frozen) {
+    toggleFreeze();
+  } else if (perspective) {
+    togglePerspective();
+  }
+};
+
 let syncSubscription;
 let callSubscription;
 let endCallSubscription;
@@ -184,6 +212,7 @@ export default compose(
   withDialogControls,
   withRouteParams(),
   withSetLoading,
+  withState('perspective', 'setPerspective', false),
   withState('frozen', 'setFrozen', false),
   withState('waitingForSupportAgent', 'setWaitingForSupportAgent', false),
   withState('showAnnotationPicker', 'setShowAnnotationPicker', false),
@@ -195,13 +224,15 @@ export default compose(
   withHandlers({
     syncAnnotation,
     goToNextView,
+    toggleFreeze,
+    togglePerspective,
   }),
   withHandlers({
     waitForSupportAgent,
     onTouch,
     closeAnnotationPicker,
     goBack,
-    toggleFreeze,
+    unpause,
   }),
   lifecycle({
     async componentDidMount() {
