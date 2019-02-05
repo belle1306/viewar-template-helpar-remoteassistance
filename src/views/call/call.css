@@ -51,6 +51,49 @@
   z-index: 50;
 }
 
+.FreezeFrames {
+  position: absolute;
+  top: 0;
+  left: 0;
+  max-height: calc(100% - ((60px + 20px * 2) * 3 + 40px));
+  box-sizing: border-box;
+  overflow-y: auto;
+  display: flex;
+  flex-flow: column;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+  pointer-events: auto;
+  transition: opacity 0.25s ease;
+}
+
+.FreezeFrames.isHidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.FreezeFrame {
+  flex: 0 0 auto;
+  margin-bottom: 20px;
+}
+
+.FreezeFrame img {
+  width: 120px;
+}
+
+@media only screen and (orientation: portrait) {
+  .FreezeFrame img {
+    width: auto;
+    height: 120px;
+  }
+}
+
+.FreezeFrameButton {
+  position: absolute;
+  left: 0;
+  bottom: calc((60px + 20px * 2) * 2 + 20px);
+  z-index: 30;
+}
+
 .PerspectiveButton {
   position: absolute;
   left: 0;

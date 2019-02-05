@@ -30,7 +30,12 @@ export const init = ({
 }) => async () => {
   setLoadingDone(false);
 
-  if (!trackers.Remote || (!trackers.Placenote && !trackers.SixDegrees)) {
+  if (
+    !trackers.Remote ||
+    (coreInterface.platform !== 'Emscripten' &&
+      !trackers.Placenote &&
+      !trackers.SixDegrees)
+  ) {
     showDialog('InvalidTrackerConfiguration', {
       showCancel: false,
       showConfirm: false,
