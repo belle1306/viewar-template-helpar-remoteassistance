@@ -39,6 +39,9 @@ export default ({
   freezeFrames,
   saveFreezeFrame,
   loadFreezeFrame,
+  freezeFrame,
+  sendFreezeFrame,
+  freezeFrameSent,
 }) => (
   <div className={cx(styles.Call)}>
     <Button
@@ -73,10 +76,17 @@ export default ({
         />
         <Button
           medium
+          icon='cast'
+          onClick={sendFreezeFrame}
+          className={styles.SendFreezeFrameButton}
+          hidden={!freezeFrame || freezeFrameSent || showAnnotationPicker}
+        />
+        <Button
+          medium
           icon='freezeframe'
           onClick={saveFreezeFrame}
           className={styles.FreezeFrameButton}
-          hidden={perspective || frozen}
+          hidden={perspective || frozen || showAnnotationPicker}
         />
         <Button
           medium

@@ -94,6 +94,7 @@
   z-index: 30;
 }
 
+.SendFreezeFrameButton,
 .PerspectiveButton {
   position: absolute;
   left: 0;

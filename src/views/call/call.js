@@ -28,6 +28,8 @@ export const waitForSupportAgent = ({
   viewarApi: { appConfig, tracker },
   setWaitingForSupportAgent,
   callClient,
+  takeFreezeFrame,
+  showFreezeFrame,
 }) => async () => {
   let featureMap;
   if (!admin) {
@@ -57,6 +59,14 @@ export const waitForSupportAgent = ({
       .subscribe(annotation => {
         annotationManager.setAnnotation(annotation, admin);
       });
+
+    freezeFrameSubscription = callClient
+      .getData('freezeFrame')
+      .subscribe(showFreezeFrame);
+
+    takeFreezeFrameSubscription = callClient
+      .getData('takeFreezeFrame')
+      .subscribe(takeFreezeFrame);
 
     endCallSubscription = callClient.endedCall.subscribe(async () => {
       goToNextView();
@@ -166,9 +176,22 @@ export const goToNextView = ({
   }
 };
 
-const toggleFreeze = ({ viewarApi: { cameras }, frozen, setFrozen }) => () => {
+const toggleFreeze = ({
+  setFreezeFrameSent,
+  callClient,
+  freezeFrame,
+  setFreezeFrame,
+  viewarApi: { cameras },
+  frozen,
+  setFrozen,
+}) => () => {
   if (frozen) {
     cameras.arCamera.unfreeze();
+    if (freezeFrame) {
+      setFreezeFrameSent(false);
+      callClient.sendData('freezeFrame', null);
+      setFreezeFrame(false);
+    }
   } else {
     cameras.arCamera.freeze();
   }
@@ -203,17 +226,65 @@ const unpause = ({
   }
 };
 
-const saveFreezeFrame = ({ freezeFrames, setFreezeFrames }) => async () => {
-  const freezeFrame = await viewarApi.cameras.arCamera.saveFreezeFrame();
+const saveFreezeFrame = ({
+  callClient,
+  freezeFrames,
+  setFreezeFrames,
+}) => async () => {
+  // Notify user to take a freeze frame as well.
+  const name = `freezeFrame-${Math.round(+new Date() / 1000)}`;
+  callClient.sendData('takeFreezeFrame', name);
+
+  // Take freeze frame.
+  const freezeFrame = await viewarApi.cameras.arCamera.saveFreezeFrame(name);
   freezeFrames.push(freezeFrame);
   setFreezeFrames(freezeFrames);
 };
 
-const loadFreezeFrame = ({ setFrozen }) => async freezeFrame => {
+const loadFreezeFrame = ({
+  setFrozen,
+  setFreezeFrame,
+}) => async freezeFrame => {
   await viewarApi.cameras.arCamera.showFreezeFrame(freezeFrame);
   setFrozen(true);
+  setFreezeFrame(freezeFrame);
 };
 
+const sendFreezeFrame = ({
+  setFreezeFrameSent,
+  freezeFrame,
+  callClient,
+}) => () => {
+  // Notify user to show freeze frame.
+  callClient.sendData('freezeFrame', freezeFrame.name);
+  setFreezeFrameSent(true);
+};
+
+const showFreezeFrame = ({ freezeFrames }) => name => {
+  // Triggered on user device via 'showFreezeFrame' call command.
+  if (name) {
+    const freezeFrame = freezeFrames.find(
+      freezeFrame => freezeFrame.name === name
+    );
+    if (freezeFrame) {
+      viewarApi.cameras.arCamera.showFreezeFrame(freezeFrame);
+    } else {
+      console.error(`No freezeFrame found with name '${name}'`);
+    }
+  } else {
+    viewarApi.cameras.arCamera.unfreeze();
+  }
+};
+
+const takeFreezeFrame = ({ freezeFrames, setFreezeFrame }) => async name => {
+  // Triggered on user device via 'takeFreezeFrame' call command.
+  const freezeFrame = await viewarApi.cameras.arCamera.saveFreezeFrame(name);
+  freezeFrames.push(freezeFrame);
+  setFreezeFrames(freezeFrames);
+};
+
+let takeFreezeFrameSubscription;
+let freezeFrameSubscription;
 let syncSubscription;
 let callSubscription;
 let endCallSubscription;
@@ -223,6 +294,8 @@ export default compose(
   withDialogControls,
   withRouteParams(),
   withSetLoading,
+  withState('freezeFrameSent', 'setFreezeFrameSent', false),
+  withState('freezeFrame', 'setFreezeFrame', false),
   withState('freezeFrames', 'setFreezeFrames', []),
   withState('perspective', 'setPerspective', false),
   withState('frozen', 'setFrozen', false),
@@ -238,6 +311,8 @@ export default compose(
     goToNextView,
     toggleFreeze,
     togglePerspective,
+    showFreezeFrame,
+    takeFreezeFrame,
   }),
   withHandlers({
     waitForSupportAgent,
@@ -247,6 +322,7 @@ export default compose(
     unpause,
     saveFreezeFrame,
     loadFreezeFrame,
+    sendFreezeFrame,
   }),
   lifecycle({
     async componentDidMount() {
@@ -282,6 +358,12 @@ export default compose(
       }
       if (endCallSubscription) {
         endCallSubscription.unsubscribe();
+      }
+      if (takeFreezeFrameSubscription) {
+        takeFreezeFrameSubscription.unsubscribe();
+      }
+      if (freezeFrameSubscription) {
+        freezeFrameSubscription.unsubscribe();
       }
 
       await callClient.endCall();
