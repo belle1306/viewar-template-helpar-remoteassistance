@@ -36,6 +36,9 @@ export default ({
   perspective,
   togglePerspective,
   unpause,
+  freezeFrames,
+  saveFreezeFrame,
+  loadFreezeFrame,
 }) => (
   <div className={cx(styles.Call)}>
     <Button
@@ -53,6 +56,14 @@ export default ({
           visible={showAnnotationPicker}
           onClose={closeAnnotationPicker}
         />
+
+        <div className={cx(styles.FreezeFrames, frozen && styles.isHidden)}>
+          {freezeFrames.map(freezeFrame => (
+            <div key={freezeFrame.name} className={styles.FreezeFrame} onClick={() => loadFreezeFrame(freezeFrame)} >
+              <img src={freezeFrame.thumbnailUrl} />
+            </div>
+          ))}
+        </div>
         <Button
           medium
           onClick={() => setShowAnnotationPicker(true)}
@@ -62,7 +73,14 @@ export default ({
         />
         <Button
           medium
-          icon='pause'
+          icon='freezeframe'
+          onClick={saveFreezeFrame}
+          className={styles.FreezeFrameButton}
+          hidden={perspective || frozen}
+        />
+        <Button
+          medium
+          icon='perspective'
           onClick={togglePerspective}
           className={styles.PerspectiveButton}
           hidden={showAnnotationPicker || perspective || frozen}

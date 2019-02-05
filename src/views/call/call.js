@@ -203,6 +203,17 @@ const unpause = ({
   }
 };
 
+const saveFreezeFrame = ({ freezeFrames, setFreezeFrames }) => async () => {
+  const freezeFrame = await viewarApi.cameras.arCamera.saveFreezeFrame();
+  freezeFrames.push(freezeFrame);
+  setFreezeFrames(freezeFrames);
+};
+
+const loadFreezeFrame = ({ setFrozen }) => async freezeFrame => {
+  await viewarApi.cameras.arCamera.showFreezeFrame(freezeFrame);
+  setFrozen(true);
+};
+
 let syncSubscription;
 let callSubscription;
 let endCallSubscription;
@@ -212,6 +223,7 @@ export default compose(
   withDialogControls,
   withRouteParams(),
   withSetLoading,
+  withState('freezeFrames', 'setFreezeFrames', []),
   withState('perspective', 'setPerspective', false),
   withState('frozen', 'setFrozen', false),
   withState('waitingForSupportAgent', 'setWaitingForSupportAgent', false),
@@ -233,6 +245,8 @@ export default compose(
     closeAnnotationPicker,
     goBack,
     unpause,
+    saveFreezeFrame,
+    loadFreezeFrame,
   }),
   lifecycle({
     async componentDidMount() {
