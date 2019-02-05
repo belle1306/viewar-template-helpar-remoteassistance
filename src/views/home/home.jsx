@@ -34,6 +34,7 @@ export default ({
       onClick={goToUserSelection}
       className={styles.LoginButton}
       hidden={!loadingDone}
+      noBackground
       small
       icon="logout"
     />
