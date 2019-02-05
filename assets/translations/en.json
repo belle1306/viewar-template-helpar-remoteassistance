@@ -42,7 +42,7 @@
   "MessageConnectionLost": "Connection to server lost.",
   "MessageCallEnded": "Call ended.",
   "MessageConnect": "Waiting for connection to server...",
-  "MessageConnectionFailed": "Failed to connect to server.<br/>Please check your internect connection.",
+  "MessageConnectionFailed": "Failed to connect to server.<br/>Please check your internet connection.",
   "MessageJoin": "Joining session, please wait.",
   "MessageJoinFailed": "Failed to join the channel.",
   "NothingFoundCallSupport": "No useful results?",

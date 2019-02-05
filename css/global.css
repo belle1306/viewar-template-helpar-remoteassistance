@@ -40,7 +40,8 @@ body {
   position: absolute;
 }
 
-input, textarea {
+input,
+textarea {
   border: 0;
   user-select: text;
 }
@@ -66,5 +67,9 @@ a:visited {
 }
 
 .ButtonColor {
-  background-color: #006DFF;
+  background-color: #006dff;
+}
+
+.ButtonBackgroundColor {
+  background-color: rgba(255, 255, 255, 0.5);
 }
