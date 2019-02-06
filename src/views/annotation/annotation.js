@@ -27,8 +27,10 @@ export const init = ({
   setLoading,
   annotation,
   updateSelection,
-  loadTrackingMap = () => { console.error('Annotation view has no loadTrackingMap function.'); },
-  viewarApi: { sceneManager, trackers, cameras },
+  loadTrackingMap = () => {
+    console.error('Annotation view has no loadTrackingMap function.');
+  },
+  viewarApi: { sceneManager, tracker, cameras },
 }) => async () => {
   setLoading(true);
   const annotation = await annotationDb.get(annotationId);
@@ -39,10 +41,9 @@ export const init = ({
   }
 
   if (annotation.featureMap) {
-    const tracker = Object.values(trackers)[0];
     if (tracker) {
       tracker.on('trackingTargetStatusChanged', updateTracking);
-      await loadTrackingMap(annotation.featureMap)
+      await loadTrackingMap(annotation.featureMap);
     }
 
     updateTracking();
@@ -104,10 +105,8 @@ export const rateAnnotation = ({ setRating }) => rating => {
 
 export const updateTracking = ({
   setTracking,
-  viewarApi: { sceneManager, trackers },
+  viewarApi: { sceneManager, tracker },
 }) => () => {
-  const tracker = Object.values(trackers)[0];
-
   let tracking = true;
   if (tracker.loadTrackingMap) {
     tracking = tracker.targets.filter(

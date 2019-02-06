@@ -12,11 +12,11 @@ export default ({
   className,
 }) => (
   <div className={cx(styles.Container, className)}>
-    <Button icon="account" className={styles.Avatar} />
+    <Button icon="account" className={styles.Avatar} white noBackground />
     <div className={styles.UserDetails}>
       <div className={styles.UserWelcome}>{translate('AdminWelcome')}</div>
       <div className={styles.UserName}>{userName}</div>
     </div>
-    <Button icon="logout" small onClick={logOut} className={styles.LogOutButton} />
+    <Button icon="logout" small onClick={logOut} className={styles.LogOutButton} noBackground />
   </div>
 );

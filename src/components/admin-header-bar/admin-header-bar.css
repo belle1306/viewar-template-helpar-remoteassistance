@@ -17,7 +17,6 @@
   flex: 0 0 auto;
   height: 4rem;
   width: 4rem;
-  background-color: white;
   margin: 0 1rem 0 0;
   cursor: default;
 }
@@ -45,6 +44,5 @@
 
 .LogOutButton {
   flex: 0 0 auto;
-  background-color: #006afd;
   margin: 0;
 }

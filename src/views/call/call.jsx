@@ -33,6 +33,15 @@ export default ({
   onTouch,
   toggleFreeze,
   frozen,
+  perspective,
+  togglePerspective,
+  unpause,
+  freezeFrames,
+  saveFreezeFrame,
+  loadFreezeFrame,
+  freezeFrame,
+  sendFreezeFrame,
+  freezeFrameSent,
 }) => (
   <div className={cx(styles.Call)}>
     <Button
@@ -50,6 +59,14 @@ export default ({
           visible={showAnnotationPicker}
           onClose={closeAnnotationPicker}
         />
+
+        <div className={cx(styles.FreezeFrames, frozen && styles.isHidden)}>
+          {freezeFrames.map(freezeFrame => (
+            <div key={freezeFrame.name} className={styles.FreezeFrame} onClick={() => loadFreezeFrame(freezeFrame)} >
+              <img src={freezeFrame.thumbnailUrl} />
+            </div>
+          ))}
+        </div>
         <Button
           medium
           onClick={() => setShowAnnotationPicker(true)}
@@ -59,17 +76,38 @@ export default ({
         />
         <Button
           medium
+          icon='cast'
+          onClick={sendFreezeFrame}
+          className={styles.SendFreezeFrameButton}
+          hidden={!freezeFrame || freezeFrameSent || showAnnotationPicker}
+        />
+        <Button
+          medium
+          icon='freezeframe'
+          onClick={saveFreezeFrame}
+          className={styles.FreezeFrameButton}
+          hidden={perspective || frozen || showAnnotationPicker}
+        />
+        <Button
+          medium
+          icon='perspective'
+          onClick={togglePerspective}
+          className={styles.PerspectiveButton}
+          hidden={showAnnotationPicker || perspective || frozen}
+        />
+        <Button
+          medium
           icon="play"
-          onClick={toggleFreeze}
-          className={styles.FreezeButton}
-          hidden={!frozen || showAnnotationPicker}
+          onClick={unpause}
+          className={styles.UnpauseButton}
+          hidden={(!frozen && !perspective) || showAnnotationPicker}
         />
         <Button
           medium
           icon="pause"
           onClick={toggleFreeze}
           className={styles.FreezeButton}
-          hidden={frozen || showAnnotationPicker}
+          hidden={frozen || showAnnotationPicker || perspective}
         />
       </Fragment>
     ) : (

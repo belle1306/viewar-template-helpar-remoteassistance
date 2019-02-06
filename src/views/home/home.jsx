@@ -34,10 +34,15 @@ export default ({
       onClick={goToUserSelection}
       className={styles.LoginButton}
       hidden={!loadingDone}
+      noBackground
       small
       icon="logout"
     />
-    <CallSupportButton className={styles.CallButton} hidden={!loadingDone} callSupport={callSupport} />
+    <CallSupportButton
+      className={styles.CallButton}
+      hidden={!loadingDone}
+      callSupport={callSupport} />
+
     <TextButton
       label="HomeStart"
       className={styles.StartButton}

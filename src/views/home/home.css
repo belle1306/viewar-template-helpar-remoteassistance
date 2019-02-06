@@ -4,7 +4,7 @@
   position: absolute;
   left: 0;
   top: 0;
-  background-color: rgba(255, 255, 255, .9);
+  background-color: rgba(255, 255, 255, 0.9);
 }
 
 .Home .Logo {
@@ -24,6 +24,17 @@
   top: 0;
 }
 
+.Home .CallButton {
+  position: absolute;
+  bottom: 20vmax;
+  left: 50%;
+  transform: translate(-50%, -100%);
+  width: 50vmin;
+  margin-bottom: 0.5rem;
+  background-color: #003ba1;
+  padding: 0.9rem 1rem;
+}
+
 .Home .StartButton {
   position: absolute;
   bottom: 20vmax;
@@ -37,6 +48,7 @@
   font-size: 2em;
 }
 
+/*
 .StartButton:after {
   content: '';
   position: absolute;
@@ -50,17 +62,7 @@
   transform: translateY(calc(100% - 1px));
   pointer-events: none;
 }
-
-.Home .CallButton {
-  position: absolute;
-  bottom: 20vmax;
-  left: 50%;
-  transform: translate(-50%, -100%);
-  width: 50vmin;
-  margin-bottom: 0.5rem;
-  background-color: #003ba1;
-  padding: 0.9rem 1rem;
-}
+*/
 
 .Loading {
   position: absolute;
@@ -91,9 +93,7 @@
   pointer-events: none;
 }
 
-
-@media only
-screen and (max-device-width : 414px) {
+@media only screen and (max-device-width: 414px) {
   .Home .CallButton {
     width: 65vmin;
   }

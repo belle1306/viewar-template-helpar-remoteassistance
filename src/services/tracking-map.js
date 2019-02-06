@@ -1,42 +1,53 @@
 import pubSub from './pub-sub';
-import { compose, withState, withProps, withHandlers, lifecycle } from 'recompose';
+import {
+  compose,
+  withState,
+  withProps,
+  withHandlers,
+  lifecycle,
+} from 'recompose';
 import viewarApi from 'viewar-api';
 
-export const doSaveTrackingMap = ({viewarApi, setMessage, setProgress, setVisible}) => async() => {
+export const doSaveTrackingMap = ({
+  viewarApi: { tracker },
+  setMessage,
+  setProgress,
+  setVisible,
+}) => async () => {
   let featureMap = '';
 
-  setMessage('TrackingMapSaveInProgress')
+  setMessage('TrackingMapSaveInProgress');
 
-  const tracker = Object.values(viewarApi.trackers)[0];
   if (tracker && tracker.saveTrackingMap) {
-    setVisible(true)
+    setVisible(true);
     featureMap = await tracker.saveTrackingMap();
-    setVisible(false)
+    setVisible(false);
   }
 
-  setProgress(0)
+  setProgress(0);
   return featureMap;
-}
+};
 
-export const doLoadTrackingMap = ({viewarApi, setMessage, setProgress, setVisible}) => async(trackingMapId) => {
-  const tracker = Object.values(viewarApi.trackers)[0];
-
-  setMessage('TrackingMapLoadInProgress')
+export const doLoadTrackingMap = ({
+  viewarApi: { tracker },
+  setMessage,
+  setProgress,
+  setVisible,
+}) => async trackingMapId => {
+  setMessage('TrackingMapLoadInProgress');
 
   if (tracker && tracker.saveTrackingMap) {
-    setVisible(true)
+    setVisible(true);
     await tracker.loadTrackingMap(trackingMapId);
-    setVisible(false)
+    setVisible(false);
   }
 
-  setProgress(0)
-}
+  setProgress(0);
+};
 
-export const getTracker = () => Object.values(viewarApi.trackers)[0]
-
-export const updateProgress = ({setProgress}) => (progress) => {
+export const updateProgress = ({ setProgress }) => progress => {
   setProgress(progress * 100);
-}
+};
 
 export const withTrackingMapProgress = () =>
   compose(
@@ -46,9 +57,7 @@ export const withTrackingMapProgress = () =>
     withProps({
       viewarApi,
     }),
-    withProps(({viewarApi}) => ({
-      tracker: getTracker(),
-    })),
+    withProps(() => ({})),
     withHandlers({
       updateProgress,
       doSaveTrackingMap,
@@ -56,42 +65,49 @@ export const withTrackingMapProgress = () =>
     }),
     lifecycle({
       componentDidMount() {
-        const {doSaveTrackingMap, doLoadTrackingMap, updateProgress, tracker} = this.props
+        const {
+          doSaveTrackingMap,
+          doLoadTrackingMap,
+          updateProgress,
+          viewarApi: { tracker },
+        } = this.props;
 
-        pubSub.subscribe('trackingMap', async({saveTrackingMap, loadTrackingMap, trackingMapId}) => {
-          if (saveTrackingMap) {
-            await doSaveTrackingMap()
-          } else if (loadTrackingMap) {
-            await doLoadTrackingMap(trackingMapId);
+        pubSub.subscribe(
+          'trackingMap',
+          async ({ saveTrackingMap, loadTrackingMap, trackingMapId }) => {
+            if (saveTrackingMap) {
+              await doSaveTrackingMap();
+            } else if (loadTrackingMap) {
+              await doLoadTrackingMap(trackingMapId);
+            }
+            pubSub.publish('trackingMapResult', {});
           }
-          pubSub.publish('trackingMapResult', {});
-        });
+        );
 
         if (tracker) {
-          tracker.on('trackingMapSaveProgress', updateProgress)
-          tracker.on('trackingMapLoadProgress', updateProgress)
+          tracker.on('trackingMapSaveProgress', updateProgress);
+          tracker.on('trackingMapLoadProgress', updateProgress);
         }
-
       },
     })
   );
 
-const sendAndWaitForResult = ({pubSub}) => async(args) => {
+const sendAndWaitForResult = ({ pubSub }) => async args => {
   await new Promise(resolve => {
-    pubSub.subscribe('trackingMapResult', () => resolve())
+    pubSub.subscribe('trackingMapResult', () => resolve());
     pubSub.publish('trackingMap', args);
-  })
+  });
 
-  pubSub.unsubscribe('trackingMapResult')
-}
+  pubSub.unsubscribe('trackingMapResult');
+};
 
-const saveTrackingMap = ({sendAndWaitForResult}) => async() => {
-  await sendAndWaitForResult({ saveTrackingMap: true })
-}
+const saveTrackingMap = ({ sendAndWaitForResult }) => async () => {
+  await sendAndWaitForResult({ saveTrackingMap: true });
+};
 
-const loadTrackingMap = ({sendAndWaitForResult}) => async(trackingMapId) => {
-  await sendAndWaitForResult({ loadTrackingMap: true, trackingMapId })
-}
+const loadTrackingMap = ({ sendAndWaitForResult }) => async trackingMapId => {
+  await sendAndWaitForResult({ loadTrackingMap: true, trackingMapId });
+};
 
 export const withTrackingMap = compose(
   withProps({ pubSub }),
