@@ -34,10 +34,11 @@ export const call = ({
 }) => async clientId => {
   callSubscription = callClient.acceptedCall.subscribe((args = {}) => {
     const { data = {} } = args;
-    const { featureMap } = data;
+    const { featureMap, meshScan } = data;
     setWaitingForUser(false);
     goTo('/call-admin', {
       featureMap,
+      meshScan,
       backPath: '/user-selection',
       backArgs: {
         username,
