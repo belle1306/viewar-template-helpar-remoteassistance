@@ -31,12 +31,21 @@ export default compose(
   }),
   withRouteParams(),
   withHandlers({
-    goToNext: ({ goTo, nextView, annotationId, backPath, backArgs, topic }) => () => {
+    goToNext: ({
+      goTo,
+      nextView,
+      annotationId,
+      backPath,
+      backArgs,
+      topic,
+    }) => () => {
+      const meshScan = viewarApi.tracker && !!viewarApi.tracker.startMeshScan;
       goTo(nextView, {
         topic,
         annotationId,
         backPath,
         backArgs,
+        meshScan,
       });
     },
   }),
