@@ -20,8 +20,13 @@ export const init = ({
   setLoading,
   annotationDb,
   setAnnotations,
+  setTags,
+  setTag,
 }) => async () => {
   const annotations = annotationManager.saved;
+
+  setTag('');
+  setTags([]);
 
   setAnnotations(annotations);
 };
@@ -40,6 +45,7 @@ export const removeAnnotation = ({
 export const createTag = ({ tags, setTags, tag, setTag }) => () => {
   if (tags.indexOf(tag) === -1 && tag) {
     tags.push(tag);
+    console.log('[createTag] setTags', tags);
     setTags(tags);
   }
   setTag('');
@@ -48,6 +54,7 @@ export const createTag = ({ tags, setTags, tag, setTag }) => () => {
 export const removeTag = ({ setTags, tags }) => tag => {
   const index = tags.indexOf(tag);
   tags.splice(index, 1);
+  console.log('[removeTag] setTags', tags);
   setTags(tags);
 };
 
@@ -101,15 +108,13 @@ export const saveAnnotations = ({
   annotations,
   showDialog,
   tags,
-}) => async() => {
-  const changedAnnotations = annotations.some(
-    annotation => annotation.title
-  );
+}) => async () => {
+  const changedAnnotations = annotations.some(annotation => annotation.title);
 
-  if(changedAnnotations) {
+  if (changedAnnotations) {
     if (!tags.length) {
       await showDialog('ReviewSavingNoTags', {
-        confirmText: 'OK'
+        confirmText: 'OK',
       });
 
       return false;
@@ -123,8 +128,7 @@ export const saveAnnotations = ({
   }
 
   return true;
-
-}
+};
 
 export const saveAnnotation = ({
   featureMap,

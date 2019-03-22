@@ -236,15 +236,22 @@ const unpause = ({
   }
 };
 
-const syncDrawing = ({ callClient }) => drawing => {
+const syncDrawing = ({ callClient, admin }) => drawing => {
   const { material, name, width } = drawing;
   const path = drawing.projectPathOntoPlane();
-  callClient.sendData('drawing', {
+
+  const drawingData = {
     path,
     material: material.name,
     width,
     name,
-  });
+  };
+
+  if (admin) {
+    annotationManager.saveDrawAnnotation(drawingData);
+  }
+  console.log('[Call] send drawing', drawingData);
+  callClient.sendData('drawing', drawingData);
 };
 
 const saveFreezeFrame = ({

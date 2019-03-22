@@ -81,7 +81,6 @@ export default ({
     {admin ? (
       <Fragment>
         <DrawCanvas disabled={!showAnnotationPicker} onCancel={closeAnnotationPicker} onConfirm={closeAnnotationPicker} admin drawOnMesh={meshScan} onSync={syncDrawing} />
-        />
 
         <div className={cx(styles.FreezeFrames, frozen && styles.isHidden)}>
           {freezeFrames.map(freezeFrame => (

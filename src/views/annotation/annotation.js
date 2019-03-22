@@ -16,6 +16,7 @@ import { translate } from '../../services';
 import { withTrackingMap } from '../../services/tracking-map';
 
 import Annotation from './annotation.jsx';
+import sceneDraw from '../../services/scene-draw';
 
 export const init = ({
   setTracking,
@@ -38,6 +39,8 @@ export const init = ({
 
   if (annotation.model) {
     annotationManager.setAnnotation(annotation, false);
+  } else if (annotation.drawing) {
+    sceneDraw.insertDrawing(annotation.drawing);
   }
 
   if (annotation.featureMap) {

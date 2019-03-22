@@ -20,7 +20,7 @@ export default () => {
   let materialModelInstance;
   let materials = [];
   let material;
-  let width = 6;
+  let width = 3;
   let drawOnMesh = false;
   let drawName = null;
 
@@ -325,8 +325,9 @@ export default () => {
       return drawName;
     },
     get currentDrawing() {
-      // Only possible if drawName is set.
-      return drawings.find(drawing => drawing.name === drawName);
+      // Only possible if drawName is set. Find last drawing (most recent).
+      return drawings.reverse().find(drawing => drawing.name === drawName);
     },
   });
 };
+0;

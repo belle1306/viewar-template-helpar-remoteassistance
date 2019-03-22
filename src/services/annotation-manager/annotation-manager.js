@@ -164,6 +164,22 @@ export default ({
     );
   };
 
+  const saveDrawAnnotation = async drawing => {
+    screenshot = await takeScreenshot();
+
+    saved.push(
+      Object.assign(
+        {},
+        {
+          drawing,
+          freezeFrame,
+          screenshot,
+          id: generateId(),
+        }
+      )
+    );
+  };
+
   //--------------------------------------------------------------------------------------------------------------------
   // PRIVATE METHODS
   //--------------------------------------------------------------------------------------------------------------------
@@ -205,6 +221,7 @@ export default ({
     setAnnotation,
     setTouchAnnotation,
     saveAnnotation,
+    saveDrawAnnotation,
 
     get current() {
       return current;
