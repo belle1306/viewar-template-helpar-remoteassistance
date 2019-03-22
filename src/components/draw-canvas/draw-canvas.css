@@ -21,6 +21,7 @@
 
 .Materials {
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   max-height: 100vh;
   display: flex;
   flex-flow: column;
@@ -57,6 +58,7 @@
   position: relative;
   pointer-events: auto;
   cursor: pointer;
+  flex: 0 0 auto;
 }
 
 .isActive.MaterialButton:after {

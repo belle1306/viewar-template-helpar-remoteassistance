@@ -20,7 +20,7 @@ export default () => {
   let materialModelInstance;
   let materials = [];
   let material;
-  let width = 3;
+  let width = 2;
   let drawOnMesh = false;
   let drawName = null;
 

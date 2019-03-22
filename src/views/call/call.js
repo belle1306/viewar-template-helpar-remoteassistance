@@ -449,6 +449,7 @@ export default compose(
         await cameras.arCamera.unfreeze();
       }
 
+      sceneDraw.clear();
       await cameras.perspectiveCamera.activate();
     },
   })
