@@ -45,6 +45,10 @@ export default ({
   freezeFrame,
   sendFreezeFrame,
   freezeFrameSent,
+  toggleMuteMicrophone,
+  microphoneMuted,
+  toggleMuteSpeaker,
+  speakerMuted,
 }) => (
   <div className={cx(styles.Call)}>
     <Button
@@ -53,6 +57,24 @@ export default ({
       icon="endcall"
       onClick={goBack}
       className={styles.EndCallButton}
+      hidden={showAnnotationPicker}
+    />
+
+    <Button
+      medium
+      icon={microphoneMuted ? 'unmute' : 'mute'}
+      onClick={toggleMuteMicrophone}
+      className={styles.MuteMicrophoneButton}
+      small
+      hidden={showAnnotationPicker}
+    />
+
+    <Button
+      medium
+      icon={speakerMuted ? 'unmute_speaker' : 'mute_speaker'}
+      onClick={toggleMuteSpeaker}
+      className={styles.MuteSpeakerButton}
+      small
       hidden={showAnnotationPicker}
     />
 

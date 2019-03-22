@@ -304,6 +304,29 @@ const takeFreezeFrame = ({ freezeFrames, setFreezeFrame }) => async name => {
   setFreezeFrames(freezeFrames);
 };
 
+const toggleMuteSpeaker = ({ setSpeakerMuted, speakerMuted }) => () => {
+  if (speakerMuted) {
+    viewarApi.appUtils.unmuteSpeaker();
+  } else {
+    viewarApi.appUtils.muteSpeaker();
+  }
+
+  setSpeakerMuted(!speakerMuted);
+};
+
+const toggleMuteMicrophone = ({
+  setMicrophoneMuted,
+  microphoneMuted,
+}) => () => {
+  if (microphoneMuted) {
+    viewarApi.appUtils.unmuteMicrophone();
+  } else {
+    viewarApi.appUtils.muteMicrophone();
+  }
+
+  setMicrophoneMuted(!microphoneMuted);
+};
+
 let takeFreezeFrameSubscription;
 let freezeFrameSubscription;
 let syncDrawingSubscription;
@@ -317,6 +340,8 @@ export default compose(
   withDialogControls,
   withRouteParams(),
   withSetLoading,
+  withState('speakerMuted', 'setSpeakerMuted', false),
+  withState('microphoneMuted', 'setMicrophoneMuted', false),
   withState('freezeFrameSent', 'setFreezeFrameSent', false),
   withState('freezeFrame', 'setFreezeFrame', false),
   withState('freezeFrames', 'setFreezeFrames', []),
@@ -347,6 +372,8 @@ export default compose(
     saveFreezeFrame,
     loadFreezeFrame,
     sendFreezeFrame,
+    toggleMuteSpeaker,
+    toggleMuteMicrophone,
   }),
   lifecycle({
     async componentDidMount() {
@@ -355,7 +382,7 @@ export default compose(
         waitForSupportAgent,
         annotationManager,
         meshScan,
-        viewarApi: { cameras, tracker },
+        viewarApi: { cameras, tracker, appUtils },
       } = this.props;
       await annotationManager.reset();
 
@@ -363,6 +390,7 @@ export default compose(
         await cameras.arCamera.showPointCloud();
       }
 
+      appUtils.unmuteMicrophone();
       waitForSupportAgent();
     },
     async componentWillUnmount() {
