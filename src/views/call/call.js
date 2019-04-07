@@ -32,6 +32,7 @@ export const waitForSupportAgent = ({
   callClient,
   takeFreezeFrame,
   showFreezeFrame,
+  onCallEnd,
 }) => async () => {
   let featureMap;
   if (!admin) {
@@ -78,6 +79,7 @@ export const waitForSupportAgent = ({
       .subscribe(takeFreezeFrame);
 
     endCallSubscription = callClient.endedCall.subscribe(async () => {
+      await onCallEnd();
       goToNextView();
 
       await showDialog('MessageCallEnded', {
@@ -147,8 +149,10 @@ export const goBack = ({
   goToNextView,
   admin,
   showDialog,
+  onCallEnd,
 }) => async () => {
   if (waitingForSupportAgent) {
+    await onCallEnd();
     goToNextView();
   } else {
     const { confirmed } = await showDialog('CallAbortQuestion', {
@@ -157,6 +161,7 @@ export const goBack = ({
     });
 
     if (confirmed) {
+      await onCallEnd();
       goToNextView();
     }
   }
@@ -334,6 +339,39 @@ const toggleMuteMicrophone = ({
   setMicrophoneMuted(!microphoneMuted);
 };
 
+const onCallEnd = ({
+  admin,
+  callClient,
+  setLoading,
+  saveTrackingMap = async () => {
+    console.error('Call view has no saveTrackingMap function.');
+  },
+  meshScan,
+  viewarApi: { cameras, tracker },
+}) => async () => {
+  await callClient.endCall();
+  if (!admin) {
+    callClient.leave();
+
+    setLoading(true);
+    await saveTrackingMap();
+    // await new Promise(resolve => setTimeout(resolve, 10000));
+
+    if (meshScan) {
+      await tracker.stopMeshScan();
+      await tracker.resetMeshScan();
+    }
+
+    setLoading(false);
+    await cameras.arCamera.hidePointCloud();
+  } else {
+    callClient.setData({ available: false });
+    await cameras.arCamera.unfreeze();
+  }
+
+  sceneDraw.clear();
+};
+
 let takeFreezeFrameSubscription;
 let freezeFrameSubscription;
 let syncDrawingSubscription;
@@ -368,6 +406,7 @@ export default compose(
     togglePerspective,
     showFreezeFrame,
     takeFreezeFrame,
+    onCallEnd,
   }),
   withHandlers({
     waitForSupportAgent,
@@ -401,16 +440,7 @@ export default compose(
       waitForSupportAgent();
     },
     async componentWillUnmount() {
-      const {
-        admin,
-        callClient,
-        setLoading,
-        saveTrackingMap = async () => {
-          console.error('Call view has no saveTrackingMap function.');
-        },
-        meshScan,
-        viewarApi: { cameras, tracker },
-      } = this.props;
+      const {} = this.props;
       if (callSubscription) {
         callSubscription.unsubscribe();
       }
@@ -429,28 +459,6 @@ export default compose(
       if (freezeFrameSubscription) {
         freezeFrameSubscription.unsubscribe();
       }
-
-      await callClient.endCall();
-      if (!admin) {
-        callClient.leave();
-
-        setLoading(true);
-        await saveTrackingMap();
-
-        if (meshScan) {
-          await tracker.stopMeshScan();
-          await tracker.resetMeshScan();
-        }
-
-        setLoading(false);
-        await cameras.arCamera.hidePointCloud();
-      } else {
-        callClient.setData({ available: false });
-        await cameras.arCamera.unfreeze();
-      }
-
-      sceneDraw.clear();
-      await cameras.perspectiveCamera.activate();
     },
   })
 )(Call);
