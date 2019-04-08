@@ -26,6 +26,7 @@ export default ({
   removeAnnotation,
   updateAnnotation,
   saveReview,
+  cancelReview,
   userName,
 }) => (
   <div className={cx(styles.Review, global.BackgroundImage)}>
@@ -91,9 +92,11 @@ export default ({
             </div>
           )}
 
-
           <div className={styles.Buttons}>
             <TextButton label="ReviewSave" onClick={saveReview} className={styles.SaveButton} />
+          </div>
+          <div className={styles.Buttons}>
+            <TextButton label="ReviewCancel" onClick={cancelReview} className={styles.SaveButton} />
           </div>
         </div>
       </Fragment>

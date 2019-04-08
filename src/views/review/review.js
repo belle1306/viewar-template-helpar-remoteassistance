@@ -61,6 +61,10 @@ export const updateAnnotation = ({
   setAnnotation(undefined);
 };
 
+export const cancelReview = ({ goToLastView }) => () => {
+  goToLastView();
+};
+
 export const saveReview = ({
   featureMap,
   goToLastView,
@@ -101,15 +105,13 @@ export const saveAnnotations = ({
   annotations,
   showDialog,
   tags,
-}) => async() => {
-  const changedAnnotations = annotations.some(
-    annotation => annotation.title
-  );
+}) => async () => {
+  const changedAnnotations = annotations.some(annotation => annotation.title);
 
-  if(changedAnnotations) {
+  if (changedAnnotations) {
     if (!tags.length) {
       await showDialog('ReviewSavingNoTags', {
-        confirmText: 'OK'
+        confirmText: 'OK',
       });
 
       return false;
@@ -123,8 +125,7 @@ export const saveAnnotations = ({
   }
 
   return true;
-
-}
+};
 
 export const saveAnnotation = ({
   featureMap,
@@ -169,6 +170,7 @@ export default compose(
     init,
     removeAnnotation,
     saveReview,
+    cancelReview,
     removeTag,
     updateAnnotation,
   }),

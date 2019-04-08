@@ -77,6 +77,7 @@
     "rxjs-compat": "^6.3.3",
     "viewar-api": "^0.36.0",
     "viewar-call": "^0.2.0",
+    "viewar-cli": "^0.10.1",
     "viewar-core": "^11.17.1"
   }
 }

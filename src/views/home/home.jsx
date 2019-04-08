@@ -41,14 +41,12 @@ export default ({
       className={styles.CallButton}
       hidden={!loadingDone}
       callSupport={callSupport} />
-
     <TextButton
       label="HomeStart"
       className={styles.StartButton}
       hidden={!loadingDone}
       onClick={goToProductSelection}
     />
-
     <LoginDialog
       visible={loginVisible}
       username={username}
