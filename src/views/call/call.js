@@ -383,6 +383,9 @@ const onCallEnd = ({
   await sceneDraw.clear();
 };
 
+const toggleDraw = ({ setShowAnnotationPicker, showAnnotationPicker }) => () =>
+  setShowAnnotationPicker(!showAnnotationPicker);
+
 let takeFreezeFrameSubscription;
 let freezeFrameSubscription;
 let syncDrawingSubscription;
@@ -433,6 +436,9 @@ export default compose(
     sendFreezeFrame,
     toggleMuteSpeaker,
     toggleMuteMicrophone,
+  }),
+  withHandlers({
+    toggleDraw,
   }),
   lifecycle({
     async componentDidMount() {

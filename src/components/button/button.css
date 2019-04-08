@@ -238,28 +238,28 @@
   background-position-y: calc(100% / 7 * 1);
 }
 
-.Button.icon-mute {
+.Button.icon-unmute {
   -webkit-mask-position-x: calc(100% / 7 * 0);
   -webkit-mask-position-y: calc(100% / 7 * 3);
   background-position-x: calc(100% / 7 * 0);
   background-position-y: calc(100% / 7 * 3);
 }
 
-.Button.icon-unmute {
+.Button.icon-mute {
   -webkit-mask-position-x: calc(100% / 7 * 7);
   -webkit-mask-position-y: calc(100% / 7 * 2);
   background-position-x: calc(100% / 7 * 7);
   background-position-y: calc(100% / 7 * 2);
 }
 
-.Button.icon-mute_speaker {
+.Button.icon-unmute_speaker {
   -webkit-mask-position-x: calc(100% / 7 * 2);
   -webkit-mask-position-y: calc(100% / 7 * 3);
   background-position-x: calc(100% / 7 * 2);
   background-position-y: calc(100% / 7 * 3);
 }
 
-.Button.icon-unmute_speaker {
+.Button.icon-mute_speaker {
   -webkit-mask-position-x: calc(100% / 7 * 1);
   -webkit-mask-position-y: calc(100% / 7 * 3);
   background-position-x: calc(100% / 7 * 1);

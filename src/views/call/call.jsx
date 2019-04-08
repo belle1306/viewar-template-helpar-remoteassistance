@@ -51,6 +51,7 @@ export default ({
   speakerMuted,
   useDrawing,
   annotationMode,
+  toggleDraw,
 }) => (
   <div className={cx(styles.Call)}>
     <Button
@@ -151,38 +152,27 @@ export default ({
           hidden={frozen || showAnnotationPicker || perspective}
         />
 
-        <Hint className={cx(styles.AdminHint)} hidden={!showAnnotationPicker}>{translate(annotationMode === 'draw' ? 'CallDrawHint' : 'CallTouchHint')}</Hint>
+        <Hint className={cx(styles.Hint)} hidden={!showAnnotationPicker}>{translate(annotationMode === 'draw' ? 'CallDrawHint' : 'CallTouchHint')}</Hint>
       </Fragment>
     ) : (
       <Fragment>
-        {useDrawing && (
-          <DrawCanvas disabled={annotationMode !== 'draw'} drawOnMesh={meshScan} onSync={syncDrawing} />
-        )}
-
         <WaitForSupportAgentOverlay visible={waitingForSupportAgent} />
-        {annotationMode === 'model' && <div className={styles.TouchOverlay} onClick={onTouch} />}
+        {!showAnnotationPicker && <div className={styles.TouchOverlay} onClick={onTouch} />}
         
         {useDrawing && (
           <Fragment>
-            <Button
-              medium
-              onClick={() => openAnnotationPicker('model')}
-              icon="add"
-              active={annotationMode === 'model'}
-              className={styles.AnnotationButton}
-            />
+            <DrawCanvas disabled={!showAnnotationPicker} drawOnMesh={meshScan} onSync={syncDrawing} />
 
             <Button
               medium
-              onClick={() => openAnnotationPicker('draw')}
-              icon="draw"
-              active={annotationMode === 'draw'}
-              className={styles.AnnotationDrawButton}
+              onClick={toggleDraw}
+              icon={showAnnotationPicker ? 'cancel' : 'draw'}
+              className={styles.AnnotationButton}
             />
           </Fragment>
         )}
 
-        {!waitingForSupportAgent && <Hint className={cx(styles.Hint)}>{translate(annotationMode === 'draw' ? 'CallDrawHint' : 'CallAnnotateHint')}</Hint>}
+        {!waitingForSupportAgent && <Hint className={cx(styles.Hint)}>{translate(showAnnotationPicker ? 'CallDrawHint' : 'CallAnnotateHint')}</Hint>}
       </Fragment>
     )}
   </div>
