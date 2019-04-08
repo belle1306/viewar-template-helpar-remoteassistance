@@ -13,6 +13,7 @@ import { withSetLoading } from '../../services/loading';
 import withRouteParams from '../../services/route-params';
 import withCallClient from '../../services/call-client';
 import authManager from '../../services/auth-manager';
+import sceneDraw from '../../services/scene-draw';
 import annotationManager from '../../services/annotation-manager';
 
 import Home from './home.jsx';
@@ -29,7 +30,12 @@ export const init = ({
 }) => async () => {
   setLoadingDone(false);
 
-  if (!trackers.Remote || (!trackers.Placenote && !trackers.SixDegrees)) {
+  if (
+    !trackers.Remote ||
+    (coreInterface.platform !== 'Emscripten' &&
+      !trackers.Placenote &&
+      !trackers.SixDegrees)
+  ) {
     showDialog('InvalidTrackerConfiguration', {
       showCancel: false,
       showConfirm: false,
@@ -44,6 +50,7 @@ export const init = ({
   await authManager.readPersisted();
 
   await annotationManager.init(updateProgress);
+  await sceneDraw.initMaterials();
   setLoadingDone(true);
 };
 

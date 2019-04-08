@@ -6,7 +6,7 @@
   "scripts": {
     "test": "node ./scripts/run-tests.js './src/**/*.test.js' | faucet",
     "deploy": "viewar-cli deploy",
-    "clean": "rm -rf build && rm -rf bundle",
+    "clean": "rimraf build && rimraf bundle",
     "build": "npm run clean && webpack -p --config ./config/webpack.config.js --mode production --env production",
     "start": "npm run clean && webpack-dev-server --config ./config/webpack.config.js --open --mode development --env development_core",
     "start:mock": "npm run clean && webpack-dev-server --config ./config/webpack.config.js --open --mode development --env development_mock",
@@ -52,6 +52,7 @@
     "postcss-preset-env": "^6.4.0",
     "prettier": "^1.15.2",
     "react-hot-loader": "^4.3.12",
+    "rimraf": "^2.6.3",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
     "webpack": "^4.25.1",
@@ -73,11 +74,11 @@
     "react-intl": "^2.7.2",
     "react-router": "^4.3.1",
     "recompose": "^0.30.0",
-    "rxjs": "^6.3.3",
-    "rxjs-compat": "^6.3.3",
-    "viewar-api": "^0.36.0",
-    "viewar-call": "^0.2.0",
+    "rxjs": "^6.4.0",
+    "rxjs-compat": "^6.4.0",
+    "viewar-api": "^0.39.0",
+    "viewar-call": "^0.2.1",
     "viewar-cli": "^0.10.1",
-    "viewar-core": "^11.17.1"
+    "viewar-core": "^11.18.1"
   }
 }

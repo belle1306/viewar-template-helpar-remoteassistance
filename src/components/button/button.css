@@ -1,33 +1,74 @@
-.Button {
+.Container {
+  box-sizing: border-box;
+  cursor: pointer;
+  pointer-events: all;
+  transition: opacity 0.5s ease;
   width: 40px;
   height: 40px;
-  box-sizing: border-box;
   margin: 20px;
-  cursor: pointer;
-  transition: opacity 0.5s ease;
-  pointer-events: all;
 }
 
+.Wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.Background {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  width: calc(100% - 4px);
+  height: calc(100% - 4px);
+  z-index: 1;
+}
+
+.Border {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 2px solid #006dff;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.Button {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.5s ease;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+.Container:focus,
 .Button:focus {
   outline: 0;
 }
 
-.isHidden.Button {
+.isHidden.Container {
   opacity: 0;
   pointer-events: none;
 }
 
-.isLarge.Button {
+.isLarge.Container {
   width: 100px;
   height: 100px;
 }
 
-.isMedium.Button {
+.isMedium.Container {
   width: 60px;
   height: 60px;
 }
 
-.isSmall.Button {
+.isSmall.Container {
   width: 30px;
   height: 30px;
 }
@@ -38,6 +79,9 @@
 
 .colorGreen.Button {
   background-color: #00cc00;
+}
+.colorWhite.Button {
+  background-color: white;
 }
 
 .Button.icon-back {
@@ -171,4 +215,60 @@
   -webkit-mask-position-y: calc(100% / 7 * 2);
   background-position-x: calc(100% / 7 * 4);
   background-position-y: calc(100% / 7 * 2);
+}
+
+.Button.icon-freezeframe {
+  -webkit-mask-position-x: calc(100% / 7 * 0);
+  -webkit-mask-position-y: calc(100% / 7 * 1);
+  background-position-x: calc(100% / 7 * 0);
+  background-position-y: calc(100% / 7 * 1);
+}
+
+.Button.icon-perspective {
+  -webkit-mask-position-x: calc(100% / 7 * 5);
+  -webkit-mask-position-y: calc(100% / 7 * 1);
+  background-position-x: calc(100% / 7 * 5);
+  background-position-y: calc(100% / 7 * 1);
+}
+
+.Button.icon-cast {
+  -webkit-mask-position-x: calc(100% / 7 * 7);
+  -webkit-mask-position-y: calc(100% / 7 * 1);
+  background-position-x: calc(100% / 7 * 7);
+  background-position-y: calc(100% / 7 * 1);
+}
+
+.Button.icon-mute {
+  -webkit-mask-position-x: calc(100% / 7 * 0);
+  -webkit-mask-position-y: calc(100% / 7 * 3);
+  background-position-x: calc(100% / 7 * 0);
+  background-position-y: calc(100% / 7 * 3);
+}
+
+.Button.icon-unmute {
+  -webkit-mask-position-x: calc(100% / 7 * 7);
+  -webkit-mask-position-y: calc(100% / 7 * 2);
+  background-position-x: calc(100% / 7 * 7);
+  background-position-y: calc(100% / 7 * 2);
+}
+
+.Button.icon-mute_speaker {
+  -webkit-mask-position-x: calc(100% / 7 * 2);
+  -webkit-mask-position-y: calc(100% / 7 * 3);
+  background-position-x: calc(100% / 7 * 2);
+  background-position-y: calc(100% / 7 * 3);
+}
+
+.Button.icon-unmute_speaker {
+  -webkit-mask-position-x: calc(100% / 7 * 1);
+  -webkit-mask-position-y: calc(100% / 7 * 3);
+  background-position-x: calc(100% / 7 * 1);
+  background-position-y: calc(100% / 7 * 3);
+}
+
+.Button.icon-draw {
+  -webkit-mask-position-x: calc(100% / 7 * 7);
+  -webkit-mask-position-y: calc(100% / 7 * 0);
+  background-position-x: calc(100% / 7 * 7);
+  background-position-y: calc(100% / 7 * 0);
 }

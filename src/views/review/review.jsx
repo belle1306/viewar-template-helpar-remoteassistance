@@ -82,8 +82,8 @@ export default ({
                         />
 
                         <div className={styles.AnnotationButtons}>
-                          <Button icon="cancel" onClick={() => removeAnnotation(annotation)} className={styles.AnnotationButton} />
-                          <Button icon="pencil" onClick={() => setAnnotation(annotation)} className={styles.AnnotationButton} />
+                          <Button icon="cancel" onClick={() => removeAnnotation(annotation)} className={styles.AnnotationButton} noBackground white />
+                          <Button icon="pencil" onClick={() => setAnnotation(annotation)} className={styles.AnnotationButton} noBackground white/>
                         </div>
                       </div>
                     )

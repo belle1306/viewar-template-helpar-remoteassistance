@@ -8,6 +8,7 @@ import { compose, withContext } from 'recompose';
 import viewarApi from 'viewar-api';
 import appState from './services/app-state';
 import authManager from './services/auth-manager';
+import sceneDraw from './services/scene-draw';
 import annotationDb from './services/annotation-db';
 import googleAnalytics from './services/google-analytics/index';
 import annotationManager from './services/annotation-manager';
@@ -32,7 +33,7 @@ import '../css/global.css';
   translationProvider.init();
 
   const callClient = await createCallClient(viewarApi, {
-    host: config.serverUrl || 'ws://3.viewar.com:3002',
+    host: config.serverUrl || 'wss://helpar.viewar.com:3003',
   });
 
   document.body.classList.add('global-CustomFont1');
@@ -48,6 +49,7 @@ import '../css/global.css';
     annotationDb,
     auth,
     db,
+    sceneDraw,
   });
 
   const rootElement =

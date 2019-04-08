@@ -5,7 +5,6 @@ import { translate } from '../../services';
 import styles from './annotation-picker.css';
 import globalStyles from '../../../css/global.css';
 
-import Hint from '../hint/hint';
 import Button from '../button/button';
 
 export default ({
@@ -43,9 +42,6 @@ export default ({
         <Button className={styles.Button} medium icon="confirm" onClick={confirm} />
         <Button className={styles.Button} medium icon="cancel" onClick={cancel} />
       </div>
-      <Hint hidden={!selected} >
-        {translate('AnnotationPickerHint')}
-      </Hint>
     </div>
   </Fragment>
 );

@@ -1,0 +1,73 @@
+.Container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  transition: opacity 0.5s ease;
+}
+
+.isDisabled.Container {
+  pointer-events: none;
+  opacity: 0;
+}
+
+.Canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 30;
+}
+
+.Materials {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  max-height: 100vh;
+  display: flex;
+  flex-flow: column;
+  flex: 0 0 auto;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 35;
+  pointer-events: none;
+  padding-bottom: 20px;
+  box-sizing: border-box;
+}
+
+.Confirmation {
+  overflow-y: auto;
+  max-height: 100vh;
+  display: flex;
+  flex-flow: column;
+  flex: 0 0 auto;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 35;
+  pointer-events: none;
+  padding-bottom: 20px;
+  box-sizing: border-box;
+}
+
+.MaterialButton {
+  width: 60px;
+  height: 60px;
+  margin: 20px;
+  border-radius: 1000px;
+  position: relative;
+  pointer-events: auto;
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+
+.isActive.MaterialButton:after {
+  content: '';
+  position: absolute;
+  left: -8px;
+  top: -8px;
+  right: -8px;
+  bottom: -8px;
+  border-radius: 1000px;
+  border: 4px solid #006dff;
+}

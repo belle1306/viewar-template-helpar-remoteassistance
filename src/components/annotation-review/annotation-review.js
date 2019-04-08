@@ -48,18 +48,14 @@ export default compose(
   withState('tags', 'setTags', []),
   withState('description', 'setDescription', ''),
   withPropsOnChange(
-    ['annotation'],
-    ({ annotation, setDescription, setTitle, setTag, setTags }) => {
-      if (annotation) {
+    ['annotation', 'visible'],
+    ({ annotation, visible, setDescription, setTitle, setTag, setTags }) => {
+      if (annotation && visible) {
         setTitle(annotation.title || '');
         setTags(annotation.tags || []);
         setDescription(annotation.description || '');
         setTag('');
       }
-
-      return {
-        annotation,
-      };
     }
   ),
   withHandlers({
