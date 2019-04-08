@@ -35,6 +35,8 @@ export default () => {
     const { foreignKey = 'draw_materials', modelId = '63846' } = specs;
     const { modelManager, sceneManager, coreInterface } = viewarApi;
 
+    await clear();
+
     if (!materialModelInstance) {
       const model =
         modelManager.findModelByForeignKey(foreignKey) ||

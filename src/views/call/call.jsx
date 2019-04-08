@@ -49,6 +49,7 @@ export default ({
   microphoneMuted,
   toggleMuteSpeaker,
   speakerMuted,
+  useDrawing,
 }) => (
   <div className={cx(styles.Call)}>
     <Button
@@ -80,7 +81,14 @@ export default ({
 
     {admin ? (
       <Fragment>
-        <DrawCanvas disabled={!showAnnotationPicker} onCancel={closeAnnotationPicker} onConfirm={closeAnnotationPicker} admin drawOnMesh={meshScan} onSync={syncDrawing} />
+        {useDrawing ? (
+          <DrawCanvas disabled={!showAnnotationPicker} onCancel={closeAnnotationPicker} onConfirm={closeAnnotationPicker} admin drawOnMesh={meshScan} onSync={syncDrawing} />
+        ) : (
+          <AnnotationPicker
+            visible={showAnnotationPicker}
+            onClose={closeAnnotationPicker}
+          />
+        )}
 
         <div className={cx(styles.FreezeFrames, frozen && styles.isHidden)}>
           {freezeFrames.map(freezeFrame => (
@@ -134,10 +142,14 @@ export default ({
       </Fragment>
     ) : (
       <Fragment>
-        <DrawCanvas drawOnMesh={meshScan} onSync={syncDrawing} />
+        {useDrawing && (
+          <DrawCanvas drawOnMesh={meshScan} onSync={syncDrawing} />
+        )}
+        
         <WaitForSupportAgentOverlay visible={waitingForSupportAgent} />
         <div className={styles.TouchOverlay} onClick={onTouch} />
-        {!waitingForSupportAgent && <Hint className={cx(styles.Hint)}>{translate('CallDrawHint')}</Hint>}
+
+        {!waitingForSupportAgent && <Hint className={cx(styles.Hint)}>{translate(useDrawing ? 'CallDrawHint' : 'CallAnnotateHint')}</Hint>}
       </Fragment>
     )}
   </div>

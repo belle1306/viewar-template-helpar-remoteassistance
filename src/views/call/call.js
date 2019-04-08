@@ -33,6 +33,7 @@ export const waitForSupportAgent = ({
   takeFreezeFrame,
   showFreezeFrame,
   onCallEnd,
+  setLoading,
 }) => async () => {
   let featureMap;
   if (!admin) {
@@ -100,6 +101,8 @@ export const waitForSupportAgent = ({
         setWaitingForSupportAgent(false);
       });
     }
+
+    setLoading(false);
   }
 };
 
@@ -394,11 +397,11 @@ export default compose(
   withState('frozen', 'setFrozen', false),
   withState('waitingForSupportAgent', 'setWaitingForSupportAgent', false),
   withState('showAnnotationPicker', 'setShowAnnotationPicker', false),
-  withProps({
+  withProps(() => ({
     viewarApi,
-    getUiConfigPath,
+    useDrawing: getUiConfigPath('drawing'),
     annotationManager,
-  }),
+  })),
   withHandlers({
     syncAnnotation,
     goToNextView,
@@ -424,12 +427,14 @@ export default compose(
   lifecycle({
     async componentDidMount() {
       const {
+        setLoading,
         admin,
         waitForSupportAgent,
         annotationManager,
         meshScan,
         viewarApi: { cameras, tracker, appUtils },
       } = this.props;
+      setLoading(true);
       await annotationManager.reset();
 
       if (!admin && !meshScan) {
