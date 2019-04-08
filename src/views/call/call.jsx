@@ -104,16 +104,14 @@ export default ({
           onClick={() => openAnnotationPicker('model')}
           icon="add"
           hidden={showAnnotationPicker}
-          active={annotationMode === 'model'}
           className={styles.AnnotationButton}
         />
         
         {useDrawing && <Button
           medium
           onClick={() => openAnnotationPicker('draw')}
-          icon="add"
+          icon="draw"
           hidden={showAnnotationPicker}
-          active={annotationMode === 'draw'}
           className={styles.AnnotationDrawButton}
         />}
 
@@ -168,18 +166,18 @@ export default ({
           <Fragment>
             <Button
               medium
-              onClick={() => openAnnotationPicker('draw')}
-              icon="add"
-              active={annotationMode === 'draw'}
-              className={styles.AnnotationDrawButton}
-            />
-
-            <Button
-              medium
               onClick={() => openAnnotationPicker('model')}
               icon="add"
               active={annotationMode === 'model'}
               className={styles.AnnotationButton}
+            />
+
+            <Button
+              medium
+              onClick={() => openAnnotationPicker('draw')}
+              icon="draw"
+              active={annotationMode === 'draw'}
+              className={styles.AnnotationDrawButton}
             />
           </Fragment>
         )}

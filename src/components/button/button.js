@@ -16,6 +16,7 @@ export default ({
   className,
   onClick,
   noBackground,
+  active,
 }) => (
   <div
     className={cx(
@@ -32,6 +33,7 @@ export default ({
       {!noBackground && (
         <div className={cx(styles.Background, global.ButtonBackgroundColor)} />
       )}
+      {active && <div className={styles.Border} />}
       <div
         className={cx(
           green && styles.colorGreen,
