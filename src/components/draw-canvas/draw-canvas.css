@@ -35,7 +35,7 @@
   box-sizing: border-box;
 }
 
-.Sizes {
+.Confirmation {
   overflow-y: auto;
   max-height: 100vh;
   display: flex;

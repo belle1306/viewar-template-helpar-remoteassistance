@@ -122,6 +122,14 @@ export const onTouch = ({
   }
 };
 
+export const openAnnotationPicker = ({
+  setShowAnnotationPicker,
+  setAnnotationMode,
+}) => mode => {
+  setAnnotationMode(mode);
+  setShowAnnotationPicker(true);
+};
+
 export const closeAnnotationPicker = ({
   syncAnnotation,
   annotationManager,
@@ -372,7 +380,7 @@ const onCallEnd = ({
     await cameras.arCamera.unfreeze();
   }
 
-  sceneDraw.clear();
+  await sceneDraw.clear();
 };
 
 let takeFreezeFrameSubscription;
@@ -388,6 +396,7 @@ export default compose(
   withDialogControls,
   withRouteParams(),
   withSetLoading,
+  withState('annotationMode', 'setAnnotationMode', 'model'),
   withState('speakerMuted', 'setSpeakerMuted', false),
   withState('microphoneMuted', 'setMicrophoneMuted', false),
   withState('freezeFrameSent', 'setFreezeFrameSent', false),
@@ -414,6 +423,7 @@ export default compose(
   withHandlers({
     waitForSupportAgent,
     onTouch,
+    openAnnotationPicker,
     closeAnnotationPicker,
     goBack,
     unpause,

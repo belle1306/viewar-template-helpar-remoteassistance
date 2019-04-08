@@ -20,7 +20,7 @@ export default ({disabled, material, updateMaterial, materials, updateWidth, wid
         ))}
       </div>
 
-      <div className={styles.Sizes}>
+      <div className={styles.Confirmation}>
         {admin && <Button className={styles.Button} medium icon="confirm" onClick={handleConfirm} />}
         {admin && <Button className={styles.Button} medium icon="cancel" onClick={handleCancel} />}
       </div>

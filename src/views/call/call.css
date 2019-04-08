@@ -38,8 +38,20 @@
   z-index: 30;
 }
 
+.AnnotationDrawButton {
+  position: absolute;
+  right: 0;
+  bottom: calc(60px + 20px * 2 + 20px);
+  z-index: 30;
+}
+
 .Call .Hint {
   bottom: calc(60px + 20px * 2 + 20px);
+}
+
+.Call .AdminHint {
+  bottom: calc(40px + 60px / 2);
+  transform: translate(-50%, 50%);
 }
 
 .Call .EndCallButton {
