@@ -16,6 +16,6 @@ export default ({ deviceType }) => (
     <div className={styles.AnimationWrapper}>
       <CalibratonInstruction deviceType={deviceType} />
     </div>
-    <Hint>{translate('CalibrationARKit')}</Hint>
+    <Hint>{translate('CalibrationFilmFloor')}</Hint>
   </div>
 );

@@ -137,6 +137,13 @@ export default ({
 
     if (!position && hits.featurePoints.length) {
       position = hits.featurePoints[0].intersection;
+    } else if (hits.instances.length) {
+      const { x, y, z } = hits.instances[0].intersection[0];
+      position = {
+        x,
+        y,
+        z,
+      };
     }
 
     if (viewarApi.coreInterface.platform === 'Mock') {

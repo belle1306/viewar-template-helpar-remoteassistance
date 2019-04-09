@@ -45,8 +45,14 @@
   z-index: 30;
 }
 
+.Call .Hint {
+  bottom: auto;
+  top: 2rem;
+}
+
 @media only screen and (orientation: landscape) {
   .Call .Hint {
+    top: auto;
     bottom: calc(60px + 20px * 2 + 20px);
   }
 }

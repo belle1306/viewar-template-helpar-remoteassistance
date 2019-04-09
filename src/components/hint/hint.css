@@ -28,10 +28,3 @@
 .isHidden.Container {
   opacity: 0;
 }
-
-@media only screen and (orientation: portrait) {
-  .Container {
-    bottom: auto;
-    top: 2rem;
-  }
-}
