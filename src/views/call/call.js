@@ -106,20 +106,8 @@ export const waitForSupportAgent = ({
   }
 };
 
-export const onTouch = ({
-  syncAnnotation,
-  annotationManager,
-}) => async event => {
-  let x, y;
-  if (event.type === 'click') {
-    x = event.clientX / event.target.offsetWidth;
-    y = event.clientY / event.target.offsetHeight;
-  }
-
-  if (x !== undefined && y !== undefined) {
-    await annotationManager.setTouchAnnotation({ x, y }, true);
-    syncAnnotation();
-  }
+export const onTouch = ({ syncAnnotation }) => async event => {
+  syncAnnotation();
 };
 
 export const openAnnotationPicker = ({

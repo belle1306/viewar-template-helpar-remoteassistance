@@ -15,10 +15,10 @@ export default ({
 }) => {
   let initialized = false;
   let models = {};
-  let userModel = null; // Use model with foreign key 'helpar_user_highlight' as user model, if not existing take first.
   let instances = {};
-  let userInstance = {};
+  let userInstances = {};
   let current = false;
+  let currentUser = false;
   let freezeFrame;
   let screenshot;
   let saved = [];
@@ -37,13 +37,6 @@ export default ({
       if (category) {
         for (let model of category.children) {
           models[model.id] = model;
-          if (model.foreignKey === 'helpar_user_highlight') {
-            userModel = model;
-          }
-        }
-
-        if (!userModel) {
-          userModel = Object.values(models)[0];
         }
 
         const count = {
@@ -75,12 +68,11 @@ export default ({
             visible: false,
           });
           instances[model.id] = instance;
-          if (model === userModel) {
-            userInstance = await insertModel(model, {
-              id: `UserAnnotation${model.id}`,
-              visible: false,
-            });
-          }
+
+          userInstances[model.id] = await insertModel(model, {
+            id: `UserAnnotation${model.id}`,
+            visible: false,
+          });
           onProgress(count);
         }
 
@@ -97,7 +89,9 @@ export default ({
     for (let instance of Object.values(instances)) {
       await instance.setVisible(false);
     }
-    await userInstance.setVisible(false);
+    for (let instance of Object.values(userInstances)) {
+      await instance.setVisible(false);
+    }
 
     saved = [];
   };
@@ -106,8 +100,21 @@ export default ({
     const { model, pose } = spec;
 
     if (user) {
-      await userInstance.setPose(pose);
-      await userInstance.setVisible(true);
+      currentUser = false;
+
+      for (let [id, instance] of Object.entries(userInstances)) {
+        if (id === model) {
+          await instance.setPose(pose);
+          await instance.setVisible(true);
+
+          currentUser = {
+            pose,
+            model,
+          };
+        } else {
+          await instance.setVisible(false);
+        }
+      }
     } else {
       current = false;
 
@@ -234,12 +241,7 @@ export default ({
       return current;
     },
     get currentUser() {
-      return userInstance.visible
-        ? {
-            model: userInstance.model.id,
-            pose: userInstance.pose,
-          }
-        : null;
+      return currentUser;
     },
 
     get models() {

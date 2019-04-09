@@ -157,10 +157,17 @@ export default ({
     ) : (
       <Fragment>
         <WaitForSupportAgentOverlay visible={waitingForSupportAgent} />
-        {!showAnnotationPicker && <div className={styles.TouchOverlay} onClick={onTouch} />}
+
+        <AnnotationPicker
+          visible={!showAnnotationPicker}
+          onAnnotation={onTouch}
+          noButtons
+          user
+        />
         
         {useDrawing && (
           <Fragment>
+            
             <DrawCanvas disabled={!showAnnotationPicker} drawOnMesh={meshScan} onSync={syncDrawing} />
 
             <Button

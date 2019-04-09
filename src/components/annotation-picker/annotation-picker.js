@@ -14,9 +14,11 @@ export const touch = ({
   setLoading,
   selected,
   annotationManager,
+  onAnnotation = () => {},
+  user,
 }) => async event => {
   if (selected) {
-    setLoading(true, {opaque: true});
+    setLoading(true, { opaque: true });
 
     let x, y;
     if (event.type === 'click') {
@@ -25,7 +27,11 @@ export const touch = ({
     }
 
     if (x !== undefined && y !== undefined) {
-      await annotationManager.setTouchAnnotation({ model: selected, x, y });
+      await annotationManager.setTouchAnnotation(
+        { model: selected, x, y },
+        user
+      );
+      onAnnotation();
     }
 
     setLoading(false);
@@ -42,7 +48,7 @@ export const cancel = ({
   setLoading,
   onClose,
 }) => () => {
-  setLoading(true, {opaque: true});
+  setLoading(true, { opaque: true });
   annotationManager.setAnnotation(previous);
   setLoading(false);
 
@@ -58,18 +64,21 @@ export default compose(
   withProps(({ annotationManager }) => ({
     models: annotationManager.models,
   })),
-  withPropsOnChange(['visible'], ({ models, setSelected, selected, annotationManager, visible }) => {
-    if (!selected && models.length) {
-      setSelected(models[0].id);
+  withPropsOnChange(
+    ['visible'],
+    ({ models, setSelected, selected, annotationManager, visible }) => {
+      if (!selected && models.length) {
+        setSelected(models[0].id);
+      }
+
+      const previousAnnotation = visible ? annotationManager.current : null;
+
+      return {
+        visible,
+        previousAnnotation,
+      };
     }
-
-    const previousAnnotation = visible ? annotationManager.current : null;
-
-    return {
-      visible,
-      previousAnnotation,
-    };
-  }),
+  ),
   withHandlers({
     touch,
     confirm,

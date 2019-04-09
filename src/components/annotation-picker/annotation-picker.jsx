@@ -16,6 +16,7 @@ export default ({
   touch,
   selected,
   setSelected,
+  noButtons,
 }) => (
   <Fragment>
     <div className={cx(styles.TouchOverlay, !visible && styles.isHidden)} onClick={touch} />
@@ -38,10 +39,10 @@ export default ({
           </div>
         ))}
       </div>
-      <div className={styles.Buttons}>
+      {!noButtons && <div className={styles.Buttons}>
         <Button className={styles.Button} medium icon="confirm" onClick={confirm} />
         <Button className={styles.Button} medium icon="cancel" onClick={cancel} />
-      </div>
+      </div>}
     </div>
   </Fragment>
 );
