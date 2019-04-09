@@ -6,7 +6,7 @@
   left: 0;
   top: 0;
   transition: opacity 0.5s ease;
-  z-index: 100;
+  z-index: 110;
 }
 
 .isHidden.Container {
@@ -44,7 +44,7 @@
 
 .Message {
   margin-top: 1rem;
-  color: #003BA1;
+  color: #003ba1;
   line-height: 1.3em;
   font-size: 1.8em;
   text-align: center;
