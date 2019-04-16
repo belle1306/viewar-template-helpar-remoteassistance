@@ -50,10 +50,6 @@ export const waitForSupportAgent = ({
       if (tracker.saveTrackingMap) {
         featureMap = await tracker.generateTrackingMapId();
       }
-
-      if (meshScan) {
-        await tracker.startMeshScan();
-      }
     }
   }
 
@@ -98,6 +94,11 @@ export const waitForSupportAgent = ({
             meshScan: tracker && !!tracker.startMeshScan,
           },
         });
+
+        if (meshScan) {
+          await tracker.startMeshScan();
+        }
+
         setWaitingForSupportAgent(false);
       });
     }
