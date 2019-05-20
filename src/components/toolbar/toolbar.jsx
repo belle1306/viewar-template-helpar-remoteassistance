@@ -1,8 +1,8 @@
 import React from 'react';
 import cx from 'classnames';
 
-import styles from './toolbar.css';
-import globalStyles from '../../../css/global.css';
+import styles from './toolbar.scss';
+import global from '../../../css/global.scss';
 
 export default ({ hidden, className, children, position }) => (
   <div

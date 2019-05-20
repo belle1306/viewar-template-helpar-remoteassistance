@@ -6,11 +6,11 @@ import {
   withProps,
   withHandlers,
 } from 'recompose';
-import { withSetLoading } from '../../../services/loading';
+import { withSetLoading } from '../../../services';
 
 import viewarApi from 'viewar-api';
 
-import FloorOffsetCalibration from './floor-offset-calibration.jsx';
+import template from './floor-offset-calibration.jsx';
 
 import {
   initTracking,
@@ -60,7 +60,7 @@ export default compose(
       onTrackingChanged,
       goToNext,
     }) => async () => {
-      setLoading(true, {opaque: true});
+      setLoading(true, { opaque: true });
 
       tracker.off('trackingTargetStatusChanged', onTrackingChanged);
       await tracker.confirmGroundPosition();
@@ -86,7 +86,7 @@ export default compose(
 
       setDeviceType(getDeviceType(viewarApi));
 
-      setLoading(true, {opaque: true});
+      setLoading(true, { opaque: true });
       await activateARCamera(viewarApi);
       await insertFloorOffsetModel(viewarApi);
       await initTracking(tracker);
@@ -95,4 +95,4 @@ export default compose(
     },
   }),
   pure
-)(FloorOffsetCalibration);
+)(template);

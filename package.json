@@ -12,19 +12,13 @@
     "start:mock": "npm run clean && webpack-dev-server --config ./config/webpack.config.js --open --mode development --env development_mock",
     "format": "prettier --single-quote --trailing-comma es5 'src/**/*.{js,jsx,css,scss,md,json}' --write"
   },
-  "babel": {
-    "presets": [
-      "@babel/preset-env",
-      "@babel/preset-react"
-    ]
-  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
     }
   },
   "lint-staged": {
-    "*.{js,json,css,md, jsx}": [
+    "*.{js,jsx,css,scss,md,json}": [
       "prettier --single-quote --trailing-comma es5 --write",
       "git add"
     ]
@@ -35,14 +29,15 @@
     "@babel/core": "^7.1.6",
     "@babel/preset-env": "^7.1.6",
     "@babel/preset-react": "^7.0.0",
+    "@babel/register": "^7.4.4",
     "babel-loader": "^8.0.4",
-    "babel-polyfill": "^6.26.0",
     "copy-webpack-plugin": "^4.6.0",
     "css-loader": "^1.0.1",
     "faucet": "0.0.1",
     "file-loader": "^2.0.0",
     "html-webpack-plugin": "^3.2.0",
     "husky": "^1.1.4",
+    "ignore-styles": "^5.0.1",
     "lint-staged": "^8.0.4",
     "mini-css-extract-plugin": "^0.4.4",
     "node-sass": "^4.10.0",
@@ -58,9 +53,13 @@
     "webpack": "^4.25.1",
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.14",
-    "webpack-merge": "^4.1.4"
+    "webpack-merge": "^4.1.4",
+    "window": "^4.2.6"
   },
   "dependencies": {
+    "@babel/plugin-proposal-object-rest-spread": "^7.4.4",
+    "@babel/plugin-transform-runtime": "^7.4.4",
+    "@babel/polyfill": "^7.4.4",
     "classnames": "^2.2.6",
     "fastclick": "^1.0.6",
     "firebase": "^5.5.8",
@@ -76,9 +75,8 @@
     "recompose": "^0.30.0",
     "rxjs": "^6.4.0",
     "rxjs-compat": "^6.4.0",
-    "viewar-api": "^0.41.3",
+    "viewar-api": "^0.43.2",
     "viewar-call": "^0.2.1",
-    "viewar-cli": "^0.10.1",
     "viewar-core": "^11.18.1"
   }
 }

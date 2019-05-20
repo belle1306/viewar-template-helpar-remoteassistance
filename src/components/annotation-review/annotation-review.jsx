@@ -1,17 +1,18 @@
 import React, { Fragment } from 'react';
 import cx from 'classnames';
 
+import styles from './annotation-review.scss';
+import global from '../../../css/global.scss';
+
 import { translate } from '../../services';
-
-import styles from './annotation-review.css';
-import global from '../../../css/global.css';
-
-import HeaderBar from '../../components/header-bar/header-bar';
-import TextInput from '../../components/text-input/text-input';
-import TextArea from '../../components/text-area/text-area';
-import Button from '../../components/button/button';
-import TextButton from '../../components/text-button/text-button';
-import Tag from '../../components/tag/tag';
+import {
+  HeaderBar,
+  TextInput,
+  TextArea,
+  Button,
+  TextButton,
+  Tag,
+} from '../../components';
 
 export default ({
   tags,
@@ -64,7 +65,9 @@ export default ({
           />
 
           <div className={styles.Section}>
-            <div className={styles.Title}>{translate('AnnotationReviewTitleSection')}</div>
+            <div className={styles.Title}>
+              {translate('AnnotationReviewTitleSection')}
+            </div>
             <TextInput
               className={styles.TagInput}
               value={title}
@@ -99,7 +102,9 @@ export default ({
           </div>
 
           <div className={cx(styles.Section, styles.SectionDescription)}>
-            <div className={styles.Title}>{translate('AnnotationReviewDescription')}</div>
+            <div className={styles.Title}>
+              {translate('AnnotationReviewDescription')}
+            </div>
             <TextArea
               className={styles.Description}
               value={description}
@@ -108,7 +113,11 @@ export default ({
           </div>
 
           <div className={styles.Buttons}>
-            <TextButton label="Save" onClick={() => handleSave(annotation)} className={styles.SaveButton} />
+            <TextButton
+              label="Save"
+              onClick={() => handleSave(annotation)}
+              className={styles.SaveButton}
+            />
           </div>
         </div>
       </Fragment>

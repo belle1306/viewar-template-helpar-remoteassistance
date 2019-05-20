@@ -1,22 +1,24 @@
 import React from 'react';
 import cx from 'classnames';
 import { translate } from '../../services';
-import Button from '../../components/button/button';
+import { Button } from '../';
 
-import styles from './admin-header-bar.css';
-import global from '../../../css/global.css';
+import styles from './admin-header-bar.scss';
+import global from '../../../css/global.scss';
 
-export default ({
-  logOut,
-  userName,
-  className,
-}) => (
+export default ({ logOut, userName, className }) => (
   <div className={cx(styles.Container, className)}>
     <Button icon="account" className={styles.Avatar} white noBackground />
     <div className={styles.UserDetails}>
       <div className={styles.UserWelcome}>{translate('AdminWelcome')}</div>
       <div className={styles.UserName}>{userName}</div>
     </div>
-    <Button icon="logout" small onClick={logOut} className={styles.LogOutButton} noBackground />
+    <Button
+      icon="logout"
+      small
+      onClick={logOut}
+      className={styles.LogOutButton}
+      noBackground
+    />
   </div>
 );

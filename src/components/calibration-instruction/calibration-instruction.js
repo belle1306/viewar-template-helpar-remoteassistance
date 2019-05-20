@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './calibration-instruction.css';
+import styles from './calibration-instruction.scss';
 
 import PhoneLandscapeIcon from '../../../assets/images/animations/tracking_animation_phone_landscape.gif';
 import TabletLandscapeIcon from '../../../assets/images/animations/tracking_animation_tablet_landscape.gif';
@@ -32,7 +32,7 @@ function getStyle(deviceType) {
   };
 }
 
-export const CalibratonInstruction = ({ deviceType = 'tablet' }) => (
+export default ({ deviceType = 'tablet' }) => (
   <div className={styles.Container}>
     <div style={getStyle(deviceType)} className={styles.DevicePictogram} />
   </div>

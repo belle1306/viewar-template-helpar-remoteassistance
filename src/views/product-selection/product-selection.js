@@ -7,12 +7,14 @@ import {
 } from 'recompose';
 import viewarApi from 'viewar-api';
 import { getUiConfigPath } from '../../utils';
-import { withDialogControls } from '../../services/dialog';
-import { withSetLoading } from '../../services/loading';
-import withRouteParams from '../../services/route-params';
-import annotationDb from '../../services/annotation-db';
+import {
+  withDialogControls,
+  withSetLoading,
+  withRouteParams,
+  annotationDb,
+} from '../../services';
 
-import ProductSelection from './product-selection.jsx';
+import template from './product-selection.jsx';
 
 export const init = ({
   setLoading,
@@ -31,10 +33,10 @@ export const updateSearch = ({
   setSearch,
   setSearchResult,
   setLoading,
-}) => async(value) => {
+}) => async value => {
   setSearch(value);
 
-  if(!value) {
+  if (!value) {
     setLoading(true);
     await annotationDb.prepareData('annotations');
     setSearchResult([]);
@@ -70,7 +72,7 @@ export const openAnnotation = ({
   });
 };
 
-export const trimDescription = (text) => {
+export const trimDescription = text => {
   const maxLength = 110;
   if (text.length > maxLength) {
     let sliced = text.slice(0, maxLength - 3);
@@ -82,7 +84,7 @@ export const trimDescription = (text) => {
   }
 
   return text;
-}
+};
 
 export default compose(
   withDialogControls,
@@ -109,4 +111,4 @@ export default compose(
       this.props.init();
     },
   })
-)(ProductSelection);
+)(template);

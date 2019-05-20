@@ -2,11 +2,10 @@ import React from 'react';
 import cx from 'classnames';
 import { translate } from '../../services';
 
-import styles from './rating-overlay.css';
-import globalStyles from '../../../css/global.css';
+import styles from './rating-overlay.scss';
+import global from '../../../css/global.scss';
 
-import ButtonWithText from '../button-with-text/button-with-text';
-import RatingStars from '../rating-stars/rating-stars';
+import { ButtonWithText, RatingStars } from '../';
 
 export default ({ className, visible, onRate, onClose }) => (
   <div

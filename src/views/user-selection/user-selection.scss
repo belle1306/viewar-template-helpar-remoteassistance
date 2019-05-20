@@ -57,7 +57,7 @@
   width: 100%;
   height: 100%;
   font-size: 1.4em;
-  color: #003BA1;
+  color: #003ba1;
 }
 
 .Client {
@@ -132,7 +132,6 @@
 }
 
 @media only screen and (orientation: landscape) and (min-device-width: 1201px) {
-
   .Client {
     width: 33%;
   }
@@ -148,5 +147,4 @@
     width: calc(33% - 2rem);
     margin-left: 2rem;
   }
-
 }

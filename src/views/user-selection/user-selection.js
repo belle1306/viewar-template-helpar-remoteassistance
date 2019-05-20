@@ -5,15 +5,17 @@ import {
   withProps,
   withState,
 } from 'recompose';
-import withRouteParams from '../../services/route-params';
 import viewarApi from 'viewar-api';
-import withCallClient from '../../services/call-client';
 import { getUiConfigPath } from '../../utils';
-import { withDialogControls } from '../../services/dialog';
-import { withSetLoading } from '../../services/loading';
-import authManager from '../../services/auth-manager';
+import {
+  withRouteParams,
+  withCallClient,
+  withDialogControls,
+  withSetLoading,
+  authManager,
+} from '../../services';
 
-import UserSelection from './user-selection.jsx';
+import template from './user-selection.jsx';
 
 export const updateClientList = ({ setClients, callClient }) => async () => {
   const clients = callClient.clients.filter(
@@ -147,4 +149,4 @@ export default compose(
       }
     },
   })
-)(UserSelection);
+)(template);

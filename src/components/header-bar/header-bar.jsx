@@ -1,10 +1,10 @@
 import React from 'react';
 import cx from 'classnames';
 import { translate } from '../../services';
-import Button from '../../components/button/button';
+import { Button } from '../';
 
-import styles from './header-bar.css';
-import global from '../../../css/global.css';
+import styles from './header-bar.scss';
+import global from '../../../css/global.scss';
 
 export default ({
   goBack,
@@ -21,7 +21,9 @@ export default ({
   <div className={cx(styles.Container, className)}>
     <Button
       onClick={goBackFunction}
-      icon={showHomeIconOnBack ? 'home' : (showCancelIconOnBack ? 'cancel' : 'back')}
+      icon={
+        showHomeIconOnBack ? 'home' : showCancelIconOnBack ? 'cancel' : 'back'
+      }
       size={'small'}
       dark={dark}
       className={cx(!goBack && styles.isHidden, styles.Button)}

@@ -1,8 +1,6 @@
 import test from 'tape';
-import 'ignore-styles';
 
 import {
-  getTracker,
   usesTrackingMap,
   usesFloorOffsetModel,
   usesSimpleGroundConfirm,
@@ -16,29 +14,6 @@ import {
   FLOOR_MODEL_FOREIGN_KEY,
   DEFAULT_POSE,
 } from './tracking-utils';
-
-test('Calibration - getTracker returns the first tracker from the tracker list', assert => {
-  const trackers = {
-    ARKit: Symbol('ARKit'),
-    Placenote: Symbol('Placenote'),
-  };
-
-  const expected = trackers.ARKit;
-  const actual = getTracker({ trackers });
-  assert.equals(actual, expected);
-
-  assert.end();
-});
-
-test('Calibration - getTracker returns null if tracker list is emptry', assert => {
-  const trackers = {};
-
-  const expected = null;
-  const actual = getTracker({ trackers });
-  assert.equals(actual, expected);
-
-  assert.end();
-});
 
 test('Calibration - usesTrackingMap detects tracker with tracking map functionality', assert => {
   const tracker = {

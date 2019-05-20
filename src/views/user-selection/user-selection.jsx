@@ -1,12 +1,11 @@
 import React from 'react';
 import cx from 'classnames';
+
+import styles from './user-selection.scss';
+import global from '../../../css/global.scss';
+
 import { translate } from '../../services';
-
-import styles from './user-selection.css';
-import global from '../../../css/global.css';
-
-import Button from '../../components/button/button';
-import AdminHeaderBar from '../../components/admin-header-bar/admin-header-bar';
+import { Button, AdminHeaderBar } from '../../components';
 
 const WaitForUserOverlay = ({ visible }) => (
   <div className={cx(styles.WaitForUserOverlay, !visible && styles.isHidden)}>
@@ -32,14 +31,11 @@ export default ({
         </div>
       )}
       {clients.map(client => (
-        <div
-          className={cx(
-            styles.Client,
-          )}
-          key={client.id}
-        >
+        <div className={cx(styles.Client)} key={client.id}>
           <div className={styles.Info}>
-            <div className={styles.Time}>{formatTime(client.data.timestamp)}</div>
+            <div className={styles.Time}>
+              {formatTime(client.data.timestamp)}
+            </div>
             <div className={styles.Topic}>{trimTopic(client.data.topic)}</div>
           </div>
           <div className={styles.Call}>

@@ -7,14 +7,16 @@ import {
 } from 'recompose';
 import viewarApi from 'viewar-api';
 import { getUiConfigPath } from '../../utils';
-import { withDialogControls } from '../../services/dialog';
-import { withSetLoading } from '../../services/loading';
-import withRouteParams from '../../services/route-params';
-import annotationDb from '../../services/annotation-db';
-import annotationManager from '../../services/annotation-manager';
-import authManager from '../../services/auth-manager';
+import {
+  withDialogControls,
+  withSetLoading,
+  withRouteParams,
+  annotationDb,
+  annotationManager,
+  authManager,
+} from '../../services';
 
-import Review from './review.jsx';
+import template from './review.jsx';
 
 export const init = ({
   setLoading,
@@ -186,4 +188,4 @@ export default compose(
       this.props.init();
     },
   })
-)(Review);
+)(template);

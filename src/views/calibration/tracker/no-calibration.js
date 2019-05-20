@@ -1,6 +1,6 @@
 import React from 'react';
 import { compose, pure, lifecycle, withState, withProps } from 'recompose';
-import { withSetLoading } from '../../../services/loading';
+import { withSetLoading } from '../../../services';
 
 import viewarApi from 'viewar-api';
 
@@ -23,7 +23,7 @@ export default compose(
         tracker,
       } = this.props;
 
-      setLoading(true, {opaque: true});
+      setLoading(true, { opaque: true });
       await activateARCamera(viewarApi);
       await initTracking(tracker);
       setLoading(false);

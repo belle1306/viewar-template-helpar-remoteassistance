@@ -6,11 +6,11 @@ import {
   withHandlers,
   withProps,
 } from 'recompose';
-import { withSetLoading } from '../../../services/loading';
+import { withSetLoading } from '../../../services';
 
 import viewarApi from 'viewar-api';
 
-import TrackingMapCalibration from './tracking-map-calibration.jsx';
+import template from './tracking-map-calibration.jsx';
 
 import {
   initTracking,
@@ -35,7 +35,7 @@ export default compose(
       goToNext,
     }) => async () => {
       if (tracker.tracking) {
-        setLoading(true, {opaque: true});
+        setLoading(true, { opaque: true });
 
         tracker.off('trackingTargetStatusChanged', onTrackingChanged);
         await tracker.confirmGroundPosition();
@@ -66,7 +66,7 @@ export default compose(
 
       setDeviceType(getDeviceType(viewarApi));
 
-      setLoading(true, {opaque: true});
+      setLoading(true, { opaque: true });
       await activateARCamera(viewarApi);
       await initTracking(tracker);
       tracker.on('trackingTargetStatusChanged', onTrackingChanged);
@@ -74,4 +74,4 @@ export default compose(
     },
   }),
   pure
-)(TrackingMapCalibration);
+)(template);

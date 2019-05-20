@@ -1,8 +1,8 @@
 import React from 'react';
 import cx from 'classnames';
 
-import styles from './button.css';
-import global from '../../../css/global.css';
+import styles from './button.scss';
+import global from '../../../css/global.scss';
 
 export default ({
   green,

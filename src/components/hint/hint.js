@@ -1,5 +1,5 @@
 import { compose } from 'recompose';
 
-import Hint from './hint.jsx';
+import template from './hint.jsx';
 
-export default compose()(Hint);
+export default compose()(template);

@@ -8,7 +8,7 @@ import {
   lifecycle,
 } from 'recompose';
 
-export const load = ({
+const load = ({
   setMessage,
   setVisible,
   setShowConfirm,

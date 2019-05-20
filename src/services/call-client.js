@@ -1,10 +1,8 @@
-import { withRouter } from 'react-router';
 import { compose, getContext, withHandlers } from 'recompose';
 import PropTypes from 'prop-types';
-import { withSetLoading } from './loading';
-import { withDialogControls } from './dialog';
-import withRouterProps from '../services/route-params';
 import viewarApi from 'viewar-api';
+
+import { withDialogControls, withSetLoading } from './';
 
 const connect = ({
   goToLastView,
@@ -60,7 +58,6 @@ const disconnect = ({ callClient }) => () => {
 };
 
 export const withCallClient = compose(
-  withRouterProps(),
   withDialogControls,
   withSetLoading,
   getContext({
@@ -72,5 +69,3 @@ export const withCallClient = compose(
     joinSession,
   })
 );
-
-export default withCallClient;

@@ -5,10 +5,9 @@ import {
   withState,
   withPropsOnChange,
 } from 'recompose';
-import annotationManager from '../../services/annotation-manager';
-import { withSetLoading } from '../../services/loading';
+import { annotationManager, withSetLoading } from '../../services';
 
-import AnnotationPicker from './annotation-picker.jsx';
+import template from './annotation-picker.jsx';
 
 export const touch = ({
   setLoading,
@@ -84,4 +83,4 @@ export default compose(
     confirm,
     cancel,
   })
-)(AnnotationPicker);
+)(template);

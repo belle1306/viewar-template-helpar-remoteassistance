@@ -1,7 +1,7 @@
 import { withRouter } from 'react-router';
 import { compose, withProps, withHandlers } from 'recompose';
 
-export default (props = {}) =>
+export const withRouteParams = (props = {}) =>
   compose(
     withRouter,
     withProps(({ match: { params } }) => {
@@ -53,5 +53,3 @@ export default (props = {}) =>
       },
     })
   );
-
-export const withGoTo = compose();

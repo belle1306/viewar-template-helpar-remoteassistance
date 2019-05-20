@@ -1,6 +1,6 @@
 import { compose, withState, withHandlers, withProps } from 'recompose';
 
-import RatingStars from './rating-stars.jsx';
+import template from './rating-stars.jsx';
 
 export const onRate = ({ setRating, updateRating }) => rating => {
   setRating(rating);
@@ -15,4 +15,4 @@ export default compose(
   withHandlers({
     onRate,
   })
-)(RatingStars);
+)(template);

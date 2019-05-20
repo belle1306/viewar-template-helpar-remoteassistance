@@ -1,14 +1,11 @@
 import React, { Fragment } from 'react';
 import cx from 'classnames';
+
+import styles from './call.scss';
+import global from '../../../css/global.scss';
+
 import { translate } from '../../services';
-
-import styles from './call.css';
-import global from '../../../css/global.css';
-
-import Hint from '../../components/hint/hint';
-import Button from '../../components/button/button';
-import AnnotationPicker from '../../components/annotation-picker/annotation-picker';
-import DrawCanvas from '../../components/draw-canvas/draw-canvas';
+import { Hint, Button, AnnotationPicker, DrawCanvas } from '../../components';
 
 const WaitForSupportAgentOverlay = ({ visible }) => (
   <div
@@ -20,7 +17,7 @@ const WaitForSupportAgentOverlay = ({ visible }) => (
     <div className={styles.WaitMessage}>
       {translate('CallWaitForSupportAgent')}
     </div>
-    <div className={styles.WaitAnimation}></div>
+    <div className={styles.WaitAnimation} />
   </div>
 );
 
@@ -84,7 +81,14 @@ export default ({
     {admin ? (
       <Fragment>
         {useDrawing && (
-          <DrawCanvas disabled={!showAnnotationPicker || annotationMode !== 'draw'} onCancel={closeAnnotationPicker} onConfirm={closeAnnotationPicker} admin drawOnMesh={meshScan} onSync={syncDrawing} />
+          <DrawCanvas
+            disabled={!showAnnotationPicker || annotationMode !== 'draw'}
+            onCancel={closeAnnotationPicker}
+            onConfirm={closeAnnotationPicker}
+            admin
+            drawOnMesh={meshScan}
+            onSync={syncDrawing}
+          />
         )}
 
         <AnnotationPicker
@@ -94,7 +98,11 @@ export default ({
 
         <div className={cx(styles.FreezeFrames, frozen && styles.isHidden)}>
           {freezeFrames.map(freezeFrame => (
-            <div key={freezeFrame.name} className={styles.FreezeFrame} onClick={() => loadFreezeFrame(freezeFrame)} >
+            <div
+              key={freezeFrame.name}
+              className={styles.FreezeFrame}
+              onClick={() => loadFreezeFrame(freezeFrame)}
+            >
               <img src={freezeFrame.thumbnailUrl} />
             </div>
           ))}
@@ -107,32 +115,34 @@ export default ({
           hidden={showAnnotationPicker}
           className={styles.AnnotationButton}
         />
-        
-        {useDrawing && <Button
-          medium
-          onClick={() => openAnnotationPicker('draw')}
-          icon="draw"
-          hidden={showAnnotationPicker}
-          className={styles.AnnotationDrawButton}
-        />}
+
+        {useDrawing && (
+          <Button
+            medium
+            onClick={() => openAnnotationPicker('draw')}
+            icon="draw"
+            hidden={showAnnotationPicker}
+            className={styles.AnnotationDrawButton}
+          />
+        )}
 
         <Button
           medium
-          icon='cast'
+          icon="cast"
           onClick={sendFreezeFrame}
           className={styles.SendFreezeFrameButton}
           hidden={!freezeFrame || freezeFrameSent || showAnnotationPicker}
         />
         <Button
           medium
-          icon='freezeframe'
+          icon="freezeframe"
           onClick={saveFreezeFrame}
           className={styles.FreezeFrameButton}
           hidden={perspective || frozen || showAnnotationPicker}
         />
         <Button
           medium
-          icon='perspective'
+          icon="perspective"
           onClick={togglePerspective}
           className={styles.PerspectiveButton}
           hidden={showAnnotationPicker || perspective || frozen}
@@ -152,7 +162,11 @@ export default ({
           hidden={frozen || showAnnotationPicker || perspective}
         />
 
-        <Hint className={cx(styles.Hint)} hidden={!showAnnotationPicker}>{translate(annotationMode === 'draw' ? 'CallDrawHint' : 'CallTouchHint')}</Hint>
+        <Hint className={cx(styles.Hint)} hidden={!showAnnotationPicker}>
+          {translate(
+            annotationMode === 'draw' ? 'CallDrawHint' : 'CallTouchHint'
+          )}
+        </Hint>
       </Fragment>
     ) : (
       <Fragment>
@@ -164,11 +178,14 @@ export default ({
           noButtons
           user
         />
-        
+
         {useDrawing && (
           <Fragment>
-            
-            <DrawCanvas disabled={!showAnnotationPicker} drawOnMesh={meshScan} onSync={syncDrawing} />
+            <DrawCanvas
+              disabled={!showAnnotationPicker}
+              drawOnMesh={meshScan}
+              onSync={syncDrawing}
+            />
 
             <Button
               medium
@@ -179,7 +196,13 @@ export default ({
           </Fragment>
         )}
 
-        {!waitingForSupportAgent && <Hint className={cx(styles.Hint)}>{translate(showAnnotationPicker ? 'CallDrawHint' : 'CallAnnotateHint')}</Hint>}
+        {!waitingForSupportAgent && (
+          <Hint className={cx(styles.Hint)}>
+            {translate(
+              showAnnotationPicker ? 'CallDrawHint' : 'CallAnnotateHint'
+            )}
+          </Hint>
+        )}
       </Fragment>
     )}
   </div>

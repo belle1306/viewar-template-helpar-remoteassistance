@@ -5,18 +5,20 @@ import {
   lifecycle,
   withProps,
 } from 'recompose';
-import withCallClient from '../../services/call-client';
 import viewarApi from 'viewar-api';
 import { getUiConfigPath } from '../../utils';
-import { withDialogControls } from '../../services/dialog';
-import { withSetLoading } from '../../services/loading';
-import annotationManager from '../../services/annotation-manager';
-import sceneDraw from '../../services/scene-draw';
-import { translate } from '../../services';
-import withRouteParams from '../../services/route-params';
-import { withTrackingMap } from '../../services/tracking-map';
+import {
+  withDialogControls,
+  withSetLoading,
+  annotationManager,
+  sceneDraw,
+  translate,
+  withRouteParams,
+  withTrackingMap,
+  withCallClient,
+} from '../../services';
 
-import Call from './Call.jsx';
+import template from './Call.jsx';
 
 export const waitForSupportAgent = ({
   goToNextView,
@@ -471,4 +473,4 @@ export default compose(
       }
     },
   })
-)(Call);
+)(template);

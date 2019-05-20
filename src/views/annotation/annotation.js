@@ -7,16 +7,18 @@ import {
 } from 'recompose';
 import viewarApi from 'viewar-api';
 import { getUiConfigPath } from '../../utils';
-import { withDialogControls } from '../../services/dialog';
-import { withSetLoading } from '../../services/loading';
-import annotationManager from '../../services/annotation-manager';
-import annotationDb from '../../services/annotation-db';
-import withRouteParams from '../../services/route-params';
-import { translate } from '../../services';
-import { withTrackingMap } from '../../services/tracking-map';
 
-import Annotation from './annotation.jsx';
-import sceneDraw from '../../services/scene-draw';
+import template from './annotation.jsx';
+import {
+  sceneDraw,
+  withDialogControls,
+  withSetLoading,
+  annotationManager,
+  annotationDb,
+  withRouteParams,
+  translate,
+  withTrackingMap,
+} from '../../services';
 
 export const init = ({
   setTracking,
@@ -156,4 +158,4 @@ export default compose(
       await this.props.destroy();
     },
   })
-)(Annotation);
+)(template);

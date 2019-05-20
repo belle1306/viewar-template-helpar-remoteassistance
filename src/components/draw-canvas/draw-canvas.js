@@ -5,8 +5,8 @@ import {
   withState,
   withProps,
 } from 'recompose';
-import DrawCanvas from './draw-canvas.jsx';
-import sceneDraw from '../../services/scene-draw';
+import template from './draw-canvas.jsx';
+import { sceneDraw } from '../../services';
 import generateId from '../../utils/generate-id';
 
 export const init = ({
@@ -16,7 +16,6 @@ export const init = ({
   setMaterials,
   onScreenResize,
   getRefs,
-  canvasId,
   admin,
   sceneDraw,
   onDraw,
@@ -156,4 +155,4 @@ export default compose(
       this.props.destroy();
     },
   })
-)(DrawCanvas);
+)(template);

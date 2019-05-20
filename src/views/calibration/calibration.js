@@ -6,7 +6,7 @@ import {
   withProps,
   withHandlers,
 } from 'recompose';
-import withRouteParams from '../../services/route-params';
+import { withRouteParams } from '../../services';
 
 import NoCalibration from './tracker/no-calibration';
 import GroundConfirmCalibration from './tracker/ground-confirm-calibration';
@@ -16,7 +16,6 @@ import TrackingMapCalibration from './tracker/tracking-map-calibration';
 import viewarApi from 'viewar-api';
 
 import {
-  getTracker,
   usesTrackingMap,
   usesFloorOffsetModel,
   usesSimpleGroundConfirm,
@@ -24,7 +23,6 @@ import {
 
 export default compose(
   withProps({
-    getTracker,
     usesTrackingMap,
     usesFloorOffsetModel,
     usesSimpleGroundConfirm,
@@ -50,25 +48,21 @@ export default compose(
     },
   }),
   branch(
-    ({ getTracker, usesTrackingMap }) => usesTrackingMap(getTracker(viewarApi)),
-    renderComponent(({ getTracker, ...props }) => (
-      <TrackingMapCalibration tracker={getTracker(viewarApi)} {...props} />
+    ({ usesTrackingMap }) => usesTrackingMap(viewarApi.tracker),
+    renderComponent(({ ...props }) => (
+      <TrackingMapCalibration tracker={viewarApi.tracker} {...props} />
     ))
   ),
   branch(
-    ({ getTracker, usesFloorOffsetModel }) =>
-      usesFloorOffsetModel(getTracker(viewarApi)),
-    renderComponent(({ getTracker, ...props }) => (
-      <FloorOffsetCalibration tracker={getTracker(viewarApi)} {...props} />
+    ({ usesFloorOffsetModel }) => usesFloorOffsetModel(viewarApi.tracker),
+    renderComponent(({ ...props }) => (
+      <FloorOffsetCalibration tracker={viewarApi.tracker} {...props} />
     ))
   ),
   branch(
-    ({ getTracker, usesSimpleGroundConfirm }) =>
-      usesSimpleGroundConfirm(getTracker(viewarApi)),
-    renderComponent(({ getTracker, ...props }) => (
-      <GroundConfirmCalibration tracker={getTracker(viewarApi)} {...props} />
+    ({ usesSimpleGroundConfirm }) => usesSimpleGroundConfirm(viewarApi.tracker),
+    renderComponent(({ ...props }) => (
+      <GroundConfirmCalibration tracker={viewarApi.tracker} {...props} />
     ))
   )
-)(({ getTracker, ...props }) => (
-  <NoCalibration tracker={getTracker(viewarApi)} {...props} />
-));
+)(({ ...props }) => <NoCalibration tracker={viewarApi.tracker} {...props} />);

@@ -1,8 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { compose, lifecycle, getContext } from 'recompose';
-import { withDialogControls } from '../services/dialog';
-import withRouteParams from '../services/route-params';
+import { withDialogControls, withRouteParams } from '../services';
 
 const render = ({ children }) => <Fragment>{children}</Fragment>;
 
