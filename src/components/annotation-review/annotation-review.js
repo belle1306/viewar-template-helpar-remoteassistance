@@ -1,15 +1,11 @@
+import { compose, withHandlers, withState, withPropsOnChange } from 'recompose';
 import {
-  compose,
-  withHandlers,
-  withProps,
-  withState,
-  withPropsOnChange,
-} from 'recompose';
-import { withDialogControls } from '../../services/dialog';
-import { withSetLoading } from '../../services/loading';
-import withRouteParams from '../../services/route-params';
+  withDialogControls,
+  withSetLoading,
+  withRouteParams,
+} from '../../services';
 
-import AnnotationReview from './annotation-review.jsx';
+import template from './annotation-review.jsx';
 
 export const createTag = ({ tags, setTags, tag, setTag }) => () => {
   if (tags.indexOf(tag) === -1 && tag) {
@@ -48,18 +44,14 @@ export default compose(
   withState('tags', 'setTags', []),
   withState('description', 'setDescription', ''),
   withPropsOnChange(
-    ['annotation'],
-    ({ annotation, setDescription, setTitle, setTag, setTags }) => {
-      if (annotation) {
+    ['annotation', 'visible'],
+    ({ annotation, visible, setDescription, setTitle, setTag, setTags }) => {
+      if (annotation && visible) {
         setTitle(annotation.title || '');
         setTags(annotation.tags || []);
         setDescription(annotation.description || '');
         setTag('');
       }
-
-      return {
-        annotation,
-      };
     }
   ),
   withHandlers({
@@ -70,4 +62,4 @@ export default compose(
     removeTag,
     handleSave,
   })
-)(AnnotationReview);
+)(template);

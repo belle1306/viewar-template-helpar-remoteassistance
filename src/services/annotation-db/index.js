@@ -245,6 +245,7 @@ const createAnnotationDb = () => {
    * @param productTags Product specific tags.
    * @param featureMap Feature Map id.
    * @param pose Position/Orientation/Scale of the annotation.
+   * @param drawing Drawing description of the annotation.
    * @param model The annotation model's id.
    */
   const create = async ({
@@ -254,8 +255,9 @@ const createAnnotationDb = () => {
     tags,
     productTags,
     featureMap,
-    pose,
-    model,
+    pose = null,
+    model = null,
+    drawing = null,
   }) => {
     await initDb();
 
@@ -269,6 +271,7 @@ const createAnnotationDb = () => {
         featureMap,
         pose,
         model,
+        drawing,
       },
       tags,
       productTags,

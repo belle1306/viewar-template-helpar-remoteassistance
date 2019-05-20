@@ -3,18 +3,15 @@ import cx from 'classnames';
 
 import { translate } from '../../../services';
 
-import Hint from '../../../components/hint/hint';
-import HeaderBar from '../../../components/header-bar/header-bar';
+import { Hint, HeaderBar, CalibrationInstruction } from '../../../components';
 
-import styles from '../calibration.css';
-
-import { CalibratonInstruction } from '../../../components/calibration-instruction';
+import styles from '../calibration.scss';
 
 export default ({ deviceType }) => (
   <div className={styles.Container}>
     <HeaderBar goBack />
     <div className={styles.AnimationWrapper}>
-      <CalibratonInstruction deviceType={deviceType} />
+      <CalibrationInstruction deviceType={deviceType} />
     </div>
     <Hint>{translate('CalibrationFilmFloor')}</Hint>
   </div>

@@ -2,8 +2,8 @@ import React from 'react';
 import cx from 'classnames';
 import { translate } from '../../services';
 
-import styles from './text-input.css';
-import global from '../../../css/global.css';
+import styles from './text-input.scss';
+import global from '../../../css/global.scss';
 
 export default ({
   className,
@@ -35,10 +35,16 @@ export default ({
         placeholder={placeholder ? translate(placeholder, false) : ''}
       />
       {searchButton && (
-        <div className={cx(styles.SearchButton, global.ButtonImage)} onClick={() => setValue('')} />
+        <div
+          className={cx(styles.SearchButton, global.ButtonImage)}
+          onClick={() => setValue('')}
+        />
       )}
       {!searchButton && addButton && (
-        <div className={cx(styles.AddButton, global.ButtonImage)} onClick={handleSubmit} />
+        <div
+          className={cx(styles.AddButton, global.ButtonImage)}
+          onClick={handleSubmit}
+        />
       )}
     </form>
   </div>

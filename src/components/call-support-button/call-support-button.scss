@@ -1,0 +1,37 @@
+.CallButton {
+  white-space: nowrap;
+  border-radius: 1000px;
+  padding: 0.9rem 3rem;
+  box-sizing: border-box;
+  height: auto;
+  font-size: 2em;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-top: 0.9rem;
+  cursor: pointer;
+  color: white;
+  transition: opacity 0.5s ease;
+}
+
+.isHidden.CallButton {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.CallButtonIcon {
+  flex: 0 0 auto;
+  width: 2rem;
+  height: 2rem;
+  -webkit-mask-position-x: calc(100% / 7 * 3);
+  -webkit-mask-position-y: calc(100% / 7 * 0);
+  background-position-x: calc(100% / 7 * 3);
+  background-position-y: calc(100% / 7 * 0);
+  background-color: white;
+}
+
+.CallButtonText {
+  flex: 1 0 auto;
+  text-align: center;
+  font-weight: bold;
+}

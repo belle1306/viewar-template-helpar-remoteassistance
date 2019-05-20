@@ -5,18 +5,20 @@ import {
   lifecycle,
   withProps,
 } from 'recompose';
-import withCallClient from '../../services/call-client';
 import viewarApi from 'viewar-api';
 import { getUiConfigPath } from '../../utils';
-import { withDialogControls } from '../../services/dialog';
-import { withSetLoading } from '../../services/loading';
-import annotationManager from '../../services/annotation-manager';
-import sceneDraw from '../../services/scene-draw';
-import { translate } from '../../services';
-import withRouteParams from '../../services/route-params';
-import { withTrackingMap } from '../../services/tracking-map';
+import {
+  withDialogControls,
+  withSetLoading,
+  annotationManager,
+  sceneDraw,
+  translate,
+  withRouteParams,
+  withTrackingMap,
+  withCallClient,
+} from '../../services';
 
-import Call from './Call.jsx';
+import template from './Call.jsx';
 
 export const waitForSupportAgent = ({
   goToNextView,
@@ -32,6 +34,8 @@ export const waitForSupportAgent = ({
   callClient,
   takeFreezeFrame,
   showFreezeFrame,
+  onCallEnd,
+  setLoading,
 }) => async () => {
   let featureMap;
   if (!admin) {
@@ -47,10 +51,6 @@ export const waitForSupportAgent = ({
     if (tracker) {
       if (tracker.saveTrackingMap) {
         featureMap = await tracker.generateTrackingMapId();
-      }
-
-      if (meshScan) {
-        await tracker.startMeshScan();
       }
     }
   }
@@ -78,6 +78,7 @@ export const waitForSupportAgent = ({
       .subscribe(takeFreezeFrame);
 
     endCallSubscription = callClient.endedCall.subscribe(async () => {
+      await onCallEnd();
       goToNextView();
 
       await showDialog('MessageCallEnded', {
@@ -95,26 +96,29 @@ export const waitForSupportAgent = ({
             meshScan: tracker && !!tracker.startMeshScan,
           },
         });
+
+        if (meshScan) {
+          await tracker.startMeshScan();
+        }
+
         setWaitingForSupportAgent(false);
       });
     }
+
+    setLoading(false);
   }
 };
 
-export const onTouch = ({
-  syncAnnotation,
-  annotationManager,
-}) => async event => {
-  let x, y;
-  if (event.type === 'click') {
-    x = event.clientX / event.target.offsetWidth;
-    y = event.clientY / event.target.offsetHeight;
-  }
+export const onTouch = ({ syncAnnotation }) => async event => {
+  syncAnnotation();
+};
 
-  if (x !== undefined && y !== undefined) {
-    await annotationManager.setTouchAnnotation({ x, y }, true);
-    syncAnnotation();
-  }
+export const openAnnotationPicker = ({
+  setShowAnnotationPicker,
+  setAnnotationMode,
+}) => mode => {
+  setAnnotationMode(mode);
+  setShowAnnotationPicker(true);
 };
 
 export const closeAnnotationPicker = ({
@@ -147,8 +151,10 @@ export const goBack = ({
   goToNextView,
   admin,
   showDialog,
+  onCallEnd,
 }) => async () => {
   if (waitingForSupportAgent) {
+    await onCallEnd();
     goToNextView();
   } else {
     const { confirmed } = await showDialog('CallAbortQuestion', {
@@ -157,6 +163,7 @@ export const goBack = ({
     });
 
     if (confirmed) {
+      await onCallEnd();
       goToNextView();
     }
   }
@@ -236,15 +243,22 @@ const unpause = ({
   }
 };
 
-const syncDrawing = ({ callClient }) => drawing => {
+const syncDrawing = ({ callClient, admin }) => drawing => {
   const { material, name, width } = drawing;
   const path = drawing.projectPathOntoPlane();
-  callClient.sendData('drawing', {
+
+  const drawingData = {
     path,
     material: material.name,
     width,
     name,
-  });
+  };
+
+  if (admin) {
+    annotationManager.saveDrawAnnotation(drawingData);
+  }
+  console.log('[Call] send drawing', drawingData);
+  callClient.sendData('drawing', drawingData);
 };
 
 const saveFreezeFrame = ({
@@ -304,6 +318,65 @@ const takeFreezeFrame = ({ freezeFrames, setFreezeFrame }) => async name => {
   setFreezeFrames(freezeFrames);
 };
 
+const toggleMuteSpeaker = ({ setSpeakerMuted, speakerMuted }) => () => {
+  if (speakerMuted) {
+    viewarApi.appUtils.unmuteSpeaker();
+  } else {
+    viewarApi.appUtils.muteSpeaker();
+  }
+
+  setSpeakerMuted(!speakerMuted);
+};
+
+const toggleMuteMicrophone = ({
+  setMicrophoneMuted,
+  microphoneMuted,
+}) => () => {
+  if (microphoneMuted) {
+    viewarApi.appUtils.unmuteMicrophone();
+  } else {
+    viewarApi.appUtils.muteMicrophone();
+  }
+
+  setMicrophoneMuted(!microphoneMuted);
+};
+
+const onCallEnd = ({
+  admin,
+  callClient,
+  setLoading,
+  saveTrackingMap = async () => {
+    console.error('Call view has no saveTrackingMap function.');
+  },
+  meshScan,
+  viewarApi: { cameras, tracker },
+}) => async () => {
+  await callClient.endCall();
+  if (!admin) {
+    callClient.leave();
+
+    setLoading(true);
+    await saveTrackingMap();
+    // await new Promise(resolve => setTimeout(resolve, 10000));
+
+    if (meshScan) {
+      await tracker.stopMeshScan();
+      await tracker.resetMeshScan();
+    }
+
+    setLoading(false);
+    await cameras.arCamera.hidePointCloud();
+  } else {
+    callClient.setData({ available: false });
+    await cameras.arCamera.unfreeze();
+  }
+
+  await sceneDraw.clear();
+};
+
+const toggleDraw = ({ setShowAnnotationPicker, showAnnotationPicker }) => () =>
+  setShowAnnotationPicker(!showAnnotationPicker);
+
 let takeFreezeFrameSubscription;
 let freezeFrameSubscription;
 let syncDrawingSubscription;
@@ -317,6 +390,9 @@ export default compose(
   withDialogControls,
   withRouteParams(),
   withSetLoading,
+  withState('annotationMode', 'setAnnotationMode', 'model'),
+  withState('speakerMuted', 'setSpeakerMuted', false),
+  withState('microphoneMuted', 'setMicrophoneMuted', false),
   withState('freezeFrameSent', 'setFreezeFrameSent', false),
   withState('freezeFrame', 'setFreezeFrame', false),
   withState('freezeFrames', 'setFreezeFrames', []),
@@ -324,11 +400,11 @@ export default compose(
   withState('frozen', 'setFrozen', false),
   withState('waitingForSupportAgent', 'setWaitingForSupportAgent', false),
   withState('showAnnotationPicker', 'setShowAnnotationPicker', false),
-  withProps({
+  withProps(() => ({
     viewarApi,
-    getUiConfigPath,
+    useDrawing: getUiConfigPath('drawing'),
     annotationManager,
-  }),
+  })),
   withHandlers({
     syncAnnotation,
     goToNextView,
@@ -336,10 +412,12 @@ export default compose(
     togglePerspective,
     showFreezeFrame,
     takeFreezeFrame,
+    onCallEnd,
   }),
   withHandlers({
     waitForSupportAgent,
     onTouch,
+    openAnnotationPicker,
     closeAnnotationPicker,
     goBack,
     unpause,
@@ -347,35 +425,34 @@ export default compose(
     saveFreezeFrame,
     loadFreezeFrame,
     sendFreezeFrame,
+    toggleMuteSpeaker,
+    toggleMuteMicrophone,
+  }),
+  withHandlers({
+    toggleDraw,
   }),
   lifecycle({
     async componentDidMount() {
       const {
+        setLoading,
         admin,
         waitForSupportAgent,
         annotationManager,
         meshScan,
-        viewarApi: { cameras, tracker },
+        viewarApi: { cameras, tracker, appUtils },
       } = this.props;
+      setLoading(true);
       await annotationManager.reset();
 
       if (!admin && !meshScan) {
         await cameras.arCamera.showPointCloud();
       }
 
+      appUtils.unmuteMicrophone();
       waitForSupportAgent();
     },
     async componentWillUnmount() {
-      const {
-        admin,
-        callClient,
-        setLoading,
-        saveTrackingMap = async () => {
-          console.error('Call view has no saveTrackingMap function.');
-        },
-        meshScan,
-        viewarApi: { cameras, tracker },
-      } = this.props;
+      const {} = this.props;
       if (callSubscription) {
         callSubscription.unsubscribe();
       }
@@ -394,27 +471,6 @@ export default compose(
       if (freezeFrameSubscription) {
         freezeFrameSubscription.unsubscribe();
       }
-
-      await callClient.endCall();
-      if (!admin) {
-        callClient.leave();
-
-        setLoading(true);
-        await saveTrackingMap();
-
-        if (meshScan) {
-          await tracker.stopMeshScan();
-          await tracker.resetMeshScan();
-        }
-
-        setLoading(false);
-        await cameras.arCamera.hidePointCloud();
-      } else {
-        callClient.setData({ available: false });
-        await cameras.arCamera.unfreeze();
-      }
-
-      await cameras.perspectiveCamera.activate();
     },
   })
-)(Call);
+)(template);

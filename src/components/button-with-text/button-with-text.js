@@ -3,8 +3,8 @@ import cx from 'classnames';
 
 import { translate } from '../../services';
 
-import styles from './button-with-text.css';
-import global from '../../../css/global.css';
+import styles from './button-with-text.scss';
+import global from '../../../css/global.scss';
 
 import Button from '../button/button';
 

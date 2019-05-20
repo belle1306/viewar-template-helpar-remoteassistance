@@ -2,11 +2,10 @@ import React from 'react';
 import cx from 'classnames';
 import { translate } from '../../services';
 
-import TextButton from '../text-button/text-button';
-import TextInput from '../text-input/text-input';
+import { TextButton, TextInput } from '../';
 
-import styles from './dialog.css';
-import global from '../../../css/global.css';
+import styles from './dialog.scss';
+import global from '../../../css/global.scss';
 
 export default ({
   message,

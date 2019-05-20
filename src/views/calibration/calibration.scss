@@ -1,0 +1,31 @@
+.Container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
+  .Button {
+    margin-top: 0;
+  }
+
+  .Hint {
+    @media only screen and (orientation: portrait) and (max-height: 736px),
+      screen and (orientation: portrait) and (max-width: 375px) {
+      top: 52px;
+      bottom: auto;
+      left: 24px;
+      right: 24px;
+    }
+  }
+}
+
+.AnimationWrapper {
+  position: absolute;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}

@@ -6,21 +6,23 @@ import { AppContainer } from 'react-hot-loader';
 import { IntlProvider } from 'react-intl';
 import { compose, withContext } from 'recompose';
 import viewarApi from 'viewar-api';
-import appState from './services/app-state';
-import authManager from './services/auth-manager';
-import sceneDraw from './services/scene-draw';
-import annotationDb from './services/annotation-db';
-import googleAnalytics from './services/google-analytics/index';
-import annotationManager from './services/annotation-manager';
+
+import {
+  appState,
+  authManager,
+  sceneDraw,
+  annotationDb,
+  googleAnalytics,
+  annotationManager,
+  translationProvider,
+} from './services';
+
 import config from './config';
-import { translationProvider } from './services/index';
-import 'normalize.css/normalize.css';
 import { createCallClient } from 'viewar-call';
-import { auth, db } from './services/firebase';
 
 import App from './app';
 
-import '../css/global.css';
+import '../css/global.scss';
 
 (async function() {
   window.api = await viewarApi.init({
@@ -47,8 +49,6 @@ import '../css/global.css';
     annotationManager,
     translationProvider,
     annotationDb,
-    auth,
-    db,
     sceneDraw,
   });
 
@@ -76,6 +76,14 @@ import '../css/global.css';
   render(AppWithContext);
 
   if (module.hot) {
-    module.hot.accept(App, () => render(AppWithContext));
+    module.hot.accept('./app', () => {
+      const App = require('./app').default;
+
+      const AppWithContext = compose(
+        withContext({ callClient: PropTypes.object }, () => ({ callClient }))
+      )(App);
+
+      render(AppWithContext);
+    });
   }
 })();

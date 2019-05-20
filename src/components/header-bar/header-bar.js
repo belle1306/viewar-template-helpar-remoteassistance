@@ -1,8 +1,8 @@
 import { withRouter } from 'react-router';
-import { compose, withHandlers, lifecycle, withProps } from 'recompose';
-import withRouteParams from '../../services/route-params';
+import { compose, withHandlers } from 'recompose';
+import { withRouteParams } from '../../services';
 
-import HeaderBar from './header-bar.jsx';
+import template from './header-bar.jsx';
 
 export const defaultGoHome = ({ goTo }) => () => goTo('/');
 
@@ -20,4 +20,4 @@ export default compose(
     goBackFunction: ({ goBack, defaultGoBack }) => () =>
       typeof goBack === 'function' ? goBack() : defaultGoBack(),
   }))
-)(HeaderBar);
+)(template);

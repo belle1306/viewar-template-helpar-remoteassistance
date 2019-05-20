@@ -21,7 +21,8 @@
 
 .Materials {
   overflow-y: auto;
-  max-height: 100vh;
+  -webkit-overflow-scrolling: touch;
+  max-height: 100%;
   display: flex;
   flex-flow: column;
   flex: 0 0 auto;
@@ -34,9 +35,9 @@
   box-sizing: border-box;
 }
 
-.Sizes {
+.Confirmation {
   overflow-y: auto;
-  max-height: 100vh;
+  max-height: 100%;
   display: flex;
   flex-flow: column;
   flex: 0 0 auto;
@@ -57,6 +58,7 @@
   position: relative;
   pointer-events: auto;
   cursor: pointer;
+  flex: 0 0 auto;
 }
 
 .isActive.MaterialButton:after {

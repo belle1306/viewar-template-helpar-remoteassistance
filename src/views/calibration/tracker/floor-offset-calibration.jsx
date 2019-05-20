@@ -2,13 +2,9 @@ import React from 'react';
 import cx from 'classnames';
 
 import { translate } from '../../../services';
+import { Button, Toolbar, Hint, HeaderBar } from '../../../components';
 
-import Button from '../../../components/button/button';
-import Toolbar from '../../../components/toolbar/toolbar';
-import Hint from '../../../components/hint/hint';
-import HeaderBar from '../../../components/header-bar/header-bar';
-
-import styles from '../calibration.css';
+import styles from '../calibration.scss';
 
 export default ({ confirmGround, scaleUp, scaleDown, tracking }) => (
   <div className={styles.Container}>

@@ -1,8 +1,8 @@
 import React from 'react';
 import cx from 'classnames';
 
-import styles from './button.css';
-import global from '../../../css/global.css';
+import styles from './button.scss';
+import global from '../../../css/global.scss';
 
 export default ({
   green,
@@ -16,6 +16,7 @@ export default ({
   className,
   onClick,
   noBackground,
+  active,
 }) => (
   <div
     className={cx(
@@ -32,6 +33,7 @@ export default ({
       {!noBackground && (
         <div className={cx(styles.Background, global.ButtonBackgroundColor)} />
       )}
+      {active && <div className={styles.Border} />}
       <div
         className={cx(
           green && styles.colorGreen,

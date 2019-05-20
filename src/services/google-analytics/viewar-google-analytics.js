@@ -225,8 +225,8 @@ export default async window => {
         e = G(e)
           ? !1
           : eb.test(M.location.hostname) || ('/' == c && vc.test(d))
-            ? !1
-            : !0;
+          ? !1
+          : !0;
         if (!e) return !1;
         b && 1200 < b.length && (b = b.substring(0, 1200));
         c = a + '=' + b + '; path=' + c + '; ';
@@ -342,12 +342,10 @@ export default async window => {
               d.optOut
                 ? (J(63), Qc('', '$OPT_OUT', 31536e6))
                 : d.clientId
-                  ? Qc(d.clientId, d.securityToken, 31536e6)
-                  : !c && d.alternateUrl
-                    ? (Ga && clearTimeout(Ga),
-                      (Fa = !0),
-                      Pc(a, b, d.alternateUrl))
-                    : (J(64), Qc('', '$NOT_FOUND', 36e5));
+                ? Qc(d.clientId, d.securityToken, 31536e6)
+                : !c && d.alternateUrl
+                ? (Ga && clearTimeout(Ga), (Fa = !0), Pc(a, b, d.alternateUrl))
+                : (J(64), Qc('', '$NOT_FOUND', 36e5));
             } catch (ca) {
               J(65), Qc('', '$ERROR', 3e4);
             }
@@ -1108,8 +1106,8 @@ export default async window => {
           l.H[c] == b
             ? d.push(l)
             : void 0 == g || l.H[c] < g
-              ? ((e = [l]), (g = l.H[c]))
-              : l.H[c] == g && e.push(l);
+            ? ((e = [l]), (g = l.H[c]))
+            : l.H[c] == g && e.push(l);
         }
         return 0 < d.length ? d : e;
       },
@@ -1422,8 +1420,8 @@ export default async window => {
         0 == c
           ? (g = a.aa + g)
           : 1 == c
-            ? (g = 't=dc&aip=1&_r=3&' + g)
-            : 2 == c && (g = 't=sr&aip=1&_r=4&slf_rd=1&' + g);
+          ? (g = 't=dc&aip=1&_r=3&' + g)
+          : 2 == c && (g = 't=sr&aip=1&_r=4&slf_rd=1&' + g);
         return g;
       },
       Wd = /^gtm\d+$/;
@@ -1698,8 +1696,8 @@ export default async window => {
                     '1' != c[0] || 4 != c.length
                       ? J(72)
                       : ke(c[3], c[1])
-                        ? J(71)
-                        : (a.data.set(ce, c[3]), a.data.set(fe, c[2]), J(70));
+                      ? J(71)
+                      : (a.data.set(ce, c[3]), a.data.set(fe, c[2]), J(70));
               }
             else J(21);
         b && (J(9), a.data.set(Q, K(b)));
@@ -1969,11 +1967,11 @@ export default async window => {
         D(a, '//')
           ? (a = d + a)
           : D(a, '/')
-            ? (a = ca + a)
-            : !a || D(a, '?')
-              ? (a = ca + e[2] + (a || g))
-              : 0 > a.split('/')[0].indexOf(':') &&
-                (a = ca + e[2].substring(0, e[2].lastIndexOf('/')) + '/' + a);
+          ? (a = ca + a)
+          : !a || D(a, '?')
+          ? (a = ca + e[2] + (a || g))
+          : 0 > a.split('/')[0].indexOf(':') &&
+            (a = ca + e[2].substring(0, e[2].lastIndexOf('/')) + '/' + a);
         c.href = a;
         d = b(c);
         return {

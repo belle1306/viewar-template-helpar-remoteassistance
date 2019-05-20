@@ -1,10 +1,10 @@
-import React, {Fragment} from 'react';
+import React, { Fragment } from 'react';
 import cx from 'classnames';
-import Spinner from '../spinner/spinner.jsx'
+import { Spinner } from '../';
 import { translate } from '../../services';
 
-import styles from './loading-overlay.css';
-import global from '../../../css/global.css';
+import styles from './loading-overlay.scss';
+import global from '../../../css/global.scss';
 
 import { Circle } from 'rc-progress';
 
@@ -14,15 +14,15 @@ export default ({ loading, withProgress, opaque, progress, message }) => (
       styles.Container,
       global.OverlayBackgroundColor,
       loading && styles.visible,
-      opaque && styles.opaque,
+      opaque && styles.opaque
     )}
   >
-    {loading &&
-    !withProgress && <Fragment>
-      <Spinner />
-    </Fragment>}
-    {loading &&
-    withProgress && (
+    {loading && !withProgress && (
+      <Fragment>
+        <Spinner />
+      </Fragment>
+    )}
+    {loading && withProgress && (
       <div className={cx(styles.ProgressSpinner)}>
         <div className={cx(styles.Loading, global.ColorBright)}>
           {translate(message || 'SpinnerProgressText')}

@@ -2,30 +2,31 @@ import { MemoryRouter, Route, Switch, withRouter } from 'react-router';
 import React, { Fragment } from 'react';
 import { compose, lifecycle } from 'recompose';
 
-import Home from './views/home/home.js';
-import Call from './views/call/call.js';
-import ProductSelection from './views/product-selection/product-selection.js';
-import UserSelection from './views/user-selection/user-selection.js';
-import Calibration from './views/calibration/calibration.js';
-import Annotation from './views/annotation/annotation.js';
-import Review from './views/review/review.js';
-import ConnectionMonitor from './views/connection-monitor';
+import {
+  HomeView,
+  CallView,
+  AnnotationView,
+  CalibrationView,
+  ProductSelectionView,
+  ReviewView,
+  UserSelectionView,
+  ConnectionMonitor,
+} from './views';
 
-import LoadingOverlay from './components/loading-overlay/loading-overlay.jsx';
-import Toast from './components/toast/toast';
-import Dialog from './components/dialog/dialog';
-import TrackingMapProgress from './components/tracking-map-progress/tracking-map-progress'
+import {
+  LoadingOverlay,
+  Toast,
+  Dialog,
+  TrackingMapProgress,
+} from './components';
 
-import { withLoading, withToast } from './services/loading';
-import { withTrackingMapProgress } from './services/tracking-map';
-import { withDialog } from './services/dialog';
-
-import googleAnalytics from './services/google-analytics/index';
-
-const EnhancedSpinner = withLoading()(LoadingOverlay);
-const EnhancedToast = withToast()(Toast);
-const EnhancedDialog = withDialog()(Dialog);
-const EnhancedTrackingMapProgress = withTrackingMapProgress()(TrackingMapProgress);
+import {
+  withLoading,
+  withToast,
+  withTrackingMapProgress,
+  withDialog,
+  googleAnalytics,
+} from './services';
 
 const GaMonitor = compose(
   withRouter,
@@ -38,53 +39,61 @@ const GaMonitor = compose(
   })
 )(({ children }) => <div>{children}</div>);
 
+const EnhancedSpinner = withLoading()(LoadingOverlay);
+const EnhancedToast = withToast()(Toast);
+const EnhancedDialog = withDialog()(Dialog);
+const EnhancedTrackingMapProgress = withTrackingMapProgress()(
+  TrackingMapProgress
+);
+const AdditionalComponents = () => (
+  <Fragment>
+    <EnhancedTrackingMapProgress />
+    <EnhancedToast />
+    <EnhancedSpinner />
+    <EnhancedDialog />
+  </Fragment>
+);
+
 export default ({}) => (
   <Fragment>
-    <EnhancedTrackingMapProgress key="trackingMapProgress" />
-    <EnhancedToast key="toast" />
-    <EnhancedSpinner key="spinner" />
-    <EnhancedDialog key="dialog" />
-    <MemoryRouter key="router">
+    <AdditionalComponents />
+    <MemoryRouter>
       <ConnectionMonitor>
         <GaMonitor>
           <Switch>
-            <Route exact path="/" component={Home} />
-            <Route
-              exact
-              path="/annotation/:args?"
-              component={Annotation}
-            />
+            <Route exact path="/" component={HomeView} />
+            <Route exact path="/annotation/:args?" component={AnnotationView} />
             <Route
               exact
               path="/calibration-annotation/:args?"
               component={(...props) => (
-                <Calibration {...props} nextView="/annotation" />
+                <CalibrationView {...props} nextView="/annotation" />
               )}
             />
             <Route
               exact
               path="/calibration-call/:args?"
               component={(...props) => (
-                <Calibration {...props} nextView="/call" />
+                <CalibrationView {...props} nextView="/call" />
               )}
             />
-            <Route exact path="/call/:args?" component={Call} />
+            <Route exact path="/call/:args?" component={CallView} />
             <Route
               exact
               path="/call-admin/:args?"
-              component={(...props) => <Call admin {...props} />}
+              component={(...props) => <CallView admin {...props} />}
             />
             <Route
               exact
               path="/user-selection/:args?"
-              component={UserSelection}
+              component={UserSelectionView}
             />
             <Route
               exact
               path="/product-selection/:args?"
-              component={ProductSelection}
+              component={ProductSelectionView}
             />
-            <Route exact path="/review/:args?" component={Review} />
+            <Route exact path="/review/:args?" component={ReviewView} />
           </Switch>
         </GaMonitor>
       </ConnectionMonitor>

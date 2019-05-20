@@ -20,7 +20,7 @@ export default () => {
   let materialModelInstance;
   let materials = [];
   let material;
-  let width = 6;
+  let width = 2;
   let drawOnMesh = false;
   let drawName = null;
 
@@ -34,6 +34,8 @@ export default () => {
   const initMaterials = async (specs = {}) => {
     const { foreignKey = 'draw_materials', modelId = '63846' } = specs;
     const { modelManager, sceneManager, coreInterface } = viewarApi;
+
+    await clear();
 
     if (!materialModelInstance) {
       const model =
@@ -325,8 +327,9 @@ export default () => {
       return drawName;
     },
     get currentDrawing() {
-      // Only possible if drawName is set.
-      return drawings.find(drawing => drawing.name === drawName);
+      // Only possible if drawName is set. Find last drawing (most recent).
+      return drawings.reverse().find(drawing => drawing.name === drawName);
     },
   });
 };
+0;

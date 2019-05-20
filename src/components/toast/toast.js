@@ -1,6 +1,6 @@
 import React from 'react';
 
-import styles from './toast.css';
+import styles from './toast.scss';
 
 export default ({ content, visible, showIcon }) => (
   <div className={styles.ToastWrapper}>

@@ -1,17 +1,18 @@
 import React, { Fragment } from 'react';
 import cx from 'classnames';
 
+import styles from './review.scss';
+import global from '../../../css/global.scss';
+
 import { translate } from '../../services';
-
-import styles from './review.css';
-import global from '../../../css/global.css';
-
-import AdminHeaderBar from '../../components/admin-header-bar/admin-header-bar';
-import TextInput from '../../components/text-input/text-input';
-import AnnotationReview from '../../components/annotation-review/annotation-review';
-import Button from '../../components/button/button';
-import TextButton from '../../components/text-button/text-button';
-import Tag from '../../components/tag/tag';
+import {
+  AdminHeaderBar,
+  TextInput,
+  AnnotationReview,
+  Button,
+  TextButton,
+  Tag,
+} from '../../components';
 
 export default ({
   annotation,
@@ -26,6 +27,7 @@ export default ({
   removeAnnotation,
   updateAnnotation,
   saveReview,
+  cancelReview,
   userName,
 }) => (
   <div className={cx(styles.Review, global.BackgroundImage)}>
@@ -77,12 +79,26 @@ export default ({
                       >
                         <div
                           className={styles.AnnotationImage}
-                          style={{backgroundImage: `url('${annotation.screenshot}'`}}
+                          style={{
+                            backgroundImage: `url('${annotation.screenshot}'`,
+                          }}
                         />
 
                         <div className={styles.AnnotationButtons}>
-                          <Button icon="cancel" onClick={() => removeAnnotation(annotation)} className={styles.AnnotationButton} noBackground white />
-                          <Button icon="pencil" onClick={() => setAnnotation(annotation)} className={styles.AnnotationButton} noBackground white/>
+                          <Button
+                            icon="cancel"
+                            onClick={() => removeAnnotation(annotation)}
+                            className={styles.AnnotationButton}
+                            noBackground
+                            white
+                          />
+                          <Button
+                            icon="pencil"
+                            onClick={() => setAnnotation(annotation)}
+                            className={styles.AnnotationButton}
+                            noBackground
+                            white
+                          />
                         </div>
                       </div>
                     )
@@ -91,9 +107,19 @@ export default ({
             </div>
           )}
 
-
           <div className={styles.Buttons}>
-            <TextButton label="ReviewSave" onClick={saveReview} className={styles.SaveButton} />
+            <TextButton
+              label="ReviewSave"
+              onClick={saveReview}
+              className={styles.SaveButton}
+            />
+          </div>
+          <div className={styles.Buttons}>
+            <TextButton
+              label="ReviewCancel"
+              onClick={cancelReview}
+              className={styles.SaveButton}
+            />
           </div>
         </div>
       </Fragment>

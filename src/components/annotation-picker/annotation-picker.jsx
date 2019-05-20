@@ -1,11 +1,9 @@
 import React, { Fragment } from 'react';
 import cx from 'classnames';
-import { translate } from '../../services';
 
-import styles from './annotation-picker.css';
-import globalStyles from '../../../css/global.css';
+import styles from './annotation-picker.scss';
+import global from '../../../css/global.scss';
 
-import Hint from '../hint/hint';
 import Button from '../button/button';
 
 export default ({
@@ -17,9 +15,13 @@ export default ({
   touch,
   selected,
   setSelected,
+  noButtons,
 }) => (
   <Fragment>
-    <div className={cx(styles.TouchOverlay, !visible && styles.isHidden)} onClick={touch} />
+    <div
+      className={cx(styles.TouchOverlay, !visible && styles.isHidden)}
+      onClick={touch}
+    />
     <div className={cx(styles.AnnotationPicker, !visible && styles.isHidden)}>
       <div className={styles.Annotations}>
         {models.map(model => (
@@ -39,13 +41,22 @@ export default ({
           </div>
         ))}
       </div>
-      <div className={styles.Buttons}>
-        <Button className={styles.Button} medium icon="confirm" onClick={confirm} />
-        <Button className={styles.Button} medium icon="cancel" onClick={cancel} />
-      </div>
-      <Hint hidden={!selected} >
-        {translate('AnnotationPickerHint')}
-      </Hint>
+      {!noButtons && (
+        <div className={styles.Buttons}>
+          <Button
+            className={styles.Button}
+            medium
+            icon="confirm"
+            onClick={confirm}
+          />
+          <Button
+            className={styles.Button}
+            medium
+            icon="cancel"
+            onClick={cancel}
+          />
+        </div>
+      )}
     </div>
   </Fragment>
 );

@@ -13,8 +13,6 @@ let translationList = {
   de,
 };
 
-export default createTranslationProvider;
-
 function createTranslationProvider() {
   let language = Object.keys(translationList)[0];
   let translations = {};
@@ -124,3 +122,7 @@ function createTranslationProvider() {
     return string || string === '';
   }
 }
+
+export const translationProvider = createTranslationProvider();
+export const translate = (id, asHtml) =>
+  translationProvider ? translationProvider.translate(id, asHtml) : id;

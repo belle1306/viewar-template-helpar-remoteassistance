@@ -8,15 +8,17 @@ import {
 
 import viewarApi from 'viewar-api';
 import { getUiConfigPath } from '../../utils';
-import { withDialogControls } from '../../services/dialog';
-import { withSetLoading } from '../../services/loading';
-import withRouteParams from '../../services/route-params';
-import withCallClient from '../../services/call-client';
-import authManager from '../../services/auth-manager';
-import sceneDraw from '../../services/scene-draw';
-import annotationManager from '../../services/annotation-manager';
+import {
+  withDialogControls,
+  withSetLoading,
+  withRouteParams,
+  withCallClient,
+  authManager,
+  sceneDraw,
+  annotationManager,
+} from '../../services';
 
-import Home from './home.jsx';
+import template from './home.jsx';
 
 export const init = ({
   viewarApi: { coreInterface, cameras, trackers },
@@ -140,4 +142,4 @@ export default compose(
       this.props.init();
     },
   })
-)(Home);
+)(template);

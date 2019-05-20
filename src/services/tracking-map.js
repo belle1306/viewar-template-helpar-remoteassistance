@@ -8,7 +8,7 @@ import {
 } from 'recompose';
 import viewarApi from 'viewar-api';
 
-export const doSaveTrackingMap = ({
+const doSaveTrackingMap = ({
   viewarApi: { tracker },
   setMessage,
   setProgress,
@@ -28,7 +28,7 @@ export const doSaveTrackingMap = ({
   return featureMap;
 };
 
-export const doLoadTrackingMap = ({
+const doLoadTrackingMap = ({
   viewarApi: { tracker },
   setMessage,
   setProgress,
@@ -45,7 +45,7 @@ export const doLoadTrackingMap = ({
   setProgress(0);
 };
 
-export const updateProgress = ({ setProgress }) => progress => {
+const updateProgress = ({ setProgress }) => progress => {
   setProgress(progress * 100);
 };
 
