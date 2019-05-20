@@ -22,7 +22,7 @@
 .Materials {
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  max-height: 100vh;
+  max-height: 100%;
   display: flex;
   flex-flow: column;
   flex: 0 0 auto;
@@ -37,7 +37,7 @@
 
 .Confirmation {
   overflow-y: auto;
-  max-height: 100vh;
+  max-height: 100%;
   display: flex;
   flex-flow: column;
   flex: 0 0 auto;
