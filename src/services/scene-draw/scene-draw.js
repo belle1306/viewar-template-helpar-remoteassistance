@@ -32,7 +32,7 @@ export default () => {
    * Insert model with materials and get material options.
    */
   const initMaterials = async (specs = {}) => {
-    const { foreignKey = 'draw_materials', modelId = '63846' } = specs;
+    const { foreignKey = 'draw_materials', modelId = '69126' } = specs;
     const { modelManager, sceneManager, coreInterface } = viewarApi;
 
     await clear();
