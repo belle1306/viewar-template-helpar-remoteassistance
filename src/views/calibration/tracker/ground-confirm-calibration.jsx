@@ -6,12 +6,12 @@ import { Hint, HeaderBar, CalibrationInstruction } from '../../../components';
 
 import styles from '../calibration.scss';
 
-export default ({ deviceType }) => (
+export default ({ deviceType, trackerName }) => (
   <div className={styles.Container}>
     <HeaderBar goBack />
     <div className={styles.AnimationWrapper}>
       <CalibrationInstruction deviceType={deviceType} />
     </div>
-    <Hint>{translate('CalibrationFilmFloor')}</Hint>
+    <Hint>{translate('CalibrationFilmFloor' + trackerName)}</Hint>
   </div>
 );

@@ -22,11 +22,12 @@ export default compose(
   withSetLoading,
   withState('loadingVisible', 'setLoadingVisible', true),
   withState('deviceType', 'setDeviceType', null),
-  withProps({
+  withProps(() => ({
     getDeviceType,
     initTracking,
     activateARCamera,
-  }),
+    trackerName: viewarApi.tracker.name,
+  })),
   withHandlers({
     onTrackingChanged: ({
       setLoading,
