@@ -1,0 +1,26 @@
+language: node_js
+node_js:
+  - 12
+  - 11
+
+# cache:
+#   directories:
+#     - ~/.npm
+
+notifications:
+  email: false
+
+branches:
+  only:
+    - master
+    - develop
+    - dependabot/*
+  except:
+    # prevent semantic-release pushed tags, to trigger CI
+    - /^v\d+\.\d+\.\d+$/
+
+install: npm install
+
+script:
+  - npm run format
+  - npm run build
