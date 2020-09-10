@@ -17,15 +17,27 @@ const srcPath = path.join(root, 'src');
 const buildPath = path.join(root, 'build');
 
 const getViewARConfig = () => {
+  let config = null;
   try {
-    return JSON.parse(fs.readFileSync(path.join(root, '.viewar-config')));
-  } catch (e) {
+    config = JSON.parse(fs.readFileSync(path.join(root, 'viewar-config.json')));
+  } catch (e) {}
+
+  if (!config) {
+    try {
+      config = JSON.parse(fs.readFileSync(path.join(root, '.viewar-config')));
+    } catch (e) {}
+  }
+
+  if (!config) {
     // eslint-disable-next-line no-console
     console.error(
-      '[ViewAR] ERROR: File .viewar-config not existing or invalid JSON format.'
+      '[ViewAR] ERROR: File viewar-config.json not existing or invalid JSON format.'
     );
-    return {};
+
+    config = {};
   }
+
+  return config;
 };
 
 const printLaunchQRCode = (ip, port) => {
