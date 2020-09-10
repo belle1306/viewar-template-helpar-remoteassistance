@@ -14,7 +14,7 @@ import {
   LoginDialog,
 } from '../../components';
 
-export default ({
+const HomeTemplate = ({
   goToProductSelection,
   goToUserSelection,
   loadingDone,
@@ -26,6 +26,7 @@ export default ({
   loginVisible,
   setLoginVisible,
   login,
+  knowledgeBase,
 }) => (
   <div className={cx(styles.Home)}>
     <Logo className={styles.Logo} />
@@ -42,12 +43,14 @@ export default ({
       hidden={!loadingDone}
       callSupport={callSupport}
     />
-    <TextButton
-      label="HomeStart"
-      className={styles.StartButton}
-      hidden={!loadingDone}
-      onClick={goToProductSelection}
-    />
+    {!!knowledgeBase && (
+      <TextButton
+        label="HomeStart"
+        className={styles.StartButton}
+        hidden={!loadingDone}
+        onClick={goToProductSelection}
+      />
+    )}
     <LoginDialog
       visible={loginVisible}
       username={username}
@@ -64,3 +67,5 @@ export default ({
     <div className={styles.Copyright}>{translate('HomeCopyright')}</div>
   </div>
 );
+
+export default HomeTemplate;

@@ -1,11 +1,5 @@
 import pubSub from './pub-sub';
-import {
-  compose,
-  withState,
-  withProps,
-  withHandlers,
-  lifecycle,
-} from 'recompose';
+import { compose, withState, withProps, withHandlers, lifecycle } from 'recompose';
 import viewarApi from 'viewar-api';
 
 const doSaveTrackingMap = ({
@@ -33,7 +27,7 @@ const doLoadTrackingMap = ({
   setMessage,
   setProgress,
   setVisible,
-}) => async trackingMapId => {
+}) => async (trackingMapId) => {
   setMessage('TrackingMapLoadInProgress');
 
   if (tracker && tracker.saveTrackingMap) {
@@ -45,7 +39,7 @@ const doLoadTrackingMap = ({
   setProgress(0);
 };
 
-const updateProgress = ({ setProgress }) => progress => {
+const updateProgress = ({ setProgress }) => (progress) => {
   setProgress(progress * 100);
 };
 
@@ -92,8 +86,8 @@ export const withTrackingMapProgress = () =>
     })
   );
 
-const sendAndWaitForResult = ({ pubSub }) => async args => {
-  await new Promise(resolve => {
+const sendAndWaitForResult = ({ pubSub }) => async (args) => {
+  await new Promise((resolve) => {
     pubSub.subscribe('trackingMapResult', () => resolve());
     pubSub.publish('trackingMap', args);
   });
@@ -105,7 +99,7 @@ const saveTrackingMap = ({ sendAndWaitForResult }) => async () => {
   await sendAndWaitForResult({ saveTrackingMap: true });
 };
 
-const loadTrackingMap = ({ sendAndWaitForResult }) => async trackingMapId => {
+const loadTrackingMap = ({ sendAndWaitForResult }) => async (trackingMapId) => {
   await sendAndWaitForResult({ loadTrackingMap: true, trackingMapId });
 };
 

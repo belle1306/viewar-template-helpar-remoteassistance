@@ -20,7 +20,7 @@ function createTranslationProvider() {
   let isWebVersion = false;
 
   let translationProvider = {
-    translate: id => id,
+    translate: (id) => id,
     init,
     setLanguage,
     get language() {

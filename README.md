@@ -1,6 +1,6 @@
-# helpar
+# HelpAR
 
-helpar
+[![Build Status](https://travis-ci.com/viewar/appfiles-helpar.svg?token=9j4kv11sMyqyMRAPNQXm&branch=master)](https://travis-ci.com/viewar/appfiles-helpar)
 
 ## Installation
 

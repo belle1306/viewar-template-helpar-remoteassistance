@@ -18,11 +18,10 @@ export const createDrawing = ({
   material,
   width = 6,
   useMesh = false,
-  color = '#FF0000',
   name = generateId(),
 }) => {
   const context = canvas.getContext('2d');
-  context.strokeStyle = color;
+  context.strokeStyle = material.color;
   context.lineWidth = width;
 
   let plane = null;
@@ -54,7 +53,7 @@ export const createDrawing = ({
     if (useMesh) {
       // Filter drawing meshs.
       let filteredInstances = instances.filter(
-        instance => !instance.meshid.startsWith(NAME_PREFIX)
+        (instance) => !instance.meshid.startsWith(NAME_PREFIX)
       );
       if (filteredInstances.length) {
         // Create plane from intersection.
@@ -73,15 +72,9 @@ export const createDrawing = ({
       // Create plane from nearest featurepoint.
       if (featurePoints.length >= 1) {
         const point = new Vector3(featurePoints[0].position);
-        plane = Plane.fromNormalPoint(
-          Vector3.Z_AXIS.rotate(pose.orientation),
-          point
-        );
+        plane = Plane.fromNormalPoint(Vector3.Z_AXIS.rotate(pose.orientation), point);
       } else {
-        console.error(
-          '[Drawing] Not enough feature points for plane.',
-          touchResult
-        );
+        console.error('[Drawing] Not enough feature points for plane.', touchResult);
         plane = Plane.XZ_PLANE;
       }
     }
@@ -100,11 +93,7 @@ export const createDrawing = ({
   const update = async (x, y) => {
     if (!stopped) {
       const { x: screenX, y: screenY } = convertCanvasToScreenCoordinates(x, y);
-      const { ray } = await viewarApi.sceneManager.simulateTouchRay(
-        screenX,
-        screenY,
-        0
-      );
+      const { ray } = await viewarApi.sceneManager.simulateTouchRay(screenX, screenY, 0);
 
       // Add new position to path.
       path.push({
@@ -127,11 +116,7 @@ export const createDrawing = ({
     if (x !== undefined && y !== undefined) {
       // Get ray for the last recorded point.
       const { x: screenX, y: screenY } = convertCanvasToScreenCoordinates(x, y);
-      const { ray } = await viewarApi.sceneManager.simulateTouchRay(
-        screenX,
-        screenY,
-        0
-      );
+      const { ray } = await viewarApi.sceneManager.simulateTouchRay(screenX, screenY, 0);
 
       // Add end position to path.
       path.push({

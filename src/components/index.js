@@ -1,18 +1,12 @@
 export { default as AdminHeaderBar } from './admin-header-bar/admin-header-bar';
-export {
-  default as AnnotationPicker,
-} from './annotation-picker/annotation-picker';
-export {
-  default as AnnotationReview,
-} from './annotation-review/annotation-review';
+export { default as AnnotationPicker } from './annotation-picker/annotation-picker';
+export { default as AnnotationReview } from './annotation-review/annotation-review';
 export { default as Button } from './button/button';
 export { default as ButtonWithText } from './button-with-text/button-with-text';
 export {
   default as CalibrationInstruction,
 } from './calibration-instruction/calibration-instruction';
-export {
-  default as CallSupportButton,
-} from './call-support-button/call-support-button';
+export { default as CallSupportButton } from './call-support-button/call-support-button';
 export { default as Dialog } from './dialog/dialog';
 export { default as DrawCanvas } from './draw-canvas/draw-canvas';
 export { default as HeaderBar } from './header-bar/header-bar';

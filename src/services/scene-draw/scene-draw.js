@@ -1,12 +1,32 @@
 import viewarApi from 'viewar-api';
 
-import Plane from './math/plane';
-import Vector3 from './math/vector3';
-import Ray from './math/ray';
 import throttle from 'lodash/throttle';
-import { parseMaterialOptions, assign } from './utils';
+import { assign } from './utils';
 import { createDrawing, NAME_PREFIX } from './drawing';
 import makeEmitter from './emitter';
+
+const MATERIALS = {
+  red: {
+    id: 'red',
+    color: '#ff0000',
+    materialId: 't9rpo29tmj',
+  },
+  green: {
+    id: 'green',
+    color: '#00ff00',
+    materialId: 'hzs7c5wdiub',
+  },
+  blue: {
+    id: 'blue',
+    color: '#0000ff',
+    materialId: 'wz44t1weee9',
+  },
+  yellow: {
+    id: 'yellow',
+    color: '#ffff00',
+    materialId: 'e7ycixj6bac',
+  },
+};
 
 const UPDATE_INTERVAL = 50;
 
@@ -17,8 +37,7 @@ export default () => {
   const activeDrawings = new Map();
 
   let drawings = [];
-  let materialModelInstance;
-  let materials = [];
+  let prepared;
   let material;
   let width = 2;
   let drawOnMesh = false;
@@ -29,34 +48,23 @@ export default () => {
   //--------------------------------------------------------------------------------------------------------------------
 
   /**
-   * Insert model with materials and get material options.
+   * Prepare all necessary materials
    */
-  const initMaterials = async (specs = {}) => {
-    const { foreignKey = 'draw_materials', modelId = '69126' } = specs;
-    const { modelManager, sceneManager, coreInterface } = viewarApi;
-
+  const initMaterials = async () => {
     await clear();
 
-    if (!materialModelInstance) {
-      const model =
-        modelManager.findModelByForeignKey(foreignKey) ||
-        (await modelManager.getModelFromRepository(modelId));
+    if (!prepared) {
+      prepared = true;
 
-      const rawDescription = await coreInterface.call(
-        'prepareModelDescription',
-        model.id
-      );
-      materials = parseMaterialOptions(rawDescription);
+      for (let { materialId } of Object.values(MATERIALS)) {
+        await viewarApi.coreInterface.call('prepareMaterial', materialId);
+      }
 
-      materialModelInstance = await sceneManager.insertModel(model, {
-        visible: false,
-      });
-
-      material = materials[1];
+      material = Object.values(MATERIALS)[0];
     }
   };
 
-  const registerCanvas = canvas => {
+  const registerCanvas = (canvas) => {
     const id = canvas.id;
 
     if (!id) {
@@ -69,7 +77,7 @@ export default () => {
     }
   };
 
-  const unregisterCanvas = canvas => {
+  const unregisterCanvas = (canvas) => {
     const id = canvas.id;
 
     if (canvasRegistry.has(id)) {
@@ -87,11 +95,15 @@ export default () => {
 
   const insertDrawing = ({ path, material, width, name }) => {
     if (path.length > 1) {
+      drawings.push({
+        name,
+      });
+
       viewarApi.coreInterface.call(
         'draw',
         JSON.stringify({
           path,
-          material,
+          material: typeof material === 'object' ? material.materialId : material,
           width,
           type: 'line',
           name,
@@ -100,7 +112,7 @@ export default () => {
     }
   };
 
-  const removeDrawing = async drawing => {
+  const removeDrawing = async (drawing) => {
     console.log('[SceneDraw] removeDrawing', drawing);
     await viewarApi.coreInterface.call('removeMesh', drawing.name);
   };
@@ -109,61 +121,25 @@ export default () => {
   // PRIVATE MEMBERS
   //--------------------------------------------------------------------------------------------------------------------
 
-  const registerInput = canvas => {
-    canvas.addEventListener(
-      'mousedown',
-      throttle(handleMouseDown, UPDATE_INTERVAL)
-    );
-    canvas.addEventListener(
-      'mouseup',
-      throttle(handleMouseUp, UPDATE_INTERVAL)
-    );
-    canvas.addEventListener(
-      'mousemove',
-      throttle(handleMouseMove, UPDATE_INTERVAL)
-    );
-    canvas.addEventListener(
-      'touchstart',
-      throttle(handleTouchStart, UPDATE_INTERVAL)
-    );
-    canvas.addEventListener(
-      'touchend',
-      throttle(handleTouchEnd, UPDATE_INTERVAL)
-    );
-    canvas.addEventListener(
-      'touchmove',
-      throttle(handleTouchMove, UPDATE_INTERVAL)
-    );
+  const registerInput = (canvas) => {
+    canvas.addEventListener('mousedown', throttle(handleMouseDown, UPDATE_INTERVAL));
+    canvas.addEventListener('mouseup', throttle(handleMouseUp, UPDATE_INTERVAL));
+    canvas.addEventListener('mousemove', throttle(handleMouseMove, UPDATE_INTERVAL));
+    canvas.addEventListener('touchstart', throttle(handleTouchStart, UPDATE_INTERVAL));
+    canvas.addEventListener('touchend', throttle(handleTouchEnd, UPDATE_INTERVAL));
+    canvas.addEventListener('touchmove', throttle(handleTouchMove, UPDATE_INTERVAL));
   };
 
-  const unregisterInput = canvas => {
-    canvas.removeEventListener(
-      'mousedown',
-      throttle(handleMouseDown, UPDATE_INTERVAL)
-    );
-    canvas.removeEventListener(
-      'mouseup',
-      throttle(handleMouseUp, UPDATE_INTERVAL)
-    );
-    canvas.removeEventListener(
-      'mousemove',
-      throttle(handleMouseMove, UPDATE_INTERVAL)
-    );
-    canvas.removeEventListener(
-      'touchstart',
-      throttle(handleTouchStart, UPDATE_INTERVAL)
-    );
-    canvas.removeEventListener(
-      'touchend',
-      throttle(handleTouchEnd, UPDATE_INTERVAL)
-    );
-    canvas.removeEventListener(
-      'touchmove',
-      throttle(handleTouchMove, UPDATE_INTERVAL)
-    );
+  const unregisterInput = (canvas) => {
+    canvas.removeEventListener('mousedown', throttle(handleMouseDown, UPDATE_INTERVAL));
+    canvas.removeEventListener('mouseup', throttle(handleMouseUp, UPDATE_INTERVAL));
+    canvas.removeEventListener('mousemove', throttle(handleMouseMove, UPDATE_INTERVAL));
+    canvas.removeEventListener('touchstart', throttle(handleTouchStart, UPDATE_INTERVAL));
+    canvas.removeEventListener('touchend', throttle(handleTouchEnd, UPDATE_INTERVAL));
+    canvas.removeEventListener('touchmove', throttle(handleTouchMove, UPDATE_INTERVAL));
   };
 
-  const handleMouseDown = e => {
+  const handleMouseDown = (e) => {
     const id = e.target.id;
     const x = e.clientX;
     const y = e.clientY;
@@ -171,7 +147,7 @@ export default () => {
     startDrawing(id, x, y);
   };
 
-  const handleMouseMove = e => {
+  const handleMouseMove = (e) => {
     const id = e.target.id;
     const x = e.clientX;
     const y = e.clientY;
@@ -179,7 +155,7 @@ export default () => {
     updateDrawing(id, x, y);
   };
 
-  const handleMouseUp = e => {
+  const handleMouseUp = (e) => {
     const id = e.target.id;
     const x = e.clientX;
     const y = e.clientY;
@@ -187,7 +163,7 @@ export default () => {
     stopDrawing(id, x, y);
   };
 
-  const handleTouchStart = e => {
+  const handleTouchStart = (e) => {
     const id = e.target.id;
     const x = e.touches[0].clientX;
     const y = e.touches[0].clientY;
@@ -195,7 +171,7 @@ export default () => {
     startDrawing(id, x, y);
   };
 
-  const handleTouchMove = e => {
+  const handleTouchMove = (e) => {
     const id = e.target.id;
     const x = e.touches[0].clientX;
     const y = e.touches[0].clientY;
@@ -203,7 +179,7 @@ export default () => {
     updateDrawing(id, x, y);
   };
 
-  const handleTouchEnd = e => {
+  const handleTouchEnd = (e) => {
     const id = e.target.id;
 
     stopDrawing(id);
@@ -259,7 +235,7 @@ export default () => {
   /**
    * Send a drawing to the core to create a 3d representation.
    */
-  const draw3D = async drawing => {
+  const draw3D = async (drawing) => {
     const projectedPath = drawing.projectPathOntoPlane();
     console.log(`[SceneDraw] draw path`, drawing.name, projectedPath);
 
@@ -268,7 +244,7 @@ export default () => {
         'draw',
         JSON.stringify({
           path: projectedPath,
-          material: material ? material.name : '42b5y9uuaqm',
+          material: material.materialId,
           width: width,
           type: 'line',
           name: drawing.name,
@@ -278,7 +254,7 @@ export default () => {
 
     sceneDraw.emit('draw', drawing);
 
-    await new Promise(resolve => {
+    await new Promise((resolve) => {
       setTimeout(() => resolve(), 200);
     });
     drawing.clearCanvas();
@@ -300,7 +276,7 @@ export default () => {
       return drawings;
     },
     get materials() {
-      return materials;
+      return Object.values(MATERIALS);
     },
     set material(newMaterial) {
       material = newMaterial;
@@ -328,7 +304,7 @@ export default () => {
     },
     get currentDrawing() {
       // Only possible if drawName is set. Find last drawing (most recent).
-      return drawings.reverse().find(drawing => drawing.name === drawName);
+      return drawings.reverse().find((drawing) => drawing.name === drawName);
     },
   });
 };

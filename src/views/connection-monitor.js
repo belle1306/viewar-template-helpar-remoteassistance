@@ -1,14 +1,11 @@
 import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
-import { compose, lifecycle, getContext } from 'recompose';
+import { compose, lifecycle } from 'recompose';
+
 import { withDialogControls, withRouteParams } from '../services';
 
 const render = ({ children }) => <Fragment>{children}</Fragment>;
 
-export default compose(
-  getContext({
-    callClient: PropTypes.object,
-  }),
+const ConnectionMonitor = compose(
   withRouteParams(),
   withDialogControls,
   lifecycle({
@@ -24,3 +21,5 @@ export default compose(
     },
   })
 )(render);
+
+export default ConnectionMonitor;

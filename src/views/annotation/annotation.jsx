@@ -7,7 +7,7 @@ import global from '../../../css/global.scss';
 import { translate } from '../../services';
 import { HeaderBar, Button, RatingOverlay, Hint } from '../../components';
 
-export default ({
+const AnnotationTemplate = ({
   tracking,
   annotation,
   descriptionVisible,
@@ -40,3 +40,5 @@ export default ({
     )}
   </div>
 );
+
+export default AnnotationTemplate;

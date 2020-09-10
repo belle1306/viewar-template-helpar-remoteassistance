@@ -23,34 +23,10 @@ export const convertCanvasToScreenCoordinates = (canvasX, canvasY) => {
   };
 };
 
-/**
- * Parse material options to an array of {name, imageUrl} out of model description (not parsed via viewar-api, directly downloaded).
- */
-export const parseMaterialOptions = description => {
-  const options = [];
-  const resource = description.materials[0].resource_pack;
-
-  for (let i = 0; i < description.materials[0].options.length; i++) {
-    const thumb = description.materials[0].options[i].thumb;
-    const imageUrl = `/Models/Resources/${resource}/${thumb}`;
-
-    options.push({
-      name: description.materials[0].materials[0].options[i],
-      imageUrl: viewarApi.coreInterface.resolveUrl(imageUrl),
-    });
-  }
-
-  return options;
-};
-
 export const assign = (target, ...sources) => {
-  sources.forEach(source =>
-    Object.keys(source || {}).forEach(key =>
-      Object.defineProperty(
-        target,
-        key,
-        Object.getOwnPropertyDescriptor(source, key)
-      )
+  sources.forEach((source) =>
+    Object.keys(source || {}).forEach((key) =>
+      Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key))
     )
   );
   return target;

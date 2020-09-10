@@ -1,12 +1,6 @@
 import pubSub from './pub-sub';
 
-import {
-  compose,
-  withHandlers,
-  withProps,
-  withState,
-  lifecycle,
-} from 'recompose';
+import { compose, withHandlers, withProps, withState, lifecycle } from 'recompose';
 
 const load = ({
   setMessage,
@@ -44,7 +38,7 @@ const load = ({
   setInputPlaceholder(inputPlaceholder);
   setInputPassword(inputPassword);
 
-  keyDownFunction = e => onKeyDown(e, onConfirm, onCancel);
+  keyDownFunction = (e) => onKeyDown(e, onConfirm, onCancel);
   document.addEventListener('keydown', keyDownFunction);
 };
 
@@ -129,9 +123,7 @@ const showDialog = ({ pubSub }) => (message, args = {}, prefix = '') => {
     inputPlaceholder,
     inputPassword,
   });
-  return new Promise(resolve =>
-    pubSub.subscribe(prefix + 'closeDialog', resolve)
-  );
+  return new Promise((resolve) => pubSub.subscribe(prefix + 'closeDialog', resolve));
 };
 
 export const withDialogControls = compose(

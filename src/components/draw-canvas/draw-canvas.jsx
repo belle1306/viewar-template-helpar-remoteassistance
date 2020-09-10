@@ -5,15 +5,11 @@ import global from '../../../css/global.scss';
 
 import { Button } from '../';
 
-const MaterialButton = ({ setMaterial, material, option }) => (
+const MaterialButton = ({ setMaterial, material, active }) => (
   <div
-    className={cx(
-      styles.MaterialButton,
-      global.ButtonColor,
-      material === option && styles.isActive
-    )}
-    style={{ backgroundImage: `url(${option.imageUrl})` }}
-    onClick={() => setMaterial(option)}
+    className={cx(styles.MaterialButton, global.ButtonColor, active && styles.isActive)}
+    style={{ background: material.color }}
+    onClick={() => setMaterial(material)}
   />
 );
 
@@ -46,11 +42,11 @@ export default ({
   <div className={cx(styles.Container, disabled && styles.isDisabled)}>
     <div className={styles.Buttons}>
       <div className={styles.Materials}>
-        {materials.map(option => (
+        {materials.map((m) => (
           <MaterialButton
-            key={option.name}
-            material={material}
-            option={option}
+            key={m.id}
+            material={m}
+            active={m.id === material.id}
             setMaterial={updateMaterial}
           />
         ))}
@@ -66,12 +62,7 @@ export default ({
           />
         )}
         {admin && (
-          <Button
-            className={styles.Button}
-            medium
-            icon="cancel"
-            onClick={handleCancel}
-          />
+          <Button className={styles.Button} medium icon="cancel" onClick={handleCancel} />
         )}
       </div>
 

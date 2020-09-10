@@ -1,10 +1,4 @@
-import {
-  compose,
-  withHandlers,
-  lifecycle,
-  withProps,
-  withState,
-} from 'recompose';
+import { compose, withHandlers, lifecycle, withProps, withState } from 'recompose';
 
 import viewarApi from 'viewar-api';
 import { getUiConfigPath } from '../../utils';
@@ -19,6 +13,8 @@ import {
 } from '../../services';
 
 import template from './home.jsx';
+
+const VALID_TRACKERS = ['Placenote', 'ARKit', 'ARCore', 'SixDegrees'];
 
 export const init = ({
   viewarApi: { coreInterface, cameras, trackers },
@@ -35,8 +31,7 @@ export const init = ({
   if (
     !trackers.Remote ||
     (coreInterface.platform !== 'Emscripten' &&
-      !trackers.Placenote &&
-      !trackers.SixDegrees)
+      VALID_TRACKERS.every((trackerName) => !!trackers[trackerName]))
   ) {
     showDialog('InvalidTrackerConfiguration', {
       showCancel: false,
@@ -97,9 +92,8 @@ export const login = ({ username, password, goTo }) => () => {
   goTo('/user-selection', { username, password });
 };
 
-export const updateProgress = ({ setProgress, setStatus }) => count => {
-  const progress =
-    ((count.current + count.currentProgress / 100) / count.total) * 100;
+export const updateProgress = ({ setProgress, setStatus }) => (count) => {
+  const progress = ((count.current + count.currentProgress / 100) / count.total) * 100;
   setProgress(progress);
 };
 
@@ -110,7 +104,7 @@ export const callSupport = ({ goTo }) => () => {
   });
 };
 
-export default compose(
+const HomeViewComposed = compose(
   withCallClient,
   withRouteParams(),
   withDialogControls,
@@ -120,12 +114,13 @@ export default compose(
   withState('password', 'setPassword', ''),
   withState('loadingDone', 'setLoadingDone', false),
   withState('progress', 'setProgress', 0),
-  withProps({
+  withProps(() => ({
     viewarApi,
     getUiConfigPath,
     authManager,
     annotationManager,
-  }),
+    knowledgeBase: getUiConfigPath('knowledgeBase'),
+  })),
   withHandlers({
     resetTrackers,
     updateProgress,
@@ -143,3 +138,5 @@ export default compose(
     },
   })
 )(template);
+
+export default HomeViewComposed;

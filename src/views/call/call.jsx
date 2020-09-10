@@ -21,7 +21,7 @@ const WaitForSupportAgentOverlay = ({ visible }) => (
   </div>
 );
 
-export default ({
+const CallTemplate = ({
   admin,
   waitingForSupportAgent,
   showAnnotationPicker,
@@ -207,3 +207,5 @@ export default ({
     )}
   </div>
 );
+
+export default CallTemplate;

@@ -27,7 +27,7 @@ export default ({
   // PUBLIC METHODS
   //--------------------------------------------------------------------------------------------------------------------
 
-  const init = async onProgress => {
+  const init = async (onProgress) => {
     if (initialized) {
       await reset();
     } else {
@@ -138,7 +138,12 @@ export default ({
     const hits = await getTouchResult(x, y, 1000);
 
     let position;
-    if (hits.ray) {
+
+    if (viewarApi.coreInterface.platform === 'Mock') {
+      position = { x: 0, y: 0, z: 0 };
+    }
+
+    if (!position && hits.ray) {
       position = await getPosition(hits);
     }
 
@@ -153,8 +158,8 @@ export default ({
       };
     }
 
-    if (viewarApi.coreInterface.platform === 'Mock') {
-      position = { x: 0, y: 0, z: 0 };
+    if (!position && hits.floors && hits.floors.length) {
+      position = hits.floors[0];
     }
 
     if (position) {
@@ -178,7 +183,7 @@ export default ({
     );
   };
 
-  const saveDrawAnnotation = async drawing => {
+  const saveDrawAnnotation = async (drawing) => {
     screenshot = await takeScreenshot();
 
     saved.push(
@@ -201,7 +206,7 @@ export default ({
   /**
    * Calculate position with ray casted onto plane defined by nearest three featurepoints.
    */
-  const getPosition = async hits => {
+  const getPosition = async (hits) => {
     const plane = getFeaturePointPlane(hits.featurePoints);
     if (plane) {
       const ray = new Ray(hits.ray);
@@ -215,7 +220,7 @@ export default ({
   /**
    * Get plane from three nearest feature points.
    */
-  const getFeaturePointPlane = featurePoints => {
+  const getFeaturePointPlane = (featurePoints) => {
     if (featurePoints.length >= 3) {
       const p1 = new Vector3(featurePoints[0].position);
       const p2 = new Vector3(featurePoints[1].position);

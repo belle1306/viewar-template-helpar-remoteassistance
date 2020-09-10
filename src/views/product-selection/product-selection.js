@@ -86,7 +86,7 @@ export const trimDescription = text => {
   return text;
 };
 
-export default compose(
+const ProductSelection = compose(
   withDialogControls,
   withSetLoading,
   withRouteParams(),
@@ -112,3 +112,5 @@ export default compose(
     },
   })
 )(template);
+
+export default ProductSelection;

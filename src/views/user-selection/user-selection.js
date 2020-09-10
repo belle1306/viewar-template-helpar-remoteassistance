@@ -1,10 +1,4 @@
-import {
-  compose,
-  withHandlers,
-  lifecycle,
-  withProps,
-  withState,
-} from 'recompose';
+import { compose, withHandlers, lifecycle, withProps, withState } from 'recompose';
 import viewarApi from 'viewar-api';
 import { getUiConfigPath } from '../../utils';
 import {
@@ -19,7 +13,7 @@ import template from './user-selection.jsx';
 
 export const updateClientList = ({ setClients, callClient }) => async () => {
   const clients = callClient.clients.filter(
-    client => client.data.available && client.role === 'Client'
+    (client) => client.data.available && client.role === 'Client'
   );
 
   setClients(clients);
@@ -33,7 +27,7 @@ export const call = ({
   password,
   username,
   callClient,
-}) => async clientId => {
+}) => async (clientId) => {
   callSubscription = callClient.acceptedCall.subscribe((args = {}) => {
     const { data = {} } = args;
     const { featureMap, meshScan } = data;
@@ -58,10 +52,16 @@ export const call = ({
   });
 
   setWaitingForUser(true);
-  await callClient.call({ id: clientId });
+  const success = await callClient.call({ id: clientId });
+  if (!success) {
+    setWaitingForUser(false);
+    showDialog(`Failed to call client "${clientId}".`, {
+      confirmText: 'DialogOK',
+    });
+  }
 };
 
-export const formatTime = timestamp => {
+export const formatTime = (timestamp) => {
   const date = new Date(timestamp);
   return isNaN(timestamp) ? timestamp : date.toLocaleString();
 };
@@ -84,7 +84,7 @@ let clientSubscription;
 let callSubscription;
 let refusedCallSubscription;
 let lineBusyCallSubscription;
-export default compose(
+const UserSelection = compose(
   withCallClient,
   withDialogControls,
   withSetLoading,
@@ -128,9 +128,7 @@ export default compose(
       if (callClient.connected && callClient.session) {
         await authManager.login(username, password);
         setUserName(authManager.user.name);
-        clientSubscription = callClient.clientsUpdate.subscribe(
-          updateClientList
-        );
+        clientSubscription = callClient.clientsUpdate.subscribe(updateClientList);
         updateClientList();
       }
     },
@@ -150,3 +148,5 @@ export default compose(
     },
   })
 )(template);
+
+export default UserSelection;

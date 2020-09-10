@@ -7,9 +7,7 @@ export function createPubSub() {
 
   const publish = (event, data) => {
     if (!sinks[event]) {
-      console.warn(
-        `${event} does not have any registered listeners. Publish cancelled.`
-      );
+      console.warn(`${event} does not have any registered listeners. Publish cancelled.`);
       return false;
     }
 
@@ -18,9 +16,7 @@ export function createPubSub() {
 
   const subscribe = (event, cb) => {
     if (!cb) {
-      console.warn(
-        'No callback provided for subscription. Subscription cancelled.'
-      );
+      console.warn('No callback provided for subscription. Subscription cancelled.');
       return false;
     }
 
@@ -31,7 +27,7 @@ export function createPubSub() {
     return sinks[event].subscribe(cb);
   };
 
-  const unsubscribe = event => {
+  const unsubscribe = (event) => {
     delete sinks[event];
   };
 

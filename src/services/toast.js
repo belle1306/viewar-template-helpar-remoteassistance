@@ -1,12 +1,6 @@
 import pubSub from './pub-sub';
 
-import {
-  compose,
-  withHandlers,
-  withProps,
-  withState,
-  lifecycle,
-} from 'recompose';
+import { compose, withHandlers, withProps, withState, lifecycle } from 'recompose';
 
 const show = ({ setVisible, setTimeout, setContent, setShowIcon }) => ({
   content,

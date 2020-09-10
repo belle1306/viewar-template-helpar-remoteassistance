@@ -1,12 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import merge from 'lodash/merge';
-import { AppContainer } from 'react-hot-loader';
 import { IntlProvider } from 'react-intl';
-import { compose, withContext } from 'recompose';
 import viewarApi from 'viewar-api';
+import { createCallClient } from '@viewar/call';
 
+import { ViewarContextProvider } from './utils/ViewarContext/ViewarContext';
 import {
   appState,
   authManager,
@@ -16,15 +15,13 @@ import {
   annotationManager,
   translationProvider,
 } from './services';
-
 import config from './config';
-import { createCallClient } from 'viewar-call';
-
 import App from './app';
 
 import '../css/global.scss';
 
 (async function() {
+  // TODO: move api initialization to ViewarContextProvider ?
   window.api = await viewarApi.init({
     logToScreen: false,
     waitForDebugger: false,
@@ -43,7 +40,6 @@ import '../css/global.scss';
   Object.assign(window, {
     appState,
     authManager,
-    callClient,
     config,
     googleAnalytics,
     annotationManager,
@@ -55,35 +51,24 @@ import '../css/global.scss';
   const rootElement =
     document.getElementById('app-root') || document.getElementById('app');
 
-  const render = Component => {
+  const render = (Component) => {
     ReactDOM.render(
-      <AppContainer>
-        <IntlProvider
-          locale={translationProvider.language}
-          key={translationProvider.language}
+      <IntlProvider
+        locale={translationProvider.language}
+        key={translationProvider.language}
+      >
+        <ViewarContextProvider
+          modules={{
+            viewarApi,
+            callClient,
+          }}
         >
           <Component />
-        </IntlProvider>
-      </AppContainer>,
+        </ViewarContextProvider>
+      </IntlProvider>,
       rootElement
     );
   };
 
-  const AppWithContext = compose(
-    withContext({ callClient: PropTypes.object }, () => ({ callClient }))
-  )(App);
-
-  render(AppWithContext);
-
-  if (module.hot) {
-    module.hot.accept('./app', () => {
-      const App = require('./app').default;
-
-      const AppWithContext = compose(
-        withContext({ callClient: PropTypes.object }, () => ({ callClient }))
-      )(App);
-
-      render(AppWithContext);
-    });
-  }
+  render(App);
 })();

@@ -12,7 +12,7 @@ import {
   NothingFoundCallSupport,
 } from '../../components';
 
-export default ({
+const ProductSelectionTemplate = ({
   search,
   goTo,
   callSupport,
@@ -69,3 +69,5 @@ export default ({
     </div>
   </div>
 );
+
+export default ProductSelectionTemplate;

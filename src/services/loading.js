@@ -1,20 +1,14 @@
 import pubSub from './pub-sub';
 
-import {
-  compose,
-  withHandlers,
-  withProps,
-  withState,
-  lifecycle,
-} from 'recompose';
+import { compose, withHandlers, withProps, withState, lifecycle } from 'recompose';
 
-const load = ({
-  setLoading,
-  setProgress,
-  setMessage,
-  setWithProgress,
-  setOpaque,
-}) => ({ loading, progress = 0, withProgress = false, message, opaque }) => {
+const load = ({ setLoading, setProgress, setMessage, setWithProgress, setOpaque }) => ({
+  loading,
+  progress = 0,
+  withProgress = false,
+  message,
+  opaque,
+}) => {
   setLoading(loading);
   setProgress(progress);
   setWithProgress(withProgress);
@@ -33,8 +27,12 @@ export const withLoading = (prefix = '') =>
       load,
     }),
     lifecycle({
-      async componentDidMount() {
+      // TODO: remove deprecated lifecycle methods
+      componentDidMount() {
         pubSub.subscribe(prefix + 'loadingState', this.props.load);
+      },
+      componentWillUnmount() {
+        pubSub.unsubscribe(prefix + 'loadingState', this.props.load);
       },
     })
   );

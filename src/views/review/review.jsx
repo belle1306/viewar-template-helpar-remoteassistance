@@ -14,7 +14,7 @@ import {
   Tag,
 } from '../../components';
 
-export default ({
+const ReviewTemplate = ({
   annotation,
   setAnnotation,
   tags,
@@ -133,3 +133,5 @@ export default ({
     />
   </div>
 );
+
+export default ReviewTemplate;

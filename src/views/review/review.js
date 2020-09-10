@@ -153,7 +153,7 @@ export const saveAnnotation = ({
   }
 };
 
-export default compose(
+const Review = compose(
   withDialogControls,
   withSetLoading,
   withRouteParams(),
@@ -189,3 +189,5 @@ export default compose(
     },
   })
 )(template);
+
+export default Review;

@@ -1,10 +1,4 @@
-import {
-  compose,
-  withHandlers,
-  withState,
-  lifecycle,
-  withProps,
-} from 'recompose';
+import { compose, withHandlers, withState, lifecycle, withProps } from 'recompose';
 import viewarApi from 'viewar-api';
 import { getUiConfigPath } from '../../utils';
 import {
@@ -12,30 +6,34 @@ import {
   withSetLoading,
   annotationManager,
   sceneDraw,
-  translate,
   withRouteParams,
   withTrackingMap,
   withCallClient,
 } from '../../services';
 
-import template from './Call.jsx';
+import template from './call.jsx';
 
+let takeFreezeFrameSubscription;
+let freezeFrameSubscription;
+let syncDrawingSubscription;
+let syncAnnotationSubscription;
+let callSubscription;
+let endCallSubscription;
 export const waitForSupportAgent = ({
   goToNextView,
   joinSession,
   showDialog,
   connect,
-  history,
   admin,
   topic,
   meshScan,
-  viewarApi: { appConfig, tracker },
+  viewarApi: { tracker },
   setWaitingForSupportAgent,
-  callClient,
   takeFreezeFrame,
   showFreezeFrame,
   onCallEnd,
   setLoading,
+  callClient,
 }) => async () => {
   let featureMap;
   if (!admin) {
@@ -50,7 +48,11 @@ export const waitForSupportAgent = ({
 
     if (tracker) {
       if (tracker.saveTrackingMap) {
-        featureMap = await tracker.generateTrackingMapId();
+        if (tracker.generateTrackingMapId) {
+          featureMap = await tracker.generateTrackingMapId();
+        } else {
+          featureMap = 'SixDegrees'; // Replace with real id once core is able to save more than one 6d map.
+        }
       }
     }
   }
@@ -58,16 +60,14 @@ export const waitForSupportAgent = ({
   if (callClient.connected && callClient.session) {
     syncAnnotationSubscription = callClient
       .getData('annotation')
-      .subscribe(annotation => {
+      .subscribe((annotation) => {
         annotationManager.setAnnotation(annotation, admin);
       });
 
-    syncAnnotationSubscription = callClient
-      .getData('drawing')
-      .subscribe(drawing => {
-        console.log('[Call] received drawing', drawing);
-        sceneDraw.insertDrawing(drawing);
-      });
+    syncAnnotationSubscription = callClient.getData('drawing').subscribe((drawing) => {
+      console.log('[Call] received drawing', drawing);
+      sceneDraw.insertDrawing(drawing);
+    });
 
     freezeFrameSubscription = callClient
       .getData('freezeFrame')
@@ -109,14 +109,13 @@ export const waitForSupportAgent = ({
   }
 };
 
-export const onTouch = ({ syncAnnotation }) => async event => {
+export const onTouch = ({ syncAnnotation }) => async (event) => {
   syncAnnotation();
 };
 
-export const openAnnotationPicker = ({
-  setShowAnnotationPicker,
-  setAnnotationMode,
-}) => mode => {
+export const openAnnotationPicker = ({ setShowAnnotationPicker, setAnnotationMode }) => (
+  mode
+) => {
   setAnnotationMode(mode);
   setShowAnnotationPicker(true);
 };
@@ -125,7 +124,7 @@ export const closeAnnotationPicker = ({
   syncAnnotation,
   annotationManager,
   setShowAnnotationPicker,
-}) => confirmed => {
+}) => (confirmed) => {
   setShowAnnotationPicker(false);
   if (confirmed) {
     syncAnnotation();
@@ -133,14 +132,8 @@ export const closeAnnotationPicker = ({
   }
 };
 
-export const syncAnnotation = ({
-  annotationManager,
-  callClient,
-  admin,
-}) => () => {
-  const annotation = admin
-    ? annotationManager.current
-    : annotationManager.currentUser;
+export const syncAnnotation = ({ annotationManager, callClient, admin }) => () => {
+  const annotation = admin ? annotationManager.current : annotationManager.currentUser;
   if (annotation) {
     callClient.sendData('annotation', annotation);
   }
@@ -179,7 +172,7 @@ export const goToNextView = ({
   goToLastView,
 }) => async () => {
   if (admin) {
-    if (annotationManager.saved.length) {
+    if (annotationManager.saved.length && !!getUiConfigPath('knowledgeBase')) {
       goTo('/review', {
         backPath,
         backArgs,
@@ -230,12 +223,7 @@ const togglePerspective = ({
   setPerspective(!perspective);
 };
 
-const unpause = ({
-  toggleFreeze,
-  togglePerspective,
-  perspective,
-  frozen,
-}) => () => {
+const unpause = ({ toggleFreeze, togglePerspective, perspective, frozen }) => () => {
   if (frozen) {
     toggleFreeze();
   } else if (perspective) {
@@ -243,13 +231,13 @@ const unpause = ({
   }
 };
 
-const syncDrawing = ({ callClient, admin }) => drawing => {
+const syncDrawing = ({ callClient, admin }) => (drawing) => {
   const { material, name, width } = drawing;
   const path = drawing.projectPathOntoPlane();
 
   const drawingData = {
     path,
-    material: material.name,
+    material: material.materialId,
     width,
     name,
   };
@@ -261,11 +249,7 @@ const syncDrawing = ({ callClient, admin }) => drawing => {
   callClient.sendData('drawing', drawingData);
 };
 
-const saveFreezeFrame = ({
-  callClient,
-  freezeFrames,
-  setFreezeFrames,
-}) => async () => {
+const saveFreezeFrame = ({ callClient, freezeFrames, setFreezeFrames }) => async () => {
   // Notify user to take a freeze frame as well.
   const name = `freezeFrame-${Math.round(+new Date() / 1000)}`;
   callClient.sendData('takeFreezeFrame', name);
@@ -276,31 +260,22 @@ const saveFreezeFrame = ({
   setFreezeFrames(freezeFrames);
 };
 
-const loadFreezeFrame = ({
-  setFrozen,
-  setFreezeFrame,
-}) => async freezeFrame => {
+const loadFreezeFrame = ({ setFrozen, setFreezeFrame }) => async (freezeFrame) => {
   await viewarApi.cameras.arCamera.showFreezeFrame(freezeFrame);
   setFrozen(true);
   setFreezeFrame(freezeFrame);
 };
 
-const sendFreezeFrame = ({
-  setFreezeFrameSent,
-  freezeFrame,
-  callClient,
-}) => () => {
+const sendFreezeFrame = ({ setFreezeFrameSent, freezeFrame, callClient }) => () => {
   // Notify user to show freeze frame.
   callClient.sendData('freezeFrame', freezeFrame.name);
   setFreezeFrameSent(true);
 };
 
-const showFreezeFrame = ({ freezeFrames }) => name => {
+const showFreezeFrame = ({ freezeFrames }) => (name) => {
   // Triggered on user device via 'showFreezeFrame' call command.
   if (name) {
-    const freezeFrame = freezeFrames.find(
-      freezeFrame => freezeFrame.name === name
-    );
+    const freezeFrame = freezeFrames.find((freezeFrame) => freezeFrame.name === name);
     if (freezeFrame) {
       viewarApi.cameras.arCamera.showFreezeFrame(freezeFrame);
     } else {
@@ -311,7 +286,7 @@ const showFreezeFrame = ({ freezeFrames }) => name => {
   }
 };
 
-const takeFreezeFrame = ({ freezeFrames, setFreezeFrame }) => async name => {
+const takeFreezeFrame = ({ freezeFrames, setFreezeFrame }) => async (name) => {
   // Triggered on user device via 'takeFreezeFrame' call command.
   const freezeFrame = await viewarApi.cameras.arCamera.saveFreezeFrame(name);
   freezeFrames.push(freezeFrame);
@@ -328,10 +303,7 @@ const toggleMuteSpeaker = ({ setSpeakerMuted, speakerMuted }) => () => {
   setSpeakerMuted(!speakerMuted);
 };
 
-const toggleMuteMicrophone = ({
-  setMicrophoneMuted,
-  microphoneMuted,
-}) => () => {
+const toggleMuteMicrophone = ({ setMicrophoneMuted, microphoneMuted }) => () => {
   if (microphoneMuted) {
     viewarApi.appUtils.unmuteMicrophone();
   } else {
@@ -356,8 +328,9 @@ const onCallEnd = ({
     callClient.leave();
 
     setLoading(true);
-    await saveTrackingMap();
-    // await new Promise(resolve => setTimeout(resolve, 10000));
+    if (getUiConfigPath('knowledgeBase')) {
+      await saveTrackingMap();
+    }
 
     if (meshScan) {
       await tracker.stopMeshScan();
@@ -377,14 +350,7 @@ const onCallEnd = ({
 const toggleDraw = ({ setShowAnnotationPicker, showAnnotationPicker }) => () =>
   setShowAnnotationPicker(!showAnnotationPicker);
 
-let takeFreezeFrameSubscription;
-let freezeFrameSubscription;
-let syncDrawingSubscription;
-let syncAnnotationSubscription;
-let syncSubscription;
-let callSubscription;
-let endCallSubscription;
-export default compose(
+const Call = compose(
   withTrackingMap,
   withCallClient,
   withDialogControls,
@@ -474,3 +440,5 @@ export default compose(
     },
   })
 )(template);
+
+export default Call;

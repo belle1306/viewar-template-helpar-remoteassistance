@@ -13,7 +13,7 @@ const WaitForUserOverlay = ({ visible }) => (
   </div>
 );
 
-export default ({
+const UserSelectionTemplate = ({
   clients,
   call,
   waitingForUser,
@@ -52,3 +52,5 @@ export default ({
     </div>
   </div>
 );
+
+export default UserSelectionTemplate;

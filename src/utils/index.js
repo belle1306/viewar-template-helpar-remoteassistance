@@ -1,4 +1,4 @@
-export const getUiConfigPath = path => {
+export const getUiConfigPath = (path) => {
   const paths = path.split('.');
 
   let currentValue = config;

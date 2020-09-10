@@ -35,9 +35,7 @@ export const withRouteParams = (props = {}) =>
     withHandlers({
       goTo: ({ history }) => (path, args) => {
         const savePath = path.endsWith('/') || !args ? path : path + '/';
-        const saveArgs = args
-          ? encodeURIComponent(JSON.stringify(args || {}))
-          : '';
+        const saveArgs = args ? encodeURIComponent(JSON.stringify(args || {})) : '';
 
         window.router = history;
         history.push(savePath + saveArgs);

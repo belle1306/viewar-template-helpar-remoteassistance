@@ -1,15 +1,11 @@
-import { compose, getContext, withHandlers } from 'recompose';
-import PropTypes from 'prop-types';
+import { compose, withHandlers } from 'recompose';
 import viewarApi from 'viewar-api';
+
+import { withRouteParams } from './route-params';
 
 import { withDialogControls, withSetLoading } from './';
 
-const connect = ({
-  goToLastView,
-  showDialog,
-  setLoading,
-  callClient,
-}) => async () => {
+const connect = ({ goToLastView, showDialog, setLoading, callClient }) => async () => {
   setLoading(true, { message: 'MessageConnect' });
   await callClient.connect();
   setLoading(false);
@@ -23,12 +19,9 @@ const connect = ({
   }
 };
 
-const joinSession = ({
-  goToLastView,
-  setLoading,
-  callClient,
-  showDialog,
-}) => async (sessionArgs = {}) => {
+const joinSession = ({ goToLastView, setLoading, callClient, showDialog }) => async (
+  sessionArgs = {}
+) => {
   const {
     sessionId = viewarApi.appConfig.appId,
     username,
@@ -37,7 +30,12 @@ const joinSession = ({
   } = sessionArgs;
 
   setLoading(true, { message: 'MessageJoin' });
-  await callClient.join({ sessionId, username, password, userData });
+  await callClient.join({
+    sessionId,
+    username,
+    password,
+    userData,
+  });
   setLoading(false);
 
   if (!callClient.session) {
@@ -60,9 +58,7 @@ const disconnect = ({ callClient }) => () => {
 export const withCallClient = compose(
   withDialogControls,
   withSetLoading,
-  getContext({
-    callClient: PropTypes.object,
-  }),
+  withRouteParams(),
   withHandlers({
     connect,
     disconnect,

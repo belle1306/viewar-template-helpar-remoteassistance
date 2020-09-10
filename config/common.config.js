@@ -1,9 +1,10 @@
 const merge = require('webpack-merge');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { srcPath } = require('./utils');
+
 const fs = require('fs');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { srcPath } = require('./utils');
 
 const { appId, appVersion } = JSON.parse(
   fs.readFileSync(`${__dirname}/../.viewar-config`)
@@ -37,7 +38,7 @@ exports.config = merge([
               loader: 'postcss-loader',
               options: {
                 ident: 'postcss',
-                plugins: loader => [
+                plugins: (loader) => [
                   require('postcss-import')({ root: loader.resourcePath }),
                   require('postcss-preset-env')(),
                 ],

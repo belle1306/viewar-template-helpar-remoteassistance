@@ -123,7 +123,7 @@ export const updateTracking = ({
   setTracking(tracking);
 };
 
-export default compose(
+const Annotation = compose(
   withTrackingMap,
   withDialogControls,
   withSetLoading,
@@ -159,3 +159,5 @@ export default compose(
     },
   })
 )(template);
+
+export default Annotation;
